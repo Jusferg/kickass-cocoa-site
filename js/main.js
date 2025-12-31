@@ -18,18 +18,22 @@ function requireAuth() {
 function isAdmin() {
   return loggedInUser && loggedInUser.role === "admin";
 }
-
 /****************************************************
- * LOGOUT
+ * LOGOUT (SAFE + RELIABLE)
  ****************************************************/
 
-const logoutBtn = document.getElementById("logoutBtn");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault(); // stop link navigation
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    });
+  }
+});
+
 
 /****************************************************
  * MOBILE NAV TOGGLE
