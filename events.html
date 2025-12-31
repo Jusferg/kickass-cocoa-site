@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Events | Kick A$$ Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-container">
+    <div class="logo">
+      <img src="logo.png" alt="Kick A$$ Cocoa Logo" />
+      <span>Kick A$$ Cocoa</span>
+    </div>
+
+    <button class="menu-toggle" id="menuToggle">☰</button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="events.html" class="active">Events</a>
+      <a href="resources.html">Resources</a>
+      <a href="members-area.html">Members</a>
+      <a href="#" id="logoutBtn">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <h1>Upcoming Events</h1>
+  <p class="page-intro">Explore upcoming gatherings, workshops, and growth opportunities.</p>
+
+  <!-- Admin Event Form -->
+  <section id="adminEventSection" class="admin-only hidden">
+    <h2>Add Event</h2>
+
+    <form id="eventForm">
+      <input type="text" id="eventTitle" placeholder="Event Title" required />
+      <textarea id="eventDescription" placeholder="Event Description"></textarea>
+
+      <label>Start Date</label>
+      <input type="date" id="eventStart" required />
+
+      <label>End Date</label>
+      <input type="date" id="eventEnd" required />
+
+      <button type="submit">Add Event</button>
+    </form>
+  </section>
+
+  <!-- Calendar -->
+  <section class="calendar-section">
+    <div id="calendar" class="calendar-container"></div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2025 Kick A$$ Cocoa. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
