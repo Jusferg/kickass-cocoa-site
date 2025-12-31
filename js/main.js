@@ -26,6 +26,7 @@ function isAdmin() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
+  console.log("Logout button found:", logoutBtn);
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", (e) => {
