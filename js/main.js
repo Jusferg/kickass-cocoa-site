@@ -1,239 +1,174 @@
-// ===============================
-// MAIN.JS
-// ===============================
+/****************************************************
+ * GLOBAL USER STATE
+ ****************************************************/
 
-// ===============================
-// AUTHENTICATION & USERS
-// ===============================
+// Retrieve logged-in user from localStorage
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-// Default system users for testing/admin
-const systemUsers = {
-  "admin@wgc.com": { password: "admin123", role: "admin" },
-  "leader@wgc.com": { password: "leader123", role: "leader" }
-};
+/****************************************************
+ * AUTH / ACCESS CONTROL
+ ****************************************************/
 
-// Login function
-function login() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  const user = users[email] || systemUsers[email];
-
-  if (!user || user.password !== password) {
-    alert("Invalid email or password");
-    return;
-  }
-
-  localStorage.setItem("authenticated", "true");
-  localStorage.setItem("email", email);
-  localStorage.setItem("role", user.role);
-
-  window.location.href = "members-area.html";
-}
-
-// Register function
-function register() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  if (!email || !password) {
-    alert("Please complete all fields");
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
-  if (users[email]) {
-    alert("An account with this email already exists.");
-    return;
-  }
-
-  users[email] = { password: password, role: "member" };
-  localStorage.setItem("users", JSON.stringify(users));
-
-  alert("Registration successful. You may now log in.");
-  window.location.href = "login.html";
-}
-
-// Check authentication for members-only pages
-function checkAuth() {
-  if (localStorage.getItem("authenticated") !== "true") {
+function requireAuth() {
+  if (!loggedInUser) {
     window.location.href = "login.html";
   }
 }
 
-// Logout function
-function logout() {
-  localStorage.clear();
-  window.location.href = "login.html";
+function isAdmin() {
+  return loggedInUser && loggedInUser.role === "admin";
 }
 
-// ===============================
-// DYNAMIC NAVIGATION
-// ===============================
+/****************************************************
+ * LOGOUT
+ ****************************************************/
 
-function updateNav() {
-  const role = localStorage.getItem("role");
-  const navMenu = document.getElementById("navMenu");
-  if (!navMenu) return;
-
-  const links = navMenu.querySelectorAll("a");
-
-  links.forEach(link => {
-    const text = link.textContent.toLowerCase();
-    if (role) {
-      // Logged in: hide login/join
-      if (text === "login" || text === "join") link.style.display = "none";
-      if (text === "members area" || text === "dashboard") link.style.display = "inline";
-    } else {
-      // Logged out: hide members area/logout
-      if (text === "members area" || text === "dashboard" || text === "logout") link.style.display = "none";
-      if (text === "login" || text === "join") link.style.display = "inline";
-    }
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
   });
 }
 
-// ===============================
-// COLLAPSIBLE NAVIGATION
-// ===============================
+/****************************************************
+ * MOBILE NAV TOGGLE
+ ****************************************************/
 
-function toggleMenu() {
-  const menu = document.getElementById("navMenu");
-  if (!menu) return;
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-}
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
 
-// ===============================
-// MEMBERS ONLINE TRACKING
-// ===============================
-
-const ACTIVE_WINDOW = 5 * 60 * 1000; // 5 minutes
-
-// Update current member activity
-function updateActivity() {
-  const email = localStorage.getItem("email");
-  if (!email) return;
-
-  let activity = JSON.parse(localStorage.getItem("activity")) || {};
-  activity[email] = Date.now();
-  localStorage.setItem("activity", JSON.stringify(activity));
-}
-
-// Display members active recently
-function displayActiveMembers() {
-  let activity = JSON.parse(localStorage.getItem("activity")) || {};
-  const now = Date.now();
-  const list = document.getElementById("onlineMembers");
-  if (!list) return;
-
-  list.innerHTML = "";
-  Object.keys(activity).forEach(email => {
-    if (now - activity[email] <= ACTIVE_WINDOW) {
-      const li = document.createElement("li");
-      li.textContent = email.split("@")[0]; // show only name part
-      list.appendChild(li);
-    }
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
   });
-
-  if (!list.hasChildNodes()) {
-    list.innerHTML = "<li>No active members right now</li>";
-  }
 }
 
-// ===============================
-// EVENTS CALENDAR WITH RSVP, EDIT, DELETE
-// ===============================
+/****************************************************
+ * MEMBERS AREA ACCESS
+ ****************************************************/
 
-// Current date for calendar display
-let currentDate = new Date();
+if (document.body.classList.contains("members-page")) {
+  requireAuth();
+}
 
-// Load events from localStorage or empty
-let events = JSON.parse(localStorage.getItem("events")) || {};
+/****************************************************
+ * EVENTS LOGIC
+ ****************************************************/
 
-// Render calendar for current month
+const calendarEl = document.getElementById("calendar");
+const adminEventSection = document.getElementById("adminEventSection");
+const eventForm = document.getElementById("eventForm");
+
+// Load events from storage
+let events = JSON.parse(localStorage.getItem("events")) || [];
+
+// Show admin form only if admin
+if (adminEventSection && isAdmin()) {
+  adminEventSection.classList.remove("hidden");
+}
+
+// Add new event (ADMIN ONLY)
+if (eventForm && isAdmin()) {
+  eventForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("eventTitle").value;
+    const description = document.getElementById("eventDescription").value;
+    const startDate = document.getElementById("eventStart").value;
+    const endDate = document.getElementById("eventEnd").value;
+
+    const newEvent = {
+      id: Date.now(),
+      title,
+      description,
+      startDate,
+      endDate,
+      rsvps: []
+    };
+
+    events.push(newEvent);
+    localStorage.setItem("events", JSON.stringify(events));
+
+    eventForm.reset();
+    renderCalendar();
+  });
+}
+
+// Render calendar
 function renderCalendar() {
-  const monthYear = document.getElementById("monthYear");
-  const daysContainer = document.getElementById("calendarDays");
-  if (!monthYear || !daysContainer) return;
+  if (!calendarEl) return;
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
+  calendarEl.innerHTML = "";
 
-  monthYear.textContent = currentDate.toLocaleString("default", { month: "long", year: "numeric" });
-  daysContainer.innerHTML = "";
+  const today = new Date().toISOString().split("T")[0];
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  events.forEach(event => {
+    const day = document.createElement("div");
+    day.className = "calendar-day";
 
-  // Empty slots for first week
-  for (let i = 0; i < firstDay; i++) {
-    daysContainer.innerHTML += `<div></div>`;
-  }
+    if (event.startDate <= today && event.endDate >= today) {
+      day.classList.add("today");
+    }
 
-  // Days of the month
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    const hasEvent = events[dateKey];
+    day.innerHTML = `
+      <h3>${event.title}</h3>
+      <p>${event.description}</p>
+      <small>${event.startDate} → ${event.endDate}</small>
+      <button class="rsvp-btn" data-id="${event.id}">RSVP</button>
+      ${isAdmin() ? `<button class="delete-btn" data-id="${event.id}">Delete</button>` : ""}
+    `;
 
-    const dayDiv = document.createElement("div");
-    dayDiv.className = "calendar-day" + (hasEvent ? " has-event" : "");
-    dayDiv.textContent = day;
-    dayDiv.onclick = () => showEvents(dateKey);
-    daysContainer.appendChild(dayDiv);
+    calendarEl.appendChild(day);
+  });
+
+  attachEventButtons();
+}
+
+// RSVP + Delete handlers
+function attachEventButtons() {
+  document.querySelectorAll(".rsvp-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const eventId = btn.dataset.id;
+      const event = events.find(e => e.id == eventId);
+
+      if (!event.rsvps.includes(loggedInUser.email)) {
+        event.rsvps.push(loggedInUser.email);
+        localStorage.setItem("events", JSON.stringify(events));
+        alert("RSVP confirmed!");
+      }
+    });
+  });
+
+  if (isAdmin()) {
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const eventId = btn.dataset.id;
+        events = events.filter(e => e.id != eventId);
+        localStorage.setItem("events", JSON.stringify(events));
+        renderCalendar();
+      });
+    });
   }
 }
 
-// Show events for selected day
-function showEvents(dateKey) {
-  const eventDetails = document.getElementById("eventDetails");
-  if (!eventDetails) return;
+// Initial render
+renderCalendar();
 
-  const dayEvents = events[dateKey];
-  if (!dayEvents) {
-    eventDetails.innerHTML = "<p>No events scheduled.</p>";
-    return;
-  }
+/****************************************************
+ * RESOURCE SEARCH
+ ****************************************************/
 
-  const email = localStorage.getItem("email");
-  const role = localStorage.getItem("role");
+const searchInput = document.getElementById("searchInput");
+const resourceCards = document.querySelectorAll("#resourceCards .card");
 
-  eventDetails.innerHTML = `
-    <h4>Events</h4>
-    <ul>
-      ${dayEvents.map((e, idx) => `
-        <li>
-          <strong>${e.title}</strong><br>
-          <small>${e.description || ""}</small><br>
-          <small>RSVPs: ${e.rsvps.length}</small><br>
-          <button onclick="rsvpEvent('${dateKey}', ${idx})">
-            ${e.rsvps.includes(email) ? "Cancel RSVP" : "RSVP"}
-          </button>
-          ${role === "admin" ? `
-            <button onclick="editEvent('${dateKey}', ${idx})">Edit</button>
-            <button onclick="deleteEvent('${dateKey}', ${idx})">Delete</button>
-          ` : ""}
-        </li>
-      `).join("")}
-    </ul>
-  `;
+if (searchInput) {
+  searchInput.addEventListener("keyup", () => {
+    const term = searchInput.value.toLowerCase();
+
+    resourceCards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(term) ? "block" : "none";
+    });
+  });
 }
-
-// RSVP or cancel RSVP for event
-function rsvpEvent(dateKey, index) {
-  const email = localStorage.getItem("email");
-  if (!email) return;
-
-  const dayEvent = events[dateKey][index];
-
-  if (!dayEvent.rsvps.includes(email)) {
-    dayEvent.rsvps.push(email);
-  } else {
-    dayEvent.rsvps = dayEvent.rsvps.filter(e => e !== email);
-  }
-
-  localStorage.setItem("events", JSON.stringify(events));
-  showEvents(dateKey);
-}
-
-// Admin adds new event
