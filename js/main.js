@@ -1,4 +1,6 @@
-console.log("script.js loaded");
+window.logout = undefined;
+console.log("logout forced undefined");
+
 
 /****************************************************
  * GLOBAL USER STATE
@@ -21,21 +23,17 @@ function isAdmin() {
   return loggedInUser && loggedInUser.role === "admin";
 }
 /****************************************************
- * LOGOUT (SAFE + RELIABLE)
+ * LOGOUT — EVENT DELEGATION (FINAL FIX)
  ****************************************************/
 
-document.addEventListener("DOMContentLoaded", () => {
-  const logoutBtn = document.getElementById("logoutBtn");
-  console.log("Logout button found:", logoutBtn);
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault(); // stop link navigation
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
-    });
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "logoutBtn") {
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
   }
 });
+
 
 
 /****************************************************
