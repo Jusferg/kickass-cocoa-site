@@ -41,38 +41,35 @@ p {
    HEADER & NAVIGATION
 ========================== */
 
-header {
-  background-color: #efe6da;
-  border-bottom: 1px solid #d8c7b4;
-}
-
+/* ---------------- Header ---------------- */
 .header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 12px 24px;
+  background-color: #f0e5d8;
+  border-bottom: 2px solid #5a3e2b;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 48px;
+.header-inner .logo img {
+  max-height: 60px;
   width: auto;
 }
 
 .nav-menu {
   display: flex;
-  gap: 24px;
+  gap: 16px;
 }
 
 .nav-menu a {
-  font-weight: 500;
+  text-decoration: none;
+  color: #5a3e2b;
+  font-weight: bold;
 }
+
 
 /* ==========================
    MOBILE NAV (COLLAPSIBLE READY)
@@ -110,11 +107,13 @@ header {
    PAGE CONTAINER (CRITICAL)
 ========================== */
 
+/* ---------------- Page Container ---------------- */
 .page-container {
+  padding: 24px;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 32px 24px;
 }
+
 
 /* ==========================
    SECTIONS
@@ -140,20 +139,18 @@ section {
    BUTTONS
 ========================== */
 
-button,
+/* ---------------- Buttons ---------------- */
 .btn {
-  background-color: #5a3e2b;
-  color: #ffffff;
+  padding: 6px 12px;
+  background-color: #8b5e3c;
+  color: #fff;
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-button:hover,
 .btn:hover {
-  background-color: #472f21;
+  background-color: #5a3e2b;
 }
 
 /* ==========================
@@ -181,10 +178,18 @@ label {
    EVENTS / CALENDAR
 ========================== */
 
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
 .calendar-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 16px;
+  margin-top: 8px;
 }
 
 .calendar-table th,
@@ -193,7 +198,7 @@ label {
   width: 14.28%; /* 7 columns */
   vertical-align: top;
   height: 100px;
-  padding: 6px;
+  padding: 8px;
 }
 
 .calendar-table td.today {
@@ -219,6 +224,20 @@ label {
   margin-top: 4px;
 }
 
+/* ---------------- Admin Form ---------------- */
+#adminForm {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid #d8c7b4;
+  border-radius: 8px;
+  background-color: #fff8f0;
+}
+
+.hidden {
+  display: none;
+}
+}
+
 
 
 /* ==========================
@@ -234,10 +253,13 @@ label {
    FOOTER
 ========================== */
 
+/* ---------------- Footer ---------------- */
 footer {
-  background-color: #efe6da;
-  border-top: 1px solid #d8c7b4;
-  padding: 24px;
+  margin-top: 40px;
+  padding: 16px;
+  text-align: center;
+  background-color: #f0e5d8;
+  border-top: 2px solid #5a3e2b;
 }
 
 .footer-inner {
@@ -269,5 +291,25 @@ footer {
   }
 }
 
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .calendar-table th,
+  .calendar-table td {
+    font-size: 12px;
+    height: 80px;
+    padding: 4px;
+  }
+}
 
 
