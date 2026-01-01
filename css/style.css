@@ -190,3 +190,20 @@ footer {
   border-radius: 8px;
 }
 
+.site-header {
+  background: #4a2f24;
+  padding: 12px 24px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+
