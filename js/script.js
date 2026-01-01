@@ -52,6 +52,7 @@ if (document.body.classList.contains("members-page")) {
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Events JS loaded");
 
+  // DOM elements
   const calendarTbody = document.querySelector("#calendar tbody");
   const monthYearEl = document.getElementById("monthYear");
   const prevMonthBtn = document.getElementById("prevMonth");
@@ -59,23 +60,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminForm = document.getElementById("adminForm");
   const addEventBtn = document.getElementById("addEventBtn");
 
-  // Sample events array
-  let events = [
-    { title: "Board Meeting", start: "2026-01-05", end: "2026-01-05" },
-    { title: "Workshop", start: "2026-01-15", end: "2026-01-16" },
-  ];
+  // Load events from localStorage or initialize
+  let events = JSON.parse(localStorage.getItem("events")) || [];
 
-  // Detect logged in user from localStorage
+  // Detect logged-in user
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   const isAdmin = loggedInUser?.role === "admin";
+  const isMember = loggedInUser?.role === "member";
 
   // Show admin form if admin
-  if (isAdmin) adminForm.classList.remove("hidden");
+  if (isAdmin && adminForm) adminForm.classList.remove("hidden");
 
   let currentMonth = new Date().getMonth();
   let currentYear = new Date().getFullYear();
 
-  // Generate calendar function
+  // Save events to localStorage
+  function saveEvents() {
+    localStorage.setItem("events", JSON.stringify(events));
+  }
+
+  // Generate calendar
   function generateCalendar(month = currentMonth, year = currentYear) {
     calendarTbody.innerHTML = "";
 
@@ -110,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
           evEl.classList.add("event");
           evEl.textContent = ev.title;
 
+          // Admin: delete button
           if (isAdmin) {
             const delBtn = document.createElement("button");
             delBtn.classList.add("rsvp-btn");
@@ -117,16 +122,30 @@ document.addEventListener("DOMContentLoaded", () => {
             delBtn.textContent = "Delete";
             delBtn.addEventListener("click", () => {
               events = events.filter(e => e !== ev);
+              saveEvents();
               generateCalendar(currentMonth, currentYear);
             });
             evEl.appendChild(delBtn);
-          } else {
+          }
+
+          // Member: RSVP button
+          if (isMember) {
             const rsvpBtn = document.createElement("button");
             rsvpBtn.classList.add("rsvp-btn");
-            rsvpBtn.textContent = "RSVP";
+
+            // Check if already RSVP'd
+            ev.rsvps = ev.rsvps || [];
+            const hasRSVPed = ev.rsvps.includes(loggedInUser.email);
+            rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
+            rsvpBtn.disabled = hasRSVPed;
+
             rsvpBtn.addEventListener("click", () => {
+              ev.rsvps.push(loggedInUser.email);
+              saveEvents();
+              generateCalendar(currentMonth, currentYear);
               alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
             });
+
             evEl.appendChild(rsvpBtn);
           }
 
@@ -147,6 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (row.children.length > 0) calendarTbody.appendChild(row);
   }
 
+  // Initial calendar render
   generateCalendar();
 
   // Month navigation
@@ -179,7 +199,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const endDate = new Date(end);
       if (startDate > endDate) { alert("Start date cannot be after end date."); return; }
 
-      events.push({ title, start, end });
+      events.push({ title, start, end, rsvps: [] });
+      saveEvents();
 
       titleEl.value = "";
       startEl.value = "";
@@ -190,6 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 
 
 
