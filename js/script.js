@@ -3,8 +3,6 @@
  * Unified JS for all pages
  ****************************************************/
 
-alert("SCRIPT.JS IS RUNNING");
-
 
 /* ------------------ AUTH ------------------ */
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
