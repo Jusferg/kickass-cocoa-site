@@ -1,72 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Login | Kick A$$ Cocoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="login-page">
+<body class="auth-page">
 
-<main class="login-container">
+<main class="auth-container">
   <h1>Member Login</h1>
 
   <form id="loginForm">
-    <label>Email</label>
-    <input type="email" id="email" required />
-
-    <label>Password</label>
-    <input type="password" id="password" required />
-
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
     <button type="submit">Login</button>
-    <p id="loginError" class="error-msg"></p>
   </form>
+
+  <p id="loginError" class="error"></p>
 </main>
 
 <script>
-/****************************************************
- * SIMPLE AUTH (LOCAL ONLY)
- ****************************************************/
-
+/* SIMPLE LOGIN SCRIPT */
 const users = [
-  {
-    email: "admin@kickasscocoa.com",
-    password: "admin123",
-    role: "admin"
-  },
-  {
-    email: "member@kickasscocoa.com",
-    password: "member123",
-    role: "member"
-  }
+  { email: "admin@kickasscocoa.com", password: "admin123", role: "admin" },
+  { email: "member@kickasscocoa.com", password: "member123", role: "member" }
 ];
 
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("loginForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const errorMsg = document.getElementById("loginError");
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
   const user = users.find(
     u => u.email === email && u.password === password
   );
 
-  if (!user) {
-    errorMsg.textContent = "Invalid email or password.";
-    return;
+  if (user) {
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    window.location.href = "members-area.html";
+  } else {
+    document.getElementById("loginError").textContent =
+      "Invalid login credentials";
   }
-
-  // SAVE LOGIN STATE
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-  // REDIRECT
-  window.location.href = "members-area.html";
 });
 </script>
 
-<script src="main.js"></script>
-
 </body>
 </html>
+
 

@@ -1,69 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Resources | Kick A$$ Cocoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="members-page">
 
-<header class="site-header">
-  <div class="nav-container">
-    <div class="logo">
-      <img src="logo.png" alt="Kick A$$ Cocoa Logo" />
-      <span>Kick A$$ Cocoa</span>
-    </div>
-
-    <button class="menu-toggle" id="menuToggle">☰</button>
-
-    <nav class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="events.html">Events</a>
-      <a href="resources.html" class="active">Resources</a>
-      <a href="members-area.html">Members</a>
-      <a href="#" id="logoutBtn">Logout</a>
-    </nav>
-  </div>
+<header>
+  <nav class="nav-menu">
+    <a href="members-area.html">Dashboard</a>
+    <a href="resources.html" class="active">Resources</a>
+    <a href="events.html">Events</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
 </header>
 
 <main>
   <h1>Resource Library</h1>
-  <p class="page-intro">
-    Tools, articles, and materials curated to support growth and opportunity.
-  </p>
 
-  <!-- Search -->
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search resources..."
-  />
+  <input type="text" id="searchInput" placeholder="Search resources...">
 
-  <!-- Resources -->
-  <section id="resourceCards" class="resource-grid">
-    <div class="card">
-      <h3>Lorem Resource</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      <a href="#" target="_blank">View Resource</a>
-    </div>
-
-    <div class="card">
-      <h3>Growth Toolkit</h3>
-      <p>Lorem ipsum dolor sit amet, sed do eiusmod tempor.</p>
-      <a href="#" target="_blank">View Resource</a>
-    </div>
-
-    <div class="card">
-      <h3>Leadership Guide</h3>
-      <p>Lorem ipsum dolor sit amet, incididunt ut labore.</p>
-      <a href="#" target="_blank">View Resource</a>
-    </div>
+  <section id="resourceCards" class="card-grid">
+    <div class="card">Leadership Development Guide</div>
+    <div class="card">Career Growth Workbook</div>
+    <div class="card">Mental Wellness Toolkit</div>
+    <div class="card">Financial Empowerment Resources</div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <p>&copy; 2025 Kick A$$ Cocoa. All rights reserved.</p>
+<footer>
+  <p>&copy; Kick A$$ Cocoa 2025</p>
 </footer>
 
 <script src="script.js"></script>
