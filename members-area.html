@@ -1,85 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Members Area | Kick A$$ Cocoa</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>Members Area | Kick A$$ Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="members-page">
 
-<header class="nav-header">
-  <div class="nav-bar">
-    <h1 class="logo">Members Area</h1>
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-  </div>
+<header>
   <nav id="navMenu" class="nav-menu">
     <a href="members-area.html">Dashboard</a>
-    <a href="#resources">Resources</a>
-    <a href="#events">Events</a>
+    <a href="resources.html">Resources</a>
+    <a href="events.html">Events</a>
     <a href="#" id="logoutBtn">Logout</a>
   </nav>
 </header>
 
-<main class="container">
+<main>
+  <h1 id="welcomeUser">Welcome</h1>
 
-  <div class="member-card">
-    <h2>Welcome!</h2>
-    <p>You are logged in.</p>
-  </div>
+  <section id="adminEventSection" class="hidden">
+    <h2>Admin Event Management</h2>
+    <form id="eventForm">
+      <input type="text" id="eventTitle" placeholder="Event Title" required>
+      <input type="text" id="eventDescription" placeholder="Description" required>
+      <input type="date" id="eventStart" required>
+      <input type="date" id="eventEnd" required>
+      <button type="submit">Add Event</button>
+    </form>
+  </section>
 
-  <div class="member-card">
-    <h3>Members Active Recently</h3>
-    <ul id="onlineMembers"></ul>
-  </div>
-
-  <div class="member-card" id="resources">
-    <h3>Resource Library</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  </div>
-
-  <div class="member-card" id="events">
-    <h3>Upcoming Events</h3>
-
-    <!-- Admin Event Form -->
-    <div class="member-card" id="adminEventForm" style="display:none;">
-      <h3>Add New Event</h3>
-      <label>Date</label>
-      <input type="date" id="eventDate">
-      <label>Event Title</label>
-      <input type="text" id="eventTitle">
-      <label>Description (optional)</label>
-      <textarea id="eventDesc"></textarea>
-      <button onclick="addEvent()">Add Event</button>
-    </div>
-
-    <!-- Calendar -->
-    <div class="calendar">
-      <div class="calendar-header">
-        <button onclick="prevMonth()">‹</button>
-        <h4 id="monthYear"></h4>
-        <button onclick="nextMonth()">›</button>
-      </div>
-      <div class="calendar-grid" id="calendarDays"></div>
-    </div>
-    <div id="eventDetails" class="event-details">
-      <p>Select a date to view events.</p>
-    </div>
-  </div>
-
+  <section id="calendar"></section>
 </main>
 
 <footer>
-  <p>&copy; 2025 Kick A$$ Cocoa</p>
+  <p>&copy; Kick A$$ Cocoa 2025</p>
 </footer>
 
-
-<script>
-initMembersArea();
-</script>
-
-<script src="main.js"></script>
-
+<script src="script.js"></script>
 </body>
 </html>
+
 

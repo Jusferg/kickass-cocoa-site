@@ -1,17 +1,12 @@
-window.logout = undefined;
-console.log("logout forced undefined");
-
-
 /****************************************************
- * GLOBAL USER STATE
+ * SCRIPT.JS - Kick A$$ Cocoa
+ * Unified JS for all pages
  ****************************************************/
 
-// Retrieve logged-in user from localStorage
+console.log("SCRIPT.JS ACTIVE");
+
+/* ------------------ AUTH ------------------ */
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-/****************************************************
- * AUTH / ACCESS CONTROL
- ****************************************************/
 
 function requireAuth() {
   if (!loggedInUser) {
@@ -22,10 +17,8 @@ function requireAuth() {
 function isAdmin() {
   return loggedInUser && loggedInUser.role === "admin";
 }
-/****************************************************
- * LOGOUT — EVENT DELEGATION (FINAL FIX)
- ****************************************************/
 
+/* ------------------ LOGOUT ------------------ */
 document.addEventListener("click", (e) => {
   if (e.target && e.target.id === "logoutBtn") {
     e.preventDefault();
@@ -34,50 +27,37 @@ document.addEventListener("click", (e) => {
   }
 });
 
-
-
-/****************************************************
- * MOBILE NAV TOGGLE
- ****************************************************/
-
+/* ------------------ NAV TOGGLE ------------------ */
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
-
 if (menuToggle && navLinks) {
   menuToggle.addEventListener("click", () => {
     navLinks.classList.toggle("show");
   });
 }
 
-/****************************************************
- * MEMBERS AREA ACCESS
- ****************************************************/
-
+/* ------------------ MEMBERS AREA ------------------ */
 if (document.body.classList.contains("members-page")) {
   requireAuth();
+  const welcomeEl = document.getElementById("welcomeUser");
+  if (welcomeEl && loggedInUser) {
+    welcomeEl.textContent = `Welcome, ${loggedInUser.email}`;
+  }
 }
 
-/****************************************************
- * EVENTS LOGIC
- ****************************************************/
-
+/* ------------------ EVENTS CALENDAR ------------------ */
 const calendarEl = document.getElementById("calendar");
 const adminEventSection = document.getElementById("adminEventSection");
 const eventForm = document.getElementById("eventForm");
-
-// Load events from storage
 let events = JSON.parse(localStorage.getItem("events")) || [];
 
-// Show admin form only if admin
 if (adminEventSection && isAdmin()) {
   adminEventSection.classList.remove("hidden");
 }
 
-// Add new event (ADMIN ONLY)
 if (eventForm && isAdmin()) {
   eventForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
     const title = document.getElementById("eventTitle").value;
     const description = document.getElementById("eventDescription").value;
     const startDate = document.getElementById("eventStart").value;
@@ -94,28 +74,22 @@ if (eventForm && isAdmin()) {
 
     events.push(newEvent);
     localStorage.setItem("events", JSON.stringify(events));
-
     eventForm.reset();
     renderCalendar();
   });
 }
 
-// Render calendar
 function renderCalendar() {
   if (!calendarEl) return;
-
   calendarEl.innerHTML = "";
-
   const today = new Date().toISOString().split("T")[0];
 
   events.forEach(event => {
     const day = document.createElement("div");
     day.className = "calendar-day";
-
     if (event.startDate <= today && event.endDate >= today) {
       day.classList.add("today");
     }
-
     day.innerHTML = `
       <h3>${event.title}</h3>
       <p>${event.description}</p>
@@ -123,20 +97,17 @@ function renderCalendar() {
       <button class="rsvp-btn" data-id="${event.id}">RSVP</button>
       ${isAdmin() ? `<button class="delete-btn" data-id="${event.id}">Delete</button>` : ""}
     `;
-
     calendarEl.appendChild(day);
   });
 
   attachEventButtons();
 }
 
-// RSVP + Delete handlers
 function attachEventButtons() {
   document.querySelectorAll(".rsvp-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       const eventId = btn.dataset.id;
       const event = events.find(e => e.id == eventId);
-
       if (!event.rsvps.includes(loggedInUser.email)) {
         event.rsvps.push(loggedInUser.email);
         localStorage.setItem("events", JSON.stringify(events));
@@ -157,20 +128,13 @@ function attachEventButtons() {
   }
 }
 
-// Initial render
-renderCalendar();
-
-/****************************************************
- * RESOURCE SEARCH
- ****************************************************/
-
+/* ------------------ RESOURCE SEARCH ------------------ */
 const searchInput = document.getElementById("searchInput");
 const resourceCards = document.querySelectorAll("#resourceCards .card");
 
 if (searchInput) {
   searchInput.addEventListener("keyup", () => {
     const term = searchInput.value.toLowerCase();
-
     resourceCards.forEach(card => {
       const text = card.innerText.toLowerCase();
       card.style.display = text.includes(term) ? "block" : "none";
