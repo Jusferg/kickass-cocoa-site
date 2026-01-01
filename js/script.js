@@ -47,11 +47,12 @@ if (document.body.classList.contains("members-page")) {
 // ==============================
 // EVENTS CALENDAR
 // ==============================
+
+
 document.addEventListener("DOMContentLoaded", () => {
-  const calendarEl = document.getElementById("calendar");
+  const calendarTbody = document.querySelector("#calendar tbody");
   const adminForm = document.getElementById("adminForm");
 
-  // Example events array
   let events = [
     { title: "Board Meeting", start: "2026-01-05", end: "2026-01-05" },
     { title: "Workshop", start: "2026-01-15", end: "2026-01-16" },
@@ -60,46 +61,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   const isAdmin = loggedInUser?.role === "admin";
 
-  // Show admin form if admin
   if (isAdmin) adminForm.classList.remove("hidden");
 
-  // Generate calendar for current month
   function generateCalendar() {
-    calendarEl.innerHTML = "";
+    calendarTbody.innerHTML = "";
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    // Fill in blank days for first week
+    let row = document.createElement("tr");
+
+    // Fill blank days before first of month
     for (let i = 0; i < firstDay; i++) {
-      const blankDay = document.createElement("div");
-      blankDay.classList.add("calendar-day");
-      calendarEl.appendChild(blankDay);
+      const cell = document.createElement("td");
+      row.appendChild(cell);
     }
 
-    // Create days
     for (let day = 1; day <= daysInMonth; day++) {
+      const cell = document.createElement("td");
       const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      const dayEl = document.createElement("div");
-      dayEl.classList.add("calendar-day");
 
       // Highlight today
-      if (today.getDate() === day && today.getMonth() === month && today.getFullYear() === year) {
-        dayEl.classList.add("today");
+      if (
+        day === today.getDate() &&
+        month === today.getMonth() &&
+        year === today.getFullYear()
+      ) {
+        cell.classList.add("today");
       }
 
-      dayEl.innerHTML = `<strong>${day}</strong>`;
+      cell.innerHTML = `<strong>${day}</strong>`;
 
-      // Add events to this day
+      // Add events for this day
       events.forEach(ev => {
         if (dateStr >= ev.start && dateStr <= ev.end) {
           const evEl = document.createElement("div");
           evEl.classList.add("event");
           evEl.textContent = ev.title;
 
-          // Add RSVP button for members
+          // RSVP button for members
           if (!isAdmin) {
             const rsvpBtn = document.createElement("button");
             rsvpBtn.classList.add("rsvp-btn");
@@ -110,12 +112,12 @@ document.addEventListener("DOMContentLoaded", () => {
             evEl.appendChild(rsvpBtn);
           }
 
-          // Add delete button for admin
+          // Delete button for admin
           if (isAdmin) {
             const delBtn = document.createElement("button");
             delBtn.classList.add("rsvp-btn");
-            delBtn.textContent = "Delete";
             delBtn.style.backgroundColor = "#c0392b";
+            delBtn.textContent = "Delete";
             delBtn.addEventListener("click", () => {
               if (confirm(`Delete event "${ev.title}"?`)) {
                 events = events.filter(e => e !== ev);
@@ -125,17 +127,28 @@ document.addEventListener("DOMContentLoaded", () => {
             evEl.appendChild(delBtn);
           }
 
-          dayEl.appendChild(evEl);
+          cell.appendChild(evEl);
         }
       });
 
-      calendarEl.appendChild(dayEl);
+      row.appendChild(cell);
+
+      // Start a new row every Saturday
+      if ((day + firstDay) % 7 === 0) {
+        calendarTbody.appendChild(row);
+        row = document.createElement("tr");
+      }
+    }
+
+    // Append last row if not yet appended
+    if (row.children.length > 0) {
+      calendarTbody.appendChild(row);
     }
   }
 
   generateCalendar();
 
-  // Admin adds event
+  // Admin add event
   const addEventBtn = document.getElementById("addEventBtn");
   if (addEventBtn) {
     addEventBtn.addEventListener("click", () => {
@@ -155,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 
 
 /* ------------------ RESOURCE SEARCH ------------------ */

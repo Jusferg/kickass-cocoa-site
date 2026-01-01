@@ -181,44 +181,44 @@ label {
    EVENTS / CALENDAR
 ========================== */
 
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 16px;
 }
 
-.calendar-day {
-  background-color: #ffffff;
-  border: 1px solid #e2d6c8;
-  border-radius: 6px;
-  padding: 12px;
-  min-height: 80px;
-  position: relative;
+.calendar-table th,
+.calendar-table td {
+  border: 1px solid #d8c7b4;
+  width: 14.28%; /* 7 columns */
+  vertical-align: top;
+  height: 100px;
+  padding: 6px;
 }
 
-.calendar-day.today {
-  border: 2px solid #5a3e2b;
+.calendar-table td.today {
   background-color: #f0e5d8;
+  border: 2px solid #5a3e2b;
 }
 
 .event {
   background-color: #efe6da;
   padding: 4px 6px;
   border-radius: 4px;
-  margin-top: 6px;
+  margin-top: 4px;
   font-size: 12px;
 }
 
 .rsvp-btn {
   background-color: #8b5e3c;
   color: #fff;
-  padding: 4px 8px;
+  padding: 4px 6px;
   border-radius: 4px;
   font-size: 11px;
   cursor: pointer;
   margin-top: 4px;
 }
+
 
 
 /* ==========================

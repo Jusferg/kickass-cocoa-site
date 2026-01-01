@@ -51,7 +51,22 @@
     <h1>Upcoming Events</h1>
 
     <!-- Calendar container -->
-    <div id="calendar" class="calendar"></div>
+    <table id="calendar" class="calendar-table">
+      <thead>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS will populate the days here -->
+      </tbody>
+    </table>
 
     <!-- Admin form (only visible for admin) -->
     <div id="adminForm" class="card hidden">
@@ -69,6 +84,7 @@
     </div>
   </section>
 </main>
+
 
 
 <footer>
