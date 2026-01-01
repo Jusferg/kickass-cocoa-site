@@ -2,95 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Events | Kick A$$ Cocoa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <title>Kick A$$ Cocoa - Events</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="members-page">
-
-<header class="site-header">
-  <div class="header-inner">
+<body>
+  <header class="header-inner">
     <div class="logo">
-      <img
-        src="images/kick-ass-cocoa-logo.png"
-        alt="Kick A$$ Cocoa Logo"
-        class="site-logo"
-      >
+      <img src="images/kick-ass-cocoa-logo.png" alt="Kick A$$ Cocoa Logo">
     </div>
-
-    <nav class="nav-menu">
+    <nav id="navMenu" class="nav-menu">
       <a href="members-area.html">Dashboard</a>
-      <a href="resources.html">Resources</a>
-      <a href="events.html">Events</a>
-      <a href="#" id="logoutBtn" class="danger">Logout</a>
+      <a href="#resources">Resources</a>
+      <a href="#events">Events</a>
+      <a href="#" id="logoutBtn">Logout</a>
     </nav>
-  </div>
-</header>
+  </header>
 
+  <main class="page-container">
+    <section id="calendar-section">
+      <h1>Upcoming Events</h1>
 
+      <!-- Month navigation -->
+      <div class="calendar-nav">
+        <button id="prevMonth" class="btn">&lt; Prev</button>
+        <span id="monthYear"></span>
+        <button id="nextMonth" class="btn">Next &gt;</button>
+      </div>
 
-<main>
-  <h1>Upcoming Events</h1>
+      <!-- Calendar table -->
+      <table id="calendar" class="calendar-table">
+        <thead>
+          <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- JS will populate -->
+        </tbody>
+      </table>
 
-  <section id="adminEventSection" class="hidden">
-    <h2>Add Event (Admin)</h2>
-    <form id="eventForm">
-      <input type="text" id="eventTitle" placeholder="Event Title" required>
-      <input type="text" id="eventDescription" placeholder="Description" required>
-      <input type="date" id="eventStart" required>
-      <input type="date" id="eventEnd" required>
-      <button type="submit">Add Event</button>
-    </form>
-  </section>
+      <!-- Admin form -->
+      <div id="adminForm" class="card hidden">
+        <h2>Add New Event</h2>
+        <label for="eventTitle">Event Title</label>
+        <input type="text" id="eventTitle" placeholder="Enter event name">
 
-  <section id="calendar" class="calendar-grid"></section>
-</main>
+        <label for="eventStart">Start Date</label>
+        <input type="date" id="eventStart">
 
-<main class="page-container">
-  <section id="calendar-section">
-    <h1>Upcoming Events</h1>
+        <label for="eventEnd">End Date</label>
+        <input type="date" id="eventEnd">
 
-    <!-- Calendar container -->
-    <table id="calendar" class="calendar-table">
-      <thead>
-        <tr>
-          <th>Sun</th>
-          <th>Mon</th>
-          <th>Tue</th>
-          <th>Wed</th>
-          <th>Thu</th>
-          <th>Fri</th>
-          <th>Sat</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- JS will populate the days here -->
-      </tbody>
-    </table>
+        <button id="addEventBtn" class="btn">Add Event</button>
+      </div>
+    </section>
+  </main>
 
-    <!-- Admin form (only visible for admin) -->
-    <div id="adminForm" class="card hidden">
-      <h2>Add New Event</h2>
-      <label for="eventTitle">Event Title</label>
-      <input type="text" id="eventTitle" placeholder="Enter event name">
-
-      <label for="eventStart">Start Date</label>
-      <input type="date" id="eventStart">
-
-      <label for="eventEnd">End Date</label>
-      <input type="date" id="eventEnd">
-
-      <button id="addEventBtn" class="btn">Add Event</button>
+  <footer>
+    <div class="footer-inner">
+      &copy; 2026 Kick A$$ Cocoa. All rights reserved.
     </div>
-  </section>
-</main>
+  </footer>
 
-
-
-<footer>
-  <p>&copy; Kick A$$ Cocoa 2025</p>
-</footer>
-
-<script src="js/script.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
