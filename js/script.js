@@ -212,6 +212,56 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// Inside events.forEach() when creating evEl
+const evEl = document.createElement("div");
+evEl.classList.add("event");
+evEl.textContent = ev.title;
+
+// Tooltip
+const tooltip = document.createElement("span");
+tooltip.classList.add("tooltip");
+
+const rsvpCount = ev.rsvps ? ev.rsvps.length : 0;
+tooltip.textContent = `Dates: ${ev.start} to ${ev.end} | RSVPs: ${rsvpCount}`;
+evEl.appendChild(tooltip);
+
+// Admin: delete button
+if (isAdmin) {
+  const delBtn = document.createElement("button");
+  delBtn.classList.add("rsvp-btn");
+  delBtn.style.backgroundColor = "#c0392b";
+  delBtn.textContent = "Delete";
+  delBtn.addEventListener("click", () => {
+    events = events.filter(e => e !== ev);
+    saveEvents();
+    generateCalendar(currentMonth, currentYear);
+  });
+  evEl.appendChild(delBtn);
+}
+
+// Member: RSVP button
+if (isMember) {
+  const rsvpBtn = document.createElement("button");
+  rsvpBtn.classList.add("rsvp-btn");
+
+  ev.rsvps = ev.rsvps || [];
+  const hasRSVPed = ev.rsvps.includes(loggedInUser.email);
+  rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
+  rsvpBtn.disabled = hasRSVPed;
+
+  rsvpBtn.addEventListener("click", () => {
+    ev.rsvps.push(loggedInUser.email);
+    saveEvents();
+    generateCalendar(currentMonth, currentYear);
+    alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
+  });
+
+  evEl.appendChild(rsvpBtn);
+}
+
+cell.appendChild(evEl);
+
+
 
 
 

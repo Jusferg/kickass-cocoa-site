@@ -178,6 +178,8 @@ label {
    EVENTS / CALENDAR
 ========================== */
 
+/* ---------------- Calendar ---------------- */
+
 .calendar-nav {
   display: flex;
   justify-content: space-between;
@@ -190,6 +192,7 @@ label {
   width: 100%;
   border-collapse: collapse;
   margin-top: 8px;
+  table-layout: fixed;
 }
 
 .calendar-table th,
@@ -198,7 +201,9 @@ label {
   width: 14.28%; /* 7 columns */
   vertical-align: top;
   height: 100px;
-  padding: 8px;
+  padding: 6px;
+  position: relative;
+  background-color: #fff8f0;
 }
 
 .calendar-table td.today {
@@ -206,22 +211,94 @@ label {
   border: 2px solid #5a3e2b;
 }
 
+.calendar-table td strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Event blocks */
 .event {
   background-color: #efe6da;
   padding: 4px 6px;
-  border-radius: 4px;
-  margin-top: 4px;
+  border-radius: 6px;
+  margin-bottom: 4px;
   font-size: 12px;
+  overflow-wrap: break-word;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
+/* ---------------- Tooltip ---------------- */
+.event {
+  position: relative;
+  cursor: pointer;
+}
+
+.event .tooltip {
+  visibility: hidden;
+  background-color: #5a3e2b;
+  color: #fff;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  position: absolute;
+  z-index: 10;
+  bottom: 110%; /* above the event */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.event .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* arrow pointing down */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #5a3e2b transparent transparent transparent;
+}
+
+.event:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* RSVP and Delete buttons */
+.rsvp-btn {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.rsvp-btn:hover {
+  opacity: 0.85;
+}
+
+.rsvp-btn:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+  color: #555;
+}
+
+/* Member RSVP button */
 .rsvp-btn {
   background-color: #8b5e3c;
   color: #fff;
-  padding: 4px 6px;
-  border-radius: 4px;
-  font-size: 11px;
-  cursor: pointer;
-  margin-top: 4px;
+}
+
+/* Admin Delete button */
+.rsvp-btn[style] {
+  background-color: #c0392b;
 }
 
 /* ---------------- Admin Form ---------------- */
@@ -233,10 +310,14 @@ label {
   background-color: #fff8f0;
 }
 
-.hidden {
-  display: none;
+#adminForm input {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+  border: 1px solid #d8c7b4;
+  border-radius: 4px;
 }
-}
+
 
 
 
@@ -285,30 +366,23 @@ footer {
    MOBILE SPACING TWEAK
 ========================== */
 
-@media (max-width: 480px) {
-  .page-container {
-    padding: 24px 16px;
-  }
-}
-
 /* ---------------- Responsive ---------------- */
+
 @media (max-width: 768px) {
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-menu {
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
   .calendar-table th,
   .calendar-table td {
     font-size: 12px;
     height: 80px;
     padding: 4px;
+  }
+
+  .rsvp-btn {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  #adminForm {
+    padding: 12px;
   }
 }
 
