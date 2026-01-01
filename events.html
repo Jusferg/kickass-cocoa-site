@@ -46,6 +46,31 @@
   <section id="calendar" class="calendar-grid"></section>
 </main>
 
+<main class="page-container">
+  <section id="calendar-section">
+    <h1>Upcoming Events</h1>
+
+    <!-- Calendar container -->
+    <div id="calendar" class="calendar"></div>
+
+    <!-- Admin form (only visible for admin) -->
+    <div id="adminForm" class="card hidden">
+      <h2>Add New Event</h2>
+      <label for="eventTitle">Event Title</label>
+      <input type="text" id="eventTitle" placeholder="Enter event name">
+
+      <label for="eventStart">Start Date</label>
+      <input type="date" id="eventStart">
+
+      <label for="eventEnd">End Date</label>
+      <input type="date" id="eventEnd">
+
+      <button id="addEventBtn" class="btn">Add Event</button>
+    </div>
+  </section>
+</main>
+
+
 <footer>
   <p>&copy; Kick A$$ Cocoa 2025</p>
 </footer>

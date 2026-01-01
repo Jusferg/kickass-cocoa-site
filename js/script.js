@@ -44,88 +44,118 @@ if (document.body.classList.contains("members-page")) {
   }
 }
 
-/* ------------------ EVENTS CALENDAR ------------------ */
-const calendarEl = document.getElementById("calendar");
-const adminEventSection = document.getElementById("adminEventSection");
-const eventForm = document.getElementById("eventForm");
-let events = JSON.parse(localStorage.getItem("events")) || [];
+// ==============================
+// EVENTS CALENDAR
+// ==============================
+document.addEventListener("DOMContentLoaded", () => {
+  const calendarEl = document.getElementById("calendar");
+  const adminForm = document.getElementById("adminForm");
 
-if (adminEventSection && isAdmin()) {
-  adminEventSection.classList.remove("hidden");
-}
+  // Example events array
+  let events = [
+    { title: "Board Meeting", start: "2026-01-05", end: "2026-01-05" },
+    { title: "Workshop", start: "2026-01-15", end: "2026-01-16" },
+  ];
 
-if (eventForm && isAdmin()) {
-  eventForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const title = document.getElementById("eventTitle").value;
-    const description = document.getElementById("eventDescription").value;
-    const startDate = document.getElementById("eventStart").value;
-    const endDate = document.getElementById("eventEnd").value;
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const isAdmin = loggedInUser?.role === "admin";
 
-    const newEvent = {
-      id: Date.now(),
-      title,
-      description,
-      startDate,
-      endDate,
-      rsvps: []
-    };
+  // Show admin form if admin
+  if (isAdmin) adminForm.classList.remove("hidden");
 
-    events.push(newEvent);
-    localStorage.setItem("events", JSON.stringify(events));
-    eventForm.reset();
-    renderCalendar();
-  });
-}
+  // Generate calendar for current month
+  function generateCalendar() {
+    calendarEl.innerHTML = "";
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-function renderCalendar() {
-  if (!calendarEl) return;
-  calendarEl.innerHTML = "";
-  const today = new Date().toISOString().split("T")[0];
-
-  events.forEach(event => {
-    const day = document.createElement("div");
-    day.className = "calendar-day";
-    if (event.startDate <= today && event.endDate >= today) {
-      day.classList.add("today");
+    // Fill in blank days for first week
+    for (let i = 0; i < firstDay; i++) {
+      const blankDay = document.createElement("div");
+      blankDay.classList.add("calendar-day");
+      calendarEl.appendChild(blankDay);
     }
-    day.innerHTML = `
-      <h3>${event.title}</h3>
-      <p>${event.description}</p>
-      <small>${event.startDate} → ${event.endDate}</small>
-      <button class="rsvp-btn" data-id="${event.id}">RSVP</button>
-      ${isAdmin() ? `<button class="delete-btn" data-id="${event.id}">Delete</button>` : ""}
-    `;
-    calendarEl.appendChild(day);
-  });
 
-  attachEventButtons();
-}
+    // Create days
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const dayEl = document.createElement("div");
+      dayEl.classList.add("calendar-day");
 
-function attachEventButtons() {
-  document.querySelectorAll(".rsvp-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const eventId = btn.dataset.id;
-      const event = events.find(e => e.id == eventId);
-      if (!event.rsvps.includes(loggedInUser.email)) {
-        event.rsvps.push(loggedInUser.email);
-        localStorage.setItem("events", JSON.stringify(events));
-        alert("RSVP confirmed!");
+      // Highlight today
+      if (today.getDate() === day && today.getMonth() === month && today.getFullYear() === year) {
+        dayEl.classList.add("today");
+      }
+
+      dayEl.innerHTML = `<strong>${day}</strong>`;
+
+      // Add events to this day
+      events.forEach(ev => {
+        if (dateStr >= ev.start && dateStr <= ev.end) {
+          const evEl = document.createElement("div");
+          evEl.classList.add("event");
+          evEl.textContent = ev.title;
+
+          // Add RSVP button for members
+          if (!isAdmin) {
+            const rsvpBtn = document.createElement("button");
+            rsvpBtn.classList.add("rsvp-btn");
+            rsvpBtn.textContent = "RSVP";
+            rsvpBtn.addEventListener("click", () => {
+              alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
+            });
+            evEl.appendChild(rsvpBtn);
+          }
+
+          // Add delete button for admin
+          if (isAdmin) {
+            const delBtn = document.createElement("button");
+            delBtn.classList.add("rsvp-btn");
+            delBtn.textContent = "Delete";
+            delBtn.style.backgroundColor = "#c0392b";
+            delBtn.addEventListener("click", () => {
+              if (confirm(`Delete event "${ev.title}"?`)) {
+                events = events.filter(e => e !== ev);
+                generateCalendar();
+              }
+            });
+            evEl.appendChild(delBtn);
+          }
+
+          dayEl.appendChild(evEl);
+        }
+      });
+
+      calendarEl.appendChild(dayEl);
+    }
+  }
+
+  generateCalendar();
+
+  // Admin adds event
+  const addEventBtn = document.getElementById("addEventBtn");
+  if (addEventBtn) {
+    addEventBtn.addEventListener("click", () => {
+      const title = document.getElementById("eventTitle").value;
+      const start = document.getElementById("eventStart").value;
+      const end = document.getElementById("eventEnd").value;
+
+      if (title && start && end) {
+        events.push({ title, start, end });
+        generateCalendar();
+        document.getElementById("eventTitle").value = "";
+        document.getElementById("eventStart").value = "";
+        document.getElementById("eventEnd").value = "";
+      } else {
+        alert("Please fill out all fields.");
       }
     });
-  });
-
-  if (isAdmin()) {
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const eventId = btn.dataset.id;
-        events = events.filter(e => e.id != eventId);
-        localStorage.setItem("events", JSON.stringify(events));
-        renderCalendar();
-      });
-    });
   }
-}
+});
+
 
 /* ------------------ RESOURCE SEARCH ------------------ */
 const searchInput = document.getElementById("searchInput");

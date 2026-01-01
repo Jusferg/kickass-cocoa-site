@@ -185,6 +185,7 @@ label {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 10px;
+  margin-top: 16px;
 }
 
 .calendar-day {
@@ -193,6 +194,7 @@ label {
   border-radius: 6px;
   padding: 12px;
   min-height: 80px;
+  position: relative;
 }
 
 .calendar-day.today {
@@ -202,11 +204,22 @@ label {
 
 .event {
   background-color: #efe6da;
-  padding: 6px;
+  padding: 4px 6px;
   border-radius: 4px;
   margin-top: 6px;
   font-size: 12px;
 }
+
+.rsvp-btn {
+  background-color: #8b5e3c;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
 
 /* ==========================
    RESOURCE LIST
