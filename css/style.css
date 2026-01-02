@@ -96,21 +96,22 @@ p {
   transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.nav-menu a.active::after {
-  width: 100%;
-}
-
-
 .nav-menu a::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 0%;
-  height: 2px;
+  width: 0;
+  height: 1.5px;
   background-color: #7a5234;
   transition: width 0.3s ease;
 }
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+  width: 100%;
+}
+
 
 .nav-menu a:hover {
   color: #7a5234;
