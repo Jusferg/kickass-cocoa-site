@@ -173,6 +173,113 @@ p {
   }
 }
 
+/* HERO SLIDER */
+.hero-slider {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  max-height: 650px;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.slides {
+  height: 100%;
+  position: relative;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay */
+.slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(58, 40, 28, 0.45);
+}
+
+/* Text content */
+.slide-content {
+  position: absolute;
+  bottom: 18%;
+  left: 8%;
+  z-index: 2;
+  color: #fff;
+  max-width: 420px;
+}
+
+.slide-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+}
+
+.slide-content p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Dots */
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.dot.active {
+  background: #fff;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 55vh;
+  }
+
+  .slide-content {
+    bottom: 14%;
+    left: 6%;
+    right: 6%;
+  }
+
+  .slide-content h2 {
+    font-size: 2rem;
+  }
+
+  .slide-content p {
+    font-size: 1rem;
+  }
+}
+
+
 /* ==========================
    PAGE CONTAINER (CRITICAL)
 ========================== */

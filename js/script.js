@@ -290,7 +290,27 @@ cell.appendChild(evEl);
 
 
 
+    function nextSlide() {
+      currentSlide++;
+      if (currentSlide >= slides.length) {
+        currentSlide = 0;
+      }
+      showSlide(currentSlide);
+    }
 
+    /* Auto rotate every 5 seconds */
+    setInterval(nextSlide, 5000);
+
+    /* Dot navigation */
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", function () {
+        currentSlide = index;
+        showSlide(currentSlide);
+      });
+    });
+
+    /* Initialize */
+    showSlide(currentSlide);
 
 
 
