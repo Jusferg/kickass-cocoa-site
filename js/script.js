@@ -213,13 +213,40 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Inside events.forEach() when creating evEl
+// Create event container
 const evEl = document.createElement("div");
 evEl.classList.add("event");
 evEl.textContent = ev.title;
 
-// Tooltip
+// Ensure RSVPs exist
+ev.rsvps = ev.rsvps || [];
+
+// ---------- Tooltip ----------
 const tooltip = document.createElement("span");
 tooltip.classList.add("tooltip");
+
+// Format RSVP display
+let rsvpText = "No RSVPs yet";
+
+if (ev.rsvps.length > 0) {
+  if (isAdmin) {
+    // Admin sees full emails
+    rsvpText = `RSVPs (${ev.rsvps.length}): ${ev.rsvps.join(", ")}`;
+  } else {
+    // Members see masked names
+    const masked = ev.rsvps.map(email => email.split("@")[0]);
+    rsvpText = `RSVPs (${ev.rsvps.length}): ${masked.join(", ")}`;
+  }
+}
+
+tooltip.innerHTML = `
+  <strong>Dates:</strong><br>
+  ${ev.start} → ${ev.end}<br><br>
+  ${rsvpText}
+`;
+
+evEl.appendChild(tooltip);
+
 
 const rsvpCount = ev.rsvps ? ev.rsvps.length : 0;
 tooltip.textContent = `Dates: ${ev.start} to ${ev.end} | RSVPs: ${rsvpCount}`;
