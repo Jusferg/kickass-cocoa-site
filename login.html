@@ -8,24 +8,40 @@
 </head>
 <body class="auth-page">
 
-  <header class="site-header">
+<header>
   <div class="header-inner">
+    
+    <!-- Logo -->
     <div class="logo">
-      <img
-        src="images/kick-ass-cocoa-logo.png"
-        alt="Kick A$$ Cocoa Logo"
-        class="site-logo"
-      >
+      <a href="index.html">
+        <img src="images/kick-ass-cocoa-logo.png" alt="Kick A$$ Cocoa Logo">
+      </a>
     </div>
 
+    <!-- Navigation -->
     <nav class="nav-menu">
+
       <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="cta">Member Login</a>
+
+      <!-- About Dropdown -->
+      <div class="nav-dropdown">
+        <a href="about.html">About</a>
+        <div class="dropdown-menu">
+          <a href="about.html#our-story">Our Story</a>
+          <a href="about.html#board">Board</a>
+          <a href="about.html#vision">Collective Vision</a>
+          <a href="about.html#statement">Statement</a>
+        </div>
+      </div>
+
+      <a href="contact.html">Contact Us</a>
+      <a href="login.html">Login</a>
+
     </nav>
+
   </div>
 </header>
+
 
 
 <main class="auth-container">
