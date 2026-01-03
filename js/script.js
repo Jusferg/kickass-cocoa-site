@@ -44,6 +44,26 @@ if (document.body.classList.contains("members-page")) {
   }
 }
 
+/* ===============================
+   CONTACT FORM SUCCESS MESSAGE
+================================ */
+
+const contactForm = document.getElementById("contactForm");
+const formSuccess = document.getElementById("formSuccess");
+
+if (contactForm && formSuccess) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Simulate successful submission
+    contactForm.reset();
+
+    // Show success message
+    formSuccess.classList.add("show");
+  });
+}
+
+
 // ==============================
 // EVENTS CALENDAR
 // ==============================
@@ -311,8 +331,6 @@ cell.appendChild(evEl);
 
     /* Initialize */
     showSlide(currentSlide);
-
-
 
 
 /* ------------------ RESOURCE SEARCH ------------------ */

@@ -42,18 +42,55 @@
   </div>
 </header>
 
+<section class="contact-hero">
+  <img src="images/Contactusimage.jpg" alt="Minority women smiling and laughing">
+  <div class="contact-hero-text">
+    <h1>Contact Us</h1>
+  </div>
+</section>
 
+<section class="contact-content">
+  <div class="contact-inner">
 
-<main>
-  <h1>Contact Us</h1>
+    <!-- Left column -->
+    <div class="contact-info">
+      <h2>We’d Love to Hear From You</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
 
-  <form class="contact-form">
-    <input type="text" placeholder="Name" required>
-    <input type="email" placeholder="Email" required>
-    <textarea placeholder="Your message"></textarea>
-    <button type="submit">Send</button>
-  </form>
-</main>
+    <form class="contact-form" id="contactForm">
+      <label>
+        Name
+        <input type="text" required>
+      </label>
+
+      <label>
+        Email
+        <input type="email" required>
+      </label>
+
+      <label>
+        Message
+       <textarea required></textarea>
+      </label>
+
+      <button type="submit">Send Message</button>
+
+      <!-- Success Message -->
+      <p class="form-success" id="formSuccess">
+        Thank you for reaching out! We’ll be in touch soon.
+      </p>
+    </form>
+
+    </div>
+
+    <!-- Right column (empty for balance) -->
+    <div class="contact-spacer"></div>
+
+  </div>
+</section>
+
 
 <footer>
   <p>&copy; Kick A$$ Cocoa 2025</p>
