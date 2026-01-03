@@ -188,16 +188,37 @@ p {
   position: relative;
 }
 
+.carousel {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    height: 260px;
+  }
+
+  .slide-caption {
+    font-size: 0.9rem;
+    left: 5%;
+    right: 5%;
+  }
+}
+
+
 .slide {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.8s ease-in-out;
+  transform: scale(1.05);
+  transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
 }
 
 .slide.active {
   opacity: 1;
-  z-index: 1;
+  transform: scale(1);
+  z-index: 2;
 }
 
 .slide img {
@@ -205,6 +226,17 @@ p {
   height: 100%;
   object-fit: cover;
 }
+
+.slide-caption {
+  position: absolute;
+  bottom: 20%;
+  left: 8%;
+  color: #fff;
+  background: rgba(0,0,0,0.45);
+  padding: 20px 28px;
+  border-radius: 8px;
+}
+
 
 /* Overlay */
 .slide::after {

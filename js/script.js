@@ -2,7 +2,7 @@
  * SCRIPT.JS - Kick A$$ Cocoa
  * Unified JS for all pages
  ****************************************************/
-
+console.log("Carousel JS loaded");
 
 /* ------------------ AUTH ------------------ */
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -232,105 +232,44 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Inside events.forEach() when creating evEl
-// Create event container
-const evEl = document.createElement("div");
-evEl.classList.add("event");
-evEl.textContent = ev.title;
 
-// Ensure RSVPs exist
-ev.rsvps = ev.rsvps || [];
+console.log("Carousel JS loaded");
 
-// ---------- Tooltip ----------
-const tooltip = document.createElement("span");
-tooltip.classList.add("tooltip");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Carousel JS loaded");
+  const slides = document.querySelectorAll(".slide");
 
-// Format RSVP display
-let rsvpText = "No RSVPs yet";
-
-if (ev.rsvps.length > 0) {
-  if (isAdmin) {
-    // Admin sees full emails
-    rsvpText = `RSVPs (${ev.rsvps.length}): ${ev.rsvps.join(", ")}`;
-  } else {
-    // Members see masked names
-    const masked = ev.rsvps.map(email => email.split("@")[0]);
-    rsvpText = `RSVPs (${ev.rsvps.length}): ${masked.join(", ")}`;
+  if (!slides.length) {
+    console.warn("No slides found");
+    return;
   }
-}
 
-tooltip.innerHTML = `
-  <strong>Dates:</strong><br>
-  ${ev.start} → ${ev.end}<br><br>
-  ${rsvpText}
-`;
+  let currentIndex = 0;
 
-evEl.appendChild(tooltip);
+  function showSlide(index) {
+    slides.forEach((slide) => slide.classList.remove("active"));
+    slides[index].classList.add("active");
+  }
 
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
 
-const rsvpCount = ev.rsvps ? ev.rsvps.length : 0;
-tooltip.textContent = `Dates: ${ev.start} to ${ev.end} | RSVPs: ${rsvpCount}`;
-evEl.appendChild(tooltip);
+  // Rotate every 5 seconds
+  setInterval(nextSlide, 5000);
 
-// Admin: delete button
-if (isAdmin) {
-  const delBtn = document.createElement("button");
-  delBtn.classList.add("rsvp-btn");
-  delBtn.style.backgroundColor = "#c0392b";
-  delBtn.textContent = "Delete";
-  delBtn.addEventListener("click", () => {
-    events = events.filter(e => e !== ev);
-    saveEvents();
-    generateCalendar(currentMonth, currentYear);
+});
+
+let carouselInterval = setInterval(nextSlide, 5000);
+
+const carousel = document.querySelector(".carousel");
+if (carousel) {
+  carousel.addEventListener("mouseenter", () => clearInterval(carouselInterval));
+  carousel.addEventListener("mouseleave", () => {
+    carouselInterval = setInterval(nextSlide, 5000);
   });
-  evEl.appendChild(delBtn);
 }
-
-// Member: RSVP button
-if (isMember) {
-  const rsvpBtn = document.createElement("button");
-  rsvpBtn.classList.add("rsvp-btn");
-
-  ev.rsvps = ev.rsvps || [];
-  const hasRSVPed = ev.rsvps.includes(loggedInUser.email);
-  rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
-  rsvpBtn.disabled = hasRSVPed;
-
-  rsvpBtn.addEventListener("click", () => {
-    ev.rsvps.push(loggedInUser.email);
-    saveEvents();
-    generateCalendar(currentMonth, currentYear);
-    alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
-  });
-
-  evEl.appendChild(rsvpBtn);
-}
-
-cell.appendChild(evEl);
-
-
-
-    function nextSlide() {
-      currentSlide++;
-      if (currentSlide >= slides.length) {
-        currentSlide = 0;
-      }
-      showSlide(currentSlide);
-    }
-
-    /* Auto rotate every 5 seconds */
-    setInterval(nextSlide, 5000);
-
-    /* Dot navigation */
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", function () {
-        currentSlide = index;
-        showSlide(currentSlide);
-      });
-    });
-
-    /* Initialize */
-    showSlide(currentSlide);
 
 
 /* ------------------ RESOURCE SEARCH ------------------ */
