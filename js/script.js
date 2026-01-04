@@ -271,6 +271,59 @@ if (carousel) {
   });
 }
 
+/* ===============================
+   BOOK RATINGS
+================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const ratings = document.querySelectorAll(".rating");
+
+  ratings.forEach(ratingEl => {
+    const bookId = ratingEl.dataset.book;
+    const stars = ratingEl.querySelectorAll(".star");
+    const text = ratingEl.querySelector(".rating-text");
+
+    // Load existing ratings
+    let data = JSON.parse(localStorage.getItem(`rating-${bookId}`)) || {
+      total: 0,
+      count: 0
+    };
+
+    updateDisplay(data, stars, text);
+
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        const value = Number(star.dataset.value);
+
+        data.total += value;
+        data.count += 1;
+
+        localStorage.setItem(`rating-${bookId}`, JSON.stringify(data));
+        updateDisplay(data, stars, text);
+      });
+    });
+  });
+});
+
+function updateDisplay(data, stars, text) {
+  if (data.count === 0) {
+    text.textContent = "(No ratings yet)";
+    stars.forEach(s => s.classList.remove("active"));
+    return;
+  }
+
+  const avg = (data.total / data.count).toFixed(1);
+  text.textContent = `${avg} ★ (${data.count})`;
+
+  stars.forEach(star => {
+    star.classList.toggle(
+      "active",
+      Number(star.dataset.value) <= Math.round(avg)
+    );
+  });
+}
+
+
 
 /* ------------------ RESOURCE SEARCH ------------------ */
 const searchInput = document.getElementById("searchInput");
