@@ -565,6 +565,109 @@ p {
   margin-left: 6px;
 }
 
+/* ===============================
+   MEMBERS DASHBOARD
+================================ */
+
+.members-dashboard {
+  max-width: 1100px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+.member-welcome {
+  margin-bottom: 30px;
+}
+
+.member-welcome h1 {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.member-welcome p {
+  color: #666;
+}
+
+/* ===== FEATURED CARDS ===== */
+
+.featured-card {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 24px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px;
+  margin-bottom: 34px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+  align-items: center;
+}
+
+.featured-content h2 {
+  font-size: 1.6rem;
+  margin: 10px 0;
+}
+
+.featured-content .author,
+.featured-content .event-meta {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.featured-content .description {
+  margin: 14px 0 20px;
+  line-height: 1.55;
+}
+
+/* ===== FEATURED IMAGES ===== */
+
+.featured-image img {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* ===== BADGES ===== */
+
+.badge {
+  display: inline-block;
+  background: #c89b3c;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge.accent {
+  background: #6b4f3f;
+}
+
+/* ===== BUTTONS ===== */
+
+.btn.primary {
+  background: #c89b3c;
+  color: #fff;
+}
+
+.btn.secondary {
+  background: #6b4f3f;
+  color: #fff;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-image img {
+    max-height: 200px;
+  }
+}
+
 
 /* ==========================
    PAGE CONTAINER (CRITICAL)
