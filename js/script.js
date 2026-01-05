@@ -2,9 +2,12 @@
  * SCRIPT.JS - Kick A$$ Cocoa
  * Unified JS for all pages
  ****************************************************/
-console.log("Carousel JS loaded");
 
-/* ------------------ AUTH ------------------ */
+console.log("Unified JS loaded");
+
+/* ==========================
+   AUTH & LOGOUT
+========================== */
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
 function requireAuth() {
@@ -13,11 +16,7 @@ function requireAuth() {
   }
 }
 
-function isAdmin() {
-  return loggedInUser && loggedInUser.role === "admin";
-}
-
-/* ------------------ LOGOUT ------------------ */
+// Logout
 document.addEventListener("click", (e) => {
   if (e.target && e.target.id === "logoutBtn") {
     e.preventDefault();
@@ -26,16 +25,43 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* ------------------ NAV TOGGLE ------------------ */
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-}
+/* ==========================
+   NAVIGATION
+========================== */
+// Hamburger toggle
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navMenu = document.querySelector(".nav-menu");
 
-/* ------------------ MEMBERS AREA ------------------ */
+  if (menuToggle && navMenu) {
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("show");
+    });
+  }
+
+  // Optional: close menu when clicking a link (mobile)
+  navMenu?.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      navMenu.classList.remove("show");
+    });
+  });
+});
+
+
+// Mobile dropdowns
+const dropdowns = document.querySelectorAll(".nav-dropdown > a");
+dropdowns.forEach(drop => {
+  drop.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      drop.parentElement.classList.toggle("active");
+    }
+  });
+});
+
+/* ==========================
+   MEMBERS AREA
+========================== */
 if (document.body.classList.contains("members-page")) {
   requireAuth();
   const welcomeEl = document.getElementById("welcomeUser");
@@ -44,35 +70,64 @@ if (document.body.classList.contains("members-page")) {
   }
 }
 
-/* ===============================
-   CONTACT FORM SUCCESS MESSAGE
-================================ */
-
+/* ==========================
+   CONTACT FORM SUCCESS
+========================== */
 const contactForm = document.getElementById("contactForm");
 const formSuccess = document.getElementById("formSuccess");
 
 if (contactForm && formSuccess) {
-  contactForm.addEventListener("submit", function (e) {
+  contactForm.addEventListener("submit", function(e) {
     e.preventDefault();
-
-    // Simulate successful submission
     contactForm.reset();
-
-    // Show success message
     formSuccess.classList.add("show");
+    setTimeout(() => formSuccess.classList.remove("show"), 4000);
   });
 }
 
+/* ==========================
+   RESOURCE SEARCH
+========================== */
+const searchInput = document.getElementById("searchInput");
+const resourceCards = document.querySelectorAll("#resourceCards .card");
 
-// ==============================
-// EVENTS CALENDAR
-// ==============================
+if (searchInput) {
+  searchInput.addEventListener("keyup", () => {
+    const term = searchInput.value.toLowerCase();
+    resourceCards.forEach(card => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(term) ? "block" : "none";
+    });
+  });
+}
 
-
+/* ==========================
+   HERO CAROUSEL
+========================== */
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Events JS loaded");
+  const slides = document.querySelectorAll(".slide");
+  if (slides.length > 0) {
+    let currentIndex = 0;
 
-  // DOM elements
+    function showSlide(index) {
+      slides.forEach(slide => slide.classList.remove("active"));
+      slides[index].classList.add("active");
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    showSlide(currentIndex);
+    setInterval(nextSlide, 5000);
+  }
+});
+
+/* ==========================
+   EVENTS CALENDAR
+========================== */
+document.addEventListener("DOMContentLoaded", () => {
   const calendarTbody = document.querySelector("#calendar tbody");
   const monthYearEl = document.getElementById("monthYear");
   const prevMonthBtn = document.getElementById("prevMonth");
@@ -80,65 +135,60 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminForm = document.getElementById("adminForm");
   const addEventBtn = document.getElementById("addEventBtn");
 
-  // Load events from localStorage or initialize
-  let events = JSON.parse(localStorage.getItem("events")) || [];
+  if (!calendarTbody) return; // Exit if calendar not on page
 
-  // Detect logged-in user
+  let events = JSON.parse(localStorage.getItem("events")) || [];
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   const isAdmin = loggedInUser?.role === "admin";
   const isMember = loggedInUser?.role === "member";
 
-  // Show admin form if admin
   if (isAdmin && adminForm) adminForm.classList.remove("hidden");
 
   let currentMonth = new Date().getMonth();
   let currentYear = new Date().getFullYear();
 
-  // Save events to localStorage
   function saveEvents() {
     localStorage.setItem("events", JSON.stringify(events));
   }
 
-  // Generate calendar
   function generateCalendar(month = currentMonth, year = currentYear) {
     calendarTbody.innerHTML = "";
-
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     monthYearEl.textContent = new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' });
 
     let row = document.createElement("tr");
 
-    // Empty cells before first day
     for (let i = 0; i < firstDay; i++) {
-      const cell = document.createElement("td");
-      row.appendChild(cell);
+      row.appendChild(document.createElement("td"));
     }
 
-    // Fill in the days
     for (let day = 1; day <= daysInMonth; day++) {
       const cell = document.createElement("td");
       const dateStr = `${year}-${String(month + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
 
-      const today = new Date();
-      if (today.getDate() === day && today.getMonth() === month && today.getFullYear() === year) {
+      if (new Date().toDateString() === new Date(year, month, day).toDateString()) {
         cell.classList.add("today");
       }
 
       cell.innerHTML = `<strong>${day}</strong>`;
 
-      // Add events for this day
       events.forEach(ev => {
         if (dateStr >= ev.start && dateStr <= ev.end) {
           const evEl = document.createElement("div");
           evEl.classList.add("event");
           evEl.textContent = ev.title;
 
-          // Admin: delete button
+          // Tooltip
+          const tooltip = document.createElement("span");
+          tooltip.classList.add("tooltip");
+          tooltip.textContent = `Dates: ${ev.start} → ${ev.end} | RSVPs: ${ev.rsvps ? ev.rsvps.length : 0}`;
+          evEl.appendChild(tooltip);
+
+          // Admin delete
           if (isAdmin) {
             const delBtn = document.createElement("button");
-            delBtn.classList.add("rsvp-btn");
-            delBtn.style.backgroundColor = "#c0392b";
+            delBtn.className = "rsvp-btn admin";
             delBtn.textContent = "Delete";
             delBtn.addEventListener("click", () => {
               events = events.filter(e => e !== ev);
@@ -148,14 +198,12 @@ document.addEventListener("DOMContentLoaded", () => {
             evEl.appendChild(delBtn);
           }
 
-          // Member: RSVP button
+          // Member RSVP
           if (isMember) {
-            const rsvpBtn = document.createElement("button");
-            rsvpBtn.classList.add("rsvp-btn");
-
-            // Check if already RSVP'd
             ev.rsvps = ev.rsvps || [];
             const hasRSVPed = ev.rsvps.includes(loggedInUser.email);
+            const rsvpBtn = document.createElement("button");
+            rsvpBtn.className = "rsvp-btn member";
             rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
             rsvpBtn.disabled = hasRSVPed;
 
@@ -174,35 +222,27 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       row.appendChild(cell);
-
-      // Start new row every Saturday
       if ((day + firstDay) % 7 === 0) {
         calendarTbody.appendChild(row);
         row = document.createElement("tr");
       }
     }
 
-    // Append leftover row
     if (row.children.length > 0) calendarTbody.appendChild(row);
   }
 
-  // Initial calendar render
   generateCalendar();
 
-  // Month navigation
-  prevMonthBtn.addEventListener("click", () => {
-    currentMonth--;
-    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+  if (prevMonthBtn) prevMonthBtn.addEventListener("click", () => {
+    currentMonth--; if (currentMonth < 0) { currentMonth = 11; currentYear--; }
     generateCalendar(currentMonth, currentYear);
   });
 
-  nextMonthBtn.addEventListener("click", () => {
-    currentMonth++;
-    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+  if (nextMonthBtn) nextMonthBtn.addEventListener("click", () => {
+    currentMonth++; if (currentMonth > 11) { currentMonth = 0; currentYear++; }
     generateCalendar(currentMonth, currentYear);
   });
 
-  // Admin add event
   if (isAdmin && addEventBtn) {
     addEventBtn.addEventListener("click", () => {
       const titleEl = document.getElementById("eventTitle");
@@ -214,10 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const end = endEl.value.trim();
 
       if (!title || !start || !end) { alert("Please fill out all fields."); return; }
-
-      const startDate = new Date(start);
-      const endDate = new Date(end);
-      if (startDate > endDate) { alert("Start date cannot be after end date."); return; }
+      if (new Date(start) > new Date(end)) { alert("Start date cannot be after end date."); return; }
 
       events.push({ title, start, end, rsvps: [] });
       saveEvents();
@@ -231,110 +268,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
-
-console.log("Carousel JS loaded");
-
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("Carousel JS loaded");
-  const slides = document.querySelectorAll(".slide");
-
-  if (!slides.length) {
-    console.warn("No slides found");
-    return;
-  }
-
-  let currentIndex = 0;
-
-  function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove("active"));
-    slides[index].classList.add("active");
-  }
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }
-
-  // Rotate every 5 seconds
-  setInterval(nextSlide, 5000);
-
-});
-
-let carouselInterval = setInterval(nextSlide, 5000);
-
-const carousel = document.querySelector(".carousel");
-if (carousel) {
-  carousel.addEventListener("mouseenter", () => clearInterval(carouselInterval));
-  carousel.addEventListener("mouseleave", () => {
-    carouselInterval = setInterval(nextSlide, 5000);
-  });
-}
-
-/* ===============================
-   BOOK RATINGS
-================================ */
-
-document.addEventListener("DOMContentLoaded", () => {
-  const ratings = document.querySelectorAll(".rating");
-
-  ratings.forEach(ratingEl => {
-    const bookId = ratingEl.dataset.book;
-    const stars = ratingEl.querySelectorAll(".star");
-    const text = ratingEl.querySelector(".rating-text");
-
-    // Load existing ratings
-    let data = JSON.parse(localStorage.getItem(`rating-${bookId}`)) || {
-      total: 0,
-      count: 0
-    };
-
-    updateDisplay(data, stars, text);
-
-    stars.forEach(star => {
-      star.addEventListener("click", () => {
-        const value = Number(star.dataset.value);
-
-        data.total += value;
-        data.count += 1;
-
-        localStorage.setItem(`rating-${bookId}`, JSON.stringify(data));
-        updateDisplay(data, stars, text);
-      });
-    });
-  });
-});
-
-function updateDisplay(data, stars, text) {
-  if (data.count === 0) {
-    text.textContent = "(No ratings yet)";
-    stars.forEach(s => s.classList.remove("active"));
-    return;
-  }
-
-  const avg = (data.total / data.count).toFixed(1);
-  text.textContent = `${avg} ★ (${data.count})`;
-
-  stars.forEach(star => {
-    star.classList.toggle(
-      "active",
-      Number(star.dataset.value) <= Math.round(avg)
-    );
-  });
-}
-
-
-
-/* ------------------ RESOURCE SEARCH ------------------ */
-const searchInput = document.getElementById("searchInput");
-const resourceCards = document.querySelectorAll("#resourceCards .card");
-
-if (searchInput) {
-  searchInput.addEventListener("keyup", () => {
-    const term = searchInput.value.toLowerCase();
-    resourceCards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(term) ? "block" : "none";
-    });
-  });
-}
