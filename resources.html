@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Resources | Kick A$$ Cocoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Member Resources | Kick A$$ Cocoa</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="members-page">
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">
-      <img
-        src="images/kick-ass-cocoa-logo.png"
-        alt="Kick A$$ Cocoa Logo"
-        class="site-logo"
-      >
+<header class="member-header">
+  <div class="nav-container">
+    <div class="nav-left">
+      <img 
+        src="images/kick-ass-cocoa-logo.png" 
+        alt="Kick A$$ Cocoa Logo" 
+        class="nav-logo"
+      />
     </div>
 
-    <nav class="nav-menu">
+    <nav class="nav-menu" id="navLinks">
       <a href="members-area.html">Dashboard</a>
       <a href="resources.html">Resources</a>
       <a href="events.html">Events</a>
-      <a href="#" id="logoutBtn" class="danger">Logout</a>
+      <a href="#" id="logoutBtn">Logout</a>
     </nav>
+
+    <button class="menu-toggle" id="menuToggle">☰</button>
   </div>
 </header>
 
 
-
-<main>
+<main class="container">
   <h1>Resource Library</h1>
+  <p class="subtitle">Tools to support your growth, leadership, and purpose.</p>
 
-  <input type="text" id="searchInput" placeholder="Search resources...">
+  <div class="resource-grid">
+    <a href="books.html" class="resource-card">
+      <h3>📚 Books</h3>
+      <p>Curated reads focused on leadership, mindset, growth, and wealth.</p>
+    </a>
 
-  <section id="resourceCards" class="card-grid">
-    <div class="card">Leadership Development Guide</div>
-    <div class="card">Career Growth Workbook</div>
-    <div class="card">Mental Wellness Toolkit</div>
-    <div class="card">Financial Empowerment Resources</div>
-  </section>
+    <div class="resource-card disabled">
+      <h3>🎧 Podcasts</h3>
+      <p>Coming soon</p>
+    </div>
+
+    <div class="resource-card disabled">
+      <h3>🧠 Courses</h3>
+      <p>Coming soon</p>
+    </div>
+
+    <div class="resource-card disabled">
+      <h3>📄 Toolkits</h3>
+      <p>Coming soon</p>
+    </div>
+  </div>
 </main>
 
-<footer>
-  <p>&copy; Kick A$$ Cocoa 2025</p>
+<footer class="site-footer">
+  <p>&copy; 2026 Kick A$$ Cocoa. All rights reserved.</p>
 </footer>
+
 
 <script src="js/script.js"></script>
 </body>

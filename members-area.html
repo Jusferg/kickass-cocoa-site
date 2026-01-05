@@ -9,42 +9,75 @@
 <body class="members-page">
 
 <header class="site-header">
-  <div class="header-inner">
-    <div class="logo">
-      <img
-        src="images/kick-ass-cocoa-logo.png"
-        alt="Kick A$$ Cocoa Logo"
-        class="site-logo"
-      >
-    </div>
+  <div class="nav-container">
 
-    <nav class="nav-menu">
+    <a href="members-area.html" class="logo">
+      <img src="images/kick-ass-cocoa-logo.png" alt="Kick A$$ Cocoa Logo">
+    </a>
+
+    <button id="menuToggle" class="menu-toggle">☰</button>
+
+    <nav id="navLinks" class="nav-links">
       <a href="members-area.html">Dashboard</a>
       <a href="resources.html">Resources</a>
       <a href="events.html">Events</a>
-      <a href="#" id="logoutBtn" class="danger">Logout</a>
+      <a href="books.html">Books</a>
+      <a href="#" id="logoutBtn">Logout</a>
     </nav>
+
   </div>
 </header>
 
 
+<section class="member-welcome">
+  <h1>Welcome Back 👋</h1>
+  <p>We’re glad you’re here. Let’s keep growing together.</p>
+</section>
 
-<main>
-  <h1 id="welcomeUser">Welcome</h1>
+<!-- FEATURED BOOK -->
+<section class="featured-card featured-book">
+  <div class="featured-content">
+    <span class="badge">Currently Reading</span>
 
-  <section id="adminEventSection" class="hidden">
-    <h2>Admin Event Management</h2>
-    <form id="eventForm">
-      <input type="text" id="eventTitle" placeholder="Event Title" required>
-      <input type="text" id="eventDescription" placeholder="Description" required>
-      <input type="date" id="eventStart" required>
-      <input type="date" id="eventEnd" required>
-      <button type="submit">Add Event</button>
-    </form>
-  </section>
+    <h2>Emotional Intelligence</h2>
+    <p class="author">by Daniel Goleman</p>
 
-  <section id="calendar"></section>
-</main>
+    <p class="description">
+      This month’s collective read focuses on self-awareness, emotional
+      regulation, and leadership presence — key skills for personal and
+      professional growth.
+    </p>
+
+    <a href="books.html" class="btn primary">View Book</a>
+  </div>
+
+  <div class="featured-image">
+    <img src="https://i5.walmartimages.com/seo/Emotional-Intelligence-Why-It-Can-Matter-More-Than-IQ-Paperback-9780553383713_2997c0ea-5816-45ba-aedb-e6bfa779b43f.17419d8a96fc26a3c8044d6b473475cf.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF" alt="Emotional Intelligence Book">
+  </div>
+</section>
+
+<!-- UPCOMING EVENT -->
+<section class="featured-card featured-event">
+  <div class="featured-content">
+    <span class="badge accent">Upcoming Event</span>
+
+    <h2>Leading With Confidence</h2>
+    <p class="event-meta">📅 January 24, 2026 · 🕕 12:30 PM EST</p>
+
+    <p class="description">
+      Join us for an empowering discussion centered on confidence, communication,
+      and leadership strategies for women navigating growth.
+    </p>
+
+    <a href="events.html" class="btn secondary">View Event</a>
+  </div>
+
+  <div class="featured-image">
+    <img src="images/events/confidence-event.jpg" alt="Leading With Confidence Event">
+  </div>
+</section>
+
+
 
 <footer>
   <p>&copy; Kick A$$ Cocoa 2025</p>

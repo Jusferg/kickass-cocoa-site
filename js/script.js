@@ -2,7 +2,7 @@
  * SCRIPT.JS - Kick A$$ Cocoa
  * Unified JS for all pages
  ****************************************************/
-
+console.log("Carousel JS loaded");
 
 /* ------------------ AUTH ------------------ */
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -43,6 +43,26 @@ if (document.body.classList.contains("members-page")) {
     welcomeEl.textContent = `Welcome, ${loggedInUser.email}`;
   }
 }
+
+/* ===============================
+   CONTACT FORM SUCCESS MESSAGE
+================================ */
+
+const contactForm = document.getElementById("contactForm");
+const formSuccess = document.getElementById("formSuccess");
+
+if (contactForm && formSuccess) {
+  contactForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Simulate successful submission
+    contactForm.reset();
+
+    // Show success message
+    formSuccess.classList.add("show");
+  });
+}
+
 
 // ==============================
 // EVENTS CALENDAR
@@ -212,59 +232,96 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Inside events.forEach() when creating evEl
-const evEl = document.createElement("div");
-evEl.classList.add("event");
-evEl.textContent = ev.title;
 
-// Tooltip
-const tooltip = document.createElement("span");
-tooltip.classList.add("tooltip");
+console.log("Carousel JS loaded");
 
-const rsvpCount = ev.rsvps ? ev.rsvps.length : 0;
-tooltip.textContent = `Dates: ${ev.start} to ${ev.end} | RSVPs: ${rsvpCount}`;
-evEl.appendChild(tooltip);
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Carousel JS loaded");
+  const slides = document.querySelectorAll(".slide");
 
-// Admin: delete button
-if (isAdmin) {
-  const delBtn = document.createElement("button");
-  delBtn.classList.add("rsvp-btn");
-  delBtn.style.backgroundColor = "#c0392b";
-  delBtn.textContent = "Delete";
-  delBtn.addEventListener("click", () => {
-    events = events.filter(e => e !== ev);
-    saveEvents();
-    generateCalendar(currentMonth, currentYear);
+  if (!slides.length) {
+    console.warn("No slides found");
+    return;
+  }
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide) => slide.classList.remove("active"));
+    slides[index].classList.add("active");
+  }
+
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+  }
+
+  // Rotate every 5 seconds
+  setInterval(nextSlide, 5000);
+
+});
+
+let carouselInterval = setInterval(nextSlide, 5000);
+
+const carousel = document.querySelector(".carousel");
+if (carousel) {
+  carousel.addEventListener("mouseenter", () => clearInterval(carouselInterval));
+  carousel.addEventListener("mouseleave", () => {
+    carouselInterval = setInterval(nextSlide, 5000);
   });
-  evEl.appendChild(delBtn);
 }
 
-// Member: RSVP button
-if (isMember) {
-  const rsvpBtn = document.createElement("button");
-  rsvpBtn.classList.add("rsvp-btn");
+/* ===============================
+   BOOK RATINGS
+================================ */
 
-  ev.rsvps = ev.rsvps || [];
-  const hasRSVPed = ev.rsvps.includes(loggedInUser.email);
-  rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
-  rsvpBtn.disabled = hasRSVPed;
+document.addEventListener("DOMContentLoaded", () => {
+  const ratings = document.querySelectorAll(".rating");
 
-  rsvpBtn.addEventListener("click", () => {
-    ev.rsvps.push(loggedInUser.email);
-    saveEvents();
-    generateCalendar(currentMonth, currentYear);
-    alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
+  ratings.forEach(ratingEl => {
+    const bookId = ratingEl.dataset.book;
+    const stars = ratingEl.querySelectorAll(".star");
+    const text = ratingEl.querySelector(".rating-text");
+
+    // Load existing ratings
+    let data = JSON.parse(localStorage.getItem(`rating-${bookId}`)) || {
+      total: 0,
+      count: 0
+    };
+
+    updateDisplay(data, stars, text);
+
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        const value = Number(star.dataset.value);
+
+        data.total += value;
+        data.count += 1;
+
+        localStorage.setItem(`rating-${bookId}`, JSON.stringify(data));
+        updateDisplay(data, stars, text);
+      });
+    });
   });
+});
 
-  evEl.appendChild(rsvpBtn);
+function updateDisplay(data, stars, text) {
+  if (data.count === 0) {
+    text.textContent = "(No ratings yet)";
+    stars.forEach(s => s.classList.remove("active"));
+    return;
+  }
+
+  const avg = (data.total / data.count).toFixed(1);
+  text.textContent = `${avg} ★ (${data.count})`;
+
+  stars.forEach(star => {
+    star.classList.toggle(
+      "active",
+      Number(star.dataset.value) <= Math.round(avg)
+    );
+  });
 }
-
-cell.appendChild(evEl);
-
-
-
-
-
 
 
 
