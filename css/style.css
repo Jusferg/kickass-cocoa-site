@@ -399,7 +399,7 @@ p {
   justify-content: space-between;
 }
 
-.nav-logo {
+.member-header .nav-logo {
   height: 55px;
   transition: transform 0.3s ease, filter 0.3s ease;
 }
@@ -409,7 +409,7 @@ p {
   filter: drop-shadow(0 0 8px rgba(255, 215, 160, 0.7));
 }
 
-.nav-menu a {
+.member-header .nav-menu a {
   color: #f5efe6;
   margin-left: 20px;
   text-decoration: none;
@@ -987,9 +987,6 @@ label {
   border-radius: 4px;
 }
 
-
-
-
 /* ==========================
    RESOURCE LIST
 ========================== */
@@ -1004,6 +1001,7 @@ label {
 ========================== */
 
 /* ---------------- Footer ---------------- */
+/*
 footer {
   margin-top: 40px;
   padding: 16px;
@@ -1011,6 +1009,7 @@ footer {
   background-color: #f0e5d8;
   border-top: 2px solid #5a3e2b;
 }
+  */
 
 .footer-inner {
   max-width: 1100px;
@@ -1054,5 +1053,3 @@ footer {
     padding: 12px;
   }
 }
-
-
