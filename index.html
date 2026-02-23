@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 
@@ -112,7 +112,7 @@
       <a href="community.html" class="btn primary-btn">Join the Movement</a>
     </div>
 
-  </br>
+  <br>
 
     <div class="pillars-grid">
 
@@ -157,7 +157,7 @@
 
         <div class="why-actions">
           <a class="btn primary-btn" href="register.html">Join the Movement</a>
-          <a class="btn secondary-btn" href="about.html">Our Story</a>
+          <a class="btn secondary-btn-dark" href="about.html">Our Story</a>
         </div>
       </div>
 
@@ -247,24 +247,27 @@
 </footer>
 
 
-<script src="js/script.js"></script>
+<script src="js/script.js" defer></script>
 
 <script>
-  const words = ["Leadership", "Growth", "Community", "Action"];
-  const rotatingWord = document.querySelector(".rotating-word");
-  let index = 0;
+  document.addEventListener("DOMContentLoaded", () => {
+    const words = ["Leadership", "Growth", "Community", "Action"];
+    const rotatingWord = document.querySelector(".rotating-word");
+    if (!rotatingWord) return;
 
-  setInterval(() => {
-    index = (index + 1) % words.length;
+    let index = 0;
 
-    rotatingWord.style.opacity = 0;
+    setInterval(() => {
+      index = (index + 1) % words.length;
 
-    setTimeout(() => {
-      rotatingWord.textContent = words[index];
-      rotatingWord.style.opacity = 1;
-    }, 300);
+      rotatingWord.classList.add("is-fading");
+      setTimeout(() => {
+        rotatingWord.textContent = words[index];
+        rotatingWord.classList.remove("is-fading");
+      }, 250);
 
-  }, 4000); // match your slide timing
+    }, 4000);
+  });
 </script>
 
 </body>
