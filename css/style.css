@@ -12,6 +12,15 @@
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
 
   --radius: 18px;
+   --container: 1200px;
+  --pad: 20px;
+
+  /* consistent vertical rhythm */
+  --space-xs: 14px;
+  --space-sm: 22px;
+  --space-md: 40px;
+  --space-lg: 70px;
+  --space-xl: 110px;
 }
 
 * {
@@ -34,6 +43,16 @@ body{
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.container{
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.section{
+  padding: var(--space-xl) 0;
 }
 
 /* ==========================
@@ -480,6 +499,144 @@ a{
 
 .pillar-card p{
   font-size: 1.05rem;
+}
+
+/* ===== WHY WE EXIST ===== */
+.why-section{
+  padding: 100px 20px;
+  background: #fff;
+}
+
+.why-container{
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.why-grid{
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.why-copy h2{
+  font-size: clamp(2.0rem, 3vw, 2.6rem);
+  color: #2a1212;
+  margin-bottom: 14px;
+}
+
+.why-lead{
+  font-size: 1.15rem;
+  color: rgba(26, 14, 14, 0.78);
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+
+.why-copy p{
+  color: rgba(26, 14, 14, 0.72);
+  line-height: 1.75;
+}
+
+.why-actions{
+  margin-top: 26px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Right-side card */
+.why-card{
+  background: #0f0b0b;
+  border-radius: 18px;
+  padding: 34px 28px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle accent bar */
+.why-card::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: #f5c16c;
+}
+
+.why-card h3{
+  color: #fff;
+  margin: 18px 0 14px;
+  font-size: 1.35rem;
+  letter-spacing: -0.2px;
+}
+
+.why-card ul{
+  margin: 0;
+  padding-left: 18px;
+}
+
+.why-card li{
+  color: rgba(255,255,255,0.86);
+  line-height: 1.7;
+  margin: 10px 0;
+}
+
+.why-card strong{
+  color: #f5c16c;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .why-grid{
+    grid-template-columns: 1fr;
+  }
+  .why-card{
+    margin-top: 10px;
+  }
+}
+
+/* ===== FOUNDER STATEMENT ===== */
+.statement-section{
+  padding: 110px 20px;
+  background: #1a0e0e;
+  text-align: center;
+}
+
+.statement-container{
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.statement-quote{
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.3rem);
+  color: #ffffff;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  margin-bottom: 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.statement-signature{
+  color: #f5c16c;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .resource-grid {
