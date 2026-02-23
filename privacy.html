@@ -2,11 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kick A$$ Cocoa</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <title>Privacy Policy | Kick-Ass Cocoa</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -49,99 +45,43 @@
 
 
 
-<section class="hero-slider">
+<main class="legal-page">
+  <div class="legal-container">
+    <h1>Privacy Policy</h1>
+    <p>Effective Date: <span id="effectiveDate"></span></p>
 
-  <div class="slides">
-
-    <div class="slide active">
-      <img src="images/leadership_slide.jpg" alt="Leadership">
-    </div>
-
-    <div class="slide">
-      <img src="images/growth_graduation_slide.jpg" alt="Growth">
-    </div>
-
-    <div class="slide">
-      <img src="images/community_slide.jpg" alt="Community">
-    </div>
-
-    <div class="slide">
-      <img src="images/action_slide.jpg" alt="Action">
-    </div>
-
-  </div>
-
-  <!-- Dark Overlay -->
-  <div class="hero-overlay"></div>
-
-  <!-- Main Hero Message -->
-  <div class="hero-content">
-    <h1>
-      Bold Women. Real 
-      <span class="rotating-word">Leadership</span>. 
-      Unstoppable Impact.
-    </h1>
-    
     <p>
-      Kick-Ass Cocoa is a community for ambitious women ready to lead,
-      grow, and build legacy together.
-    </p>
-    <div class="hero-buttons">
-      <a href="community.html" class="btn primary-btn">Join the Community</a>
-      <a href="events.html" class="btn secondary-btn">Explore Events</a>
-    </div>
-  </div>
-
-  <!-- Navigation dots -->
-  <div class="slider-dots">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </div>
-  </section>
-
-  <section class="pillars-section">
-  <div class="pillars-container">
-    <h2 class="section-title">Our Pillars</h2>
-    <p class="section-subtitle">
-      The foundation of Kick-Ass Cocoa is built on four transformative principles.
+      Kick-Ass Cocoa respects your privacy. This policy explains how we collect,
+      use, and protect your information when you visit our website.
     </p>
 
-    <div class="pillars-cta">
-      <a href="community.html" class="btn primary-btn">Join the Movement</a>
-    </div>
+    <h2>Information We Collect</h2>
+    <p>
+      We may collect personal information you voluntarily provide such as your
+      name, email address, or account details when registering or contacting us.
+    </p>
 
-  </br>
+    <h2>How We Use Information</h2>
+    <p>
+      We use your information to provide services, communicate updates, and
+      improve your experience within our community.
+    </p>
 
-    <div class="pillars-grid">
+    <h2>Data Protection</h2>
+    <p>
+      We implement reasonable security measures to safeguard your personal
+      information.
+    </p>
 
-      <div class="pillar-card">
-        <h3>Leadership</h3>
-          <p>Command the room. Build confidence. Lead with clarity and power.</p>
-      </div>
-
-      <div class="pillar-card">
-        <h3>Growth</h3>
-          <p>Level up through mentorship, accountability, and real conversations.</p>
-      </div>
-
-      <div class="pillar-card">
-        <h3>Community</h3>
-          <p>Find your people. Build genuine connections. Move as a unit.</p>
-      </div>
-
-      <div class="pillar-card">
-        <h3>Action</h3>
-          <p>Execute the plan. Launch the thing. Create measurable impact.</p>
-      </div>
-
-    </div>
+    <h2>Contact</h2>
+    <p>
+      If you have questions about this policy, please contact us at
+      <a href="contact.html">our contact page</a>.
+    </p>
   </div>
-  </section>
+</main>
 
-
-  <footer class="kac-footer">
+<footer class="kac-footer">
   <div class="kac-footer-inner">
     <div class="kac-footer-top">
 
@@ -196,25 +136,9 @@
   </div>
 </footer>
 
-
-<script src="js/script.js"></script>
-
 <script>
-  const words = ["Leadership", "Growth", "Community", "Action"];
-  const rotatingWord = document.querySelector(".rotating-word");
-  let index = 0;
-
-  setInterval(() => {
-    index = (index + 1) % words.length;
-
-    rotatingWord.style.opacity = 0;
-
-    setTimeout(() => {
-      rotatingWord.textContent = words[index];
-      rotatingWord.style.opacity = 1;
-    }, 300);
-
-  }, 4000); // match your slide timing
+  document.getElementById("effectiveDate").textContent =
+    new Date().toLocaleDateString();
 </script>
 
 </body>

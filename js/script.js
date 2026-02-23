@@ -27,50 +27,40 @@ document.addEventListener("click", (e) => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Hamburger toggle
-  const menuToggleBtn = document.getElementById("menuToggle");
-  const navMenu = document.getElementById("navMenu");
+  const burger = document.querySelector(".kac-burger");
+  const menu = document.querySelector(".kac-menu");
+  const drop = document.querySelector(".kac-dropdown");
+  const dropBtn = document.querySelector(".kac-dropbtn");
 
-  if (menuToggleBtn && navMenu) {
-    menuToggleBtn.addEventListener("click", () => {
-      navMenu.classList.toggle("show");
-    });
-  }
+  if (!burger || !menu) return;
 
-  // Mobile dropdown toggle
-  const dropdownToggles = document.querySelectorAll(".nav-dropdown > a");
-
-  dropdownToggles.forEach(toggle => {
-    toggle.addEventListener("click", (e) => {
-      if (window.innerWidth <= 768) {
-        e.preventDefault();
-        toggle.parentElement.classList.toggle("active");
-      }
-    });
+  burger.addEventListener("click", () => {
+    const open = menu.classList.toggle("is-open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
   });
 
-  // Logout button
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("loggedInUser");
-      window.location.href = "login.html";
+  // Mobile dropdown toggle for About
+  if (drop && dropBtn) {
+    dropBtn.addEventListener("click", () => {
+      // Only toggle dropdown on mobile
+      if (window.innerWidth >= 900) return;
+      const open = drop.classList.toggle("is-open");
+      dropBtn.setAttribute("aria-expanded", open ? "true" : "false");
     });
   }
+
+  // Close menu when clicking a link (mobile)
+  menu.addEventListener("click", (e) => {
+    const a = e.target.closest("a");
+    if (!a) return;
+    if (window.innerWidth < 900) {
+      menu.classList.remove("is-open");
+      burger.setAttribute("aria-expanded", "false");
+      drop?.classList.remove("is-open");
+      dropBtn?.setAttribute("aria-expanded", "false");
+    }
+  });
 });
-
-
-
-
-/* ------------------ NAV TOGGLE ------------------ */
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
-if (menuToggle && navLinks) {
-  menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-  });
-}
 
 /* ------------------ MEMBERS AREA ------------------ */
 if (document.body.classList.contains("members-page")) {

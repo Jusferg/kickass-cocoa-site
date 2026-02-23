@@ -8,33 +8,40 @@
 </head>
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <!-- Logo -->
-    <a href="index.html" class="logo">
-      <img src="images/kick-ass-cocoa-logo.png" alt="Kick A$$ Cocoa Logo">
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="index.html">
+      <span class="kac-logo-mark">KAC</span>
+      <span class="kac-logo-text">Kick-Ass Cocoa</span>
     </a>
 
-    <!-- Hamburger -->
-    <button id="menuToggle" class="menu-toggle" aria-label="Toggle Menu">☰</button>
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
 
-    <!-- Navigation -->
-    <nav id="navMenu" class="nav-menu">
-      <a href="index.html">Home</a>
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="index.html">Home</a>
 
-      <div class="nav-dropdown">
-        <a href="#">About</a>
-        <div class="dropdown-menu">
-          <a href="about.html#our-story">Our Story</a>
-          <a href="about.html#board">Board</a>
-          <a href="about.html#vision">Vision</a>
-          <a href="about.html#statement">Statement</a>
+      <div class="kac-dropdown">
+        <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
+          About <span class="kac-caret">▾</span>
+        </button>
+
+        <div class="kac-dropmenu" role="menu">
+          <a href="about.html" role="menuitem">Our Story</a>
+          <a href="about.html#board" role="menuitem">Board</a>
+          <a href="about.html#vision" role="menuitem">Vision</a>
+          <a href="about.html#statement" role="menuitem">Statement</a>
         </div>
       </div>
-      <a href="contact.html">Contact Us</a>
-      <a href="login.html">Login</a>
-    </nav>
-  </div>
+
+      <a class="kac-link" href="contact.html">Contact</a>
+      <a class="kac-link" href="login.html">Login</a>
+
+      <!-- Optional CTA -->
+      <a class="kac-cta" href="register.html">Join</a>
+    </div>
+  </nav>
 </header>
 
 <main class="page-container">
