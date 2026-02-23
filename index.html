@@ -37,40 +37,46 @@
 
 
 <section class="hero-slider">
+
   <div class="slides">
 
     <div class="slide active">
       <img src="images/leadership_slide.jpg" alt="Leadership">
-      <div class="slide-content">
-        <h2>Leadership</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
     </div>
 
     <div class="slide">
       <img src="images/growth_graduation_slide.jpg" alt="Growth">
-      <div class="slide-content">
-        <h2>Growth</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
     </div>
 
     <div class="slide">
       <img src="images/community_slide.jpg" alt="Community">
-      <div class="slide-content">
-        <h2>Community</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
     </div>
 
     <div class="slide">
       <img src="images/action_slide.jpg" alt="Action">
-      <div class="slide-content">
-        <h2>Action</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
     </div>
 
+  </div>
+
+  <!-- Dark Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Main Hero Message -->
+  <div class="hero-content">
+    <h1>
+      Bold Women. Real 
+      <span class="rotating-word">Leadership</span>. 
+      Unstoppable Impact.
+    </h1>
+    
+    <p>
+      Kick-Ass Cocoa is a community for ambitious women ready to lead,
+      grow, and build legacy together.
+    </p>
+    <div class="hero-buttons">
+      <a href="community.html" class="btn primary-btn">Join the Community</a>
+      <a href="events.html" class="btn secondary-btn">Explore Events</a>
+    </div>
   </div>
 
   <!-- Navigation dots -->
@@ -80,7 +86,8 @@
     <span class="dot"></span>
     <span class="dot"></span>
   </div>
-</section>
+
+  </section>
 
 
 <footer class="site-footer">
@@ -91,5 +98,24 @@
 
 
 <script src="js/script.js"></script>
+
+<script>
+  const words = ["Leadership", "Growth", "Community", "Action"];
+  const rotatingWord = document.querySelector(".rotating-word");
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % words.length;
+
+    rotatingWord.style.opacity = 0;
+
+    setTimeout(() => {
+      rotatingWord.textContent = words[index];
+      rotatingWord.style.opacity = 1;
+    }, 300);
+
+  }, 4000); // match your slide timing
+</script>
+
 </body>
 </html>

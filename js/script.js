@@ -270,11 +270,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-console.log("Carousel JS loaded");
-
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   console.log("Carousel JS loaded");
+
   const slides = document.querySelectorAll(".slide");
+  const dots = document.querySelectorAll(".slider-dots .dot");
+  const hero = document.querySelector(".hero-slider");
+
+  // Rotating headline word
+  const words = ["Leadership", "Growth", "Community", "Action"];
+  const rotatingWord = document.querySelector(".rotating-word");
 
   if (!slides.length) {
     console.warn("No slides found");
@@ -282,31 +287,62 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   let currentIndex = 0;
+  let carouselInterval;
 
   function showSlide(index) {
-    slides.forEach((slide) => slide.classList.remove("active"));
-    slides[index].classList.add("active");
+  slides.forEach((slide) => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+
+  if (dots.length) {
+    dots.forEach((dot) => dot.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
   }
+
+  // Rotating word: update immediately, animate via class
+  if (rotatingWord) {
+    rotatingWord.classList.add("is-fading");
+    rotatingWord.textContent = words[index] || words[0];
+    requestAnimationFrame(() => {
+      rotatingWord.classList.remove("is-fading");
+    });
+  }
+}
 
   function nextSlide() {
     currentIndex = (currentIndex + 1) % slides.length;
     showSlide(currentIndex);
   }
 
-  // Rotate every 5 seconds
-  setInterval(nextSlide, 5000);
+  function startCarousel() {
+    stopCarousel();
+    carouselInterval = setInterval(nextSlide, 4000);
+  }
 
+  function stopCarousel() {
+    if (carouselInterval) clearInterval(carouselInterval);
+  }
+
+  // Initialize
+  showSlide(currentIndex);
+  startCarousel();
+
+  // Pause on hover (desktop)
+  if (hero) {
+    hero.addEventListener("mouseenter", stopCarousel);
+    hero.addEventListener("mouseleave", startCarousel);
+  }
+
+  // Clickable dots (optional)
+  if (dots.length) {
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        currentIndex = index;
+        showSlide(currentIndex);
+        startCarousel(); // reset timer so it feels responsive
+      });
+    });
+  }
 });
-
-let carouselInterval = setInterval(nextSlide, 5000);
-
-const carousel = document.querySelector(".carousel");
-if (carousel) {
-  carousel.addEventListener("mouseenter", () => clearInterval(carouselInterval));
-  carousel.addEventListener("mouseleave", () => {
-    carouselInterval = setInterval(nextSlide, 5000);
-  });
-}
 
 /* ===============================
    BOOK RATINGS

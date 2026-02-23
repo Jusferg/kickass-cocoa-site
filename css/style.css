@@ -206,49 +206,21 @@ p {
 /* HERO SLIDER */
 .hero-slider {
   position: relative;
-  width: 100%;
-  height: 70vh;
-  max-height: 650px;
-  overflow: hidden;
-  margin-top: 0;
-}
-
-.slides {
-  height: 100%;
-  position: relative;
-}
-
-.carousel {
-  position: relative;
-  height: 400px;
+  height: 90vh;
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .carousel {
-    height: 260px;
-  }
-
-  .slide-caption {
-    font-size: 0.9rem;
-    left: 5%;
-    right: 5%;
-  }
-}
-
-
+/* Make slides fill entire hero */
 .slide {
   position: absolute;
-  inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
-  transform: scale(1.05);
-  transition: opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
 .slide.active {
   opacity: 1;
-  transform: scale(1);
-  z-index: 2;
 }
 
 .slide img {
@@ -257,43 +229,28 @@ p {
   object-fit: cover;
 }
 
-.slide-caption {
+/* Dark overlay */
+.hero-overlay {
   position: absolute;
-  bottom: 20%;
-  left: 8%;
-  color: #fff;
-  background: rgba(0,0,0,0.45);
-  padding: 20px 28px;
-  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
-
-/* Overlay */
-.slide::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(58, 40, 28, 0.45);
-}
-
-/* Text content */
-.slide-content {
-  position: absolute;
-  bottom: 18%;
-  left: 8%;
+/* Hero text */
+.hero-content {
+  position: relative;
   z-index: 2;
-  color: #fff;
-  max-width: 420px;
-}
-
-.slide-content h2 {
-  font-size: 2.5rem;
-  margin-bottom: 8px;
-}
-
-.slide-content p {
-  font-size: 1.1rem;
-  line-height: 1.5;
+  color: white;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* Dots */
@@ -318,6 +275,18 @@ p {
 
 .dot.active {
   background: #fff;
+}
+
+.rotating-word {
+  display: inline-block;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.rotating-word.is-fading {
+  opacity: 0;
+  transform: translateY(6px);
 }
 
 /* Mobile */
