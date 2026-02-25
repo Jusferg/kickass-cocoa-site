@@ -3,7 +3,7 @@
  * - Navbar burger + dropdown
  * - Logout button (if present)
  ****************************************************/
-console.log("core.js loaded");
+console.log("core.js loaded ✅");
 document.addEventListener("DOMContentLoaded", () => {
   // ---------- NAV ----------
   const burger = document.querySelector(".kac-burger");
