@@ -1052,6 +1052,37 @@ label{
   max-width: 52ch;
 }
 
+.member-intro{
+  background: #fff;
+  border: 1px solid rgba(42,18,18,0.08);
+  border-radius: 16px;
+  padding: 28px 26px;
+  margin-bottom: 40px;
+}
+
+.member-intro h2{
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+  color: var(--cocoa);
+}
+
+.member-intro p{
+  margin-bottom: 16px;
+  color: rgba(26,14,14,0.75);
+  max-width: 52ch;
+}
+
+.member-intro textarea{
+  width: 100%;
+  border: 1px solid #d6c4b2;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 14px;
+}
+
 /* Featured card in members dashboard */
 .featured-card{
   display: grid;
