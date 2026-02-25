@@ -248,28 +248,9 @@
 
 
 <script src="js/core.js" defer></script> 
+<script src="js/home.js" defer></script>
 <script src="js/script.js" defer></script> 
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const words = ["Leadership", "Growth", "Community", "Action"];
-    const rotatingWord = document.querySelector(".rotating-word");
-    if (!rotatingWord) return;
-
-    let index = 0;
-
-    setInterval(() => {
-      index = (index + 1) % words.length;
-
-      rotatingWord.classList.add("is-fading");
-      setTimeout(() => {
-        rotatingWord.textContent = words[index];
-        rotatingWord.classList.remove("is-fading");
-      }, 250);
-
-    }, 4000);
-  });
-</script>
 
 </body>
 </html>
