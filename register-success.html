@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Welcome — Kick-Ass Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="page-container" style="padding-top: 120px;">
+    <h1>Welcome to Kick-Ass Cocoa 🎉</h1>
+    <p>We’ve received your request. You’re officially in.</p>
+    <div style="margin-top: 16px;">
+      <a class="btn primary-btn" href="login.html">Go to Login</a>
+      <a class="btn secondary-btn-dark" href="index.html">Back to Home</a>
+    </div>
+  </main>
+
+  <script>
+    const yearEl = document.getElementById("kacYear");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

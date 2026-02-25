@@ -1,52 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Register | Kick A$$ Cocoa</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Join — Kick-Ass Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Join Kick-Ass Cocoa — a community for bold women ready to lead, grow, and build legacy together." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
 </head>
+
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">
-      <img
-        src="images/kick-ass-cocoa-logo.png"
-        alt="Kick A$$ Cocoa Logo"
-        class="site-logo"
-      >
-    </div>
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="index.html">
+      <span class="kac-logo-mark">KAC</span>
+      <span class="kac-logo-text">Kick-Ass Cocoa</span>
+    </a>
 
-    <nav class="nav-menu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html" class="cta">Member Login</a>
-    </nav>
-  </div>
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="index.html">Home</a>
+
+      <div class="kac-dropdown">
+        <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
+          About <span class="kac-caret">▾</span>
+        </button>
+        <div class="kac-dropmenu" role="menu">
+          <a href="about.html" role="menuitem">Our Story</a>
+          <a href="about.html#board" role="menuitem">Board</a>
+          <a href="about.html#vision" role="menuitem">Vision</a>
+          <a href="about.html#statement" role="menuitem">Statement</a>
+        </div>
+      </div>
+
+      <a class="kac-link" href="contact.html">Contact</a>
+      <a class="kac-link" href="login.html">Login</a>
+      <a class="kac-cta" href="register.html">Join</a>
+    </div>
+  </nav>
 </header>
 
+<main class="page-container">
+  <section aria-labelledby="joinTitle">
+    <h1 id="joinTitle" style="margin-bottom: 10px;">Join the Movement</h1>
+    <p style="max-width: 60ch;">
+      This is a free community for bold women ready to lead, grow, and move with purpose.
+      Create your membership and get access to the Members Area.
+    </p>
+  </section>
 
-<main class="container">
-  <div class="member-card">
-    <h2>Create an Account</h2>
-    <label>Email</label>
-    <input type="email" id="email">
-    <label>Password</label>
-    <input type="password" id="password">
-    <button onclick="register()">Register</button>
-    <p style="margin-top:1rem;">Already a member? <a href="login.html">Login here</a></p>
-  </div>
+  <section class="card" style="background:#fff; border:1px solid #e9dfd2; border-radius:16px; padding:22px;">
+    <!-- Netlify Forms: captures submissions automatically when deployed on Netlify -->
+    <form name="kac-register" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="register-success.html">
+      <input type="hidden" name="form-name" value="kac-register" />
+      <p class="hidden">
+        <label>Don’t fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
+        <div>
+          <label for="firstName">First name</label>
+          <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
+        </div>
+
+        <div>
+          <label for="lastName">Last name</label>
+          <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
+        </div>
+      </div>
+
+      <label for="email" style="margin-top: 10px;">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" required />
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:10px;">
+        <div>
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" autocomplete="address-level2" />
+        </div>
+
+        <div>
+          <label for="state">State</label>
+          <input id="state" name="state" type="text" autocomplete="address-level1" />
+        </div>
+      </div>
+
+      <label for="goal" style="margin-top: 10px;">What are you here to build right now?</label>
+      <textarea id="goal" name="goal" rows="4" placeholder="Ex: Confidence in leadership, a business launch, career growth, consistency..." ></textarea>
+
+      <label style="display:flex; gap:10px; align-items:flex-start; margin-top:12px;">
+        <input type="checkbox" name="agree" required style="margin-top:4px; width:auto;" />
+        <span style="color: rgba(26,14,14,0.78);">
+          I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
+        </span>
+      </label>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;">
+        <button class="btn primary-btn" type="submit">Create my membership</button>
+        <a class="btn secondary-btn-dark" href="login.html">Already a member? Log in</a>
+      </div>
+
+      <p style="margin-top: 12px; font-size: 0.95rem;">
+        You’ll get a confirmation screen after submitting.
+      </p>
+    </form>
+  </section>
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>&copy; 2026 Kick-Ass Cocoa. All rights reserved.</p>
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
   </div>
 </footer>
 
+<script src="js/script.js" defer></script>
+<script>
+  document.getElementById("kacYear").textContent = new Date().getFullYear();
+</script>
 
-<script src="js/script.js"></script>
 </body>
 </html>
