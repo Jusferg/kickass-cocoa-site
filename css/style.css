@@ -1027,6 +1027,31 @@ label{
 
 .member-welcome p{ color: #666; }
 
+/* Members welcome banner upgrade */
+.member-welcome{
+  background: linear-gradient(
+    135deg,
+    rgba(245, 193, 108, 0.08),
+    rgba(42, 18, 18, 0.05)
+  );
+  border: 1px solid rgba(42, 18, 18, 0.08);
+  border-radius: 18px;
+  padding: 28px 26px;
+  margin-bottom: 40px;
+}
+
+.member-welcome h1{
+  font-size: 2rem;
+  font-family: var(--font-display);
+  color: var(--cocoa);
+}
+
+.member-welcome p{
+  font-size: 1rem;
+  color: rgba(26,14,14,0.75);
+  max-width: 52ch;
+}
+
 /* Featured card in members dashboard */
 .featured-card{
   display: grid;
