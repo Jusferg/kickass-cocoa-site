@@ -26,25 +26,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const burger = document.querySelector(".kac-burger");
-  const menu = document.querySelector(".kac-menu");
-  const drop = document.querySelector(".kac-dropdown");
-  const dropBtn = document.querySelector(".kac-dropbtn");
-  const dropMenu = document.querySelector(".kac-dropmenu");
 
-  if (!burger || !menu) return;
-
-  burger.addEventListener("click", () => {
-    const open = menu.classList.toggle("is-open");
-    burger.setAttribute("aria-expanded", open ? "true" : "false");
-
-    // When opening the mobile menu, keep dropdown closed initially
-    if (!open) {
-      drop?.classList.remove("is-open");
-      dropBtn?.setAttribute("aria-expanded", "false");
-    }
-  });
 
   // Dropdown toggle for About (desktop + mobile)
   if (drop && dropBtn) {
@@ -83,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (dropMenu) {
     dropMenu.addEventListener("click", (e) => e.stopPropagation());
   }
-});
+
 
 // Member statement (persist until "logout")
 const statementEl = document.getElementById("memberStatement");
@@ -318,79 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Carousel JS loaded");
 
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.querySelectorAll(".slider-dots .dot");
-  const hero = document.querySelector(".hero-slider");
-
-  // Rotating headline word
-  const words = ["Leadership", "Growth", "Community", "Action"];
-  const rotatingWord = document.querySelector(".rotating-word");
-
-  if (!slides.length) {
-    console.warn("No slides found");
-    return;
-  }
-
-  let currentIndex = 0;
-  let carouselInterval;
-
-  function showSlide(index) {
-  slides.forEach((slide) => slide.classList.remove("active"));
-  slides[index].classList.add("active");
-
-  if (dots.length) {
-    dots.forEach((dot) => dot.classList.remove("active"));
-    if (dots[index]) dots[index].classList.add("active");
-  }
-
-  // Rotating word: update immediately, animate via class
-  if (rotatingWord) {
-    rotatingWord.classList.add("is-fading");
-    rotatingWord.textContent = words[index] || words[0];
-    requestAnimationFrame(() => {
-      rotatingWord.classList.remove("is-fading");
-    });
-  }
-}
-
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    showSlide(currentIndex);
-  }
-
-  function startCarousel() {
-    stopCarousel();
-    carouselInterval = setInterval(nextSlide, 4000);
-  }
-
-  function stopCarousel() {
-    if (carouselInterval) clearInterval(carouselInterval);
-  }
-
-  // Initialize
-  showSlide(currentIndex);
-  startCarousel();
-
-  // Pause on hover (desktop)
-  if (hero) {
-    hero.addEventListener("mouseenter", stopCarousel);
-    hero.addEventListener("mouseleave", startCarousel);
-  }
-
-  // Clickable dots (optional)
-  if (dots.length) {
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        currentIndex = index;
-        showSlide(currentIndex);
-        startCarousel(); // reset timer so it feels responsive
-      });
-    });
-  }
-});
 
 /* ===============================
    BOOK RATINGS
