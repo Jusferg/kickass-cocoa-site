@@ -49,24 +49,7 @@ console.log("Carousel JS loaded");
 
 
 
-/* ===============================
-   CONTACT FORM SUCCESS MESSAGE
-================================ */
 
-const contactForm = document.getElementById("contactForm");
-const formSuccess = document.getElementById("formSuccess");
-
-if (contactForm && formSuccess) {
-  contactForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    // Simulate successful submission
-    contactForm.reset();
-
-    // Show success message
-    formSuccess.classList.add("show");
-  });
-}
 
 
 // ==============================
