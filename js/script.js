@@ -224,17 +224,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-/* ------------------ RESOURCE SEARCH ------------------ */
-const searchInput = document.getElementById("searchInput");
-const resourceCards = document.querySelectorAll("#resourceCards .card");
-
-if (searchInput) {
-  searchInput.addEventListener("keyup", () => {
-    const term = searchInput.value.toLowerCase();
-    resourceCards.forEach(card => {
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(term) ? "block" : "none";
-    });
-  });
-}
