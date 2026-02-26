@@ -4,27 +4,7 @@
  ****************************************************/
 console.log("Carousel JS loaded");
 
-/* ------------------ AUTH ------------------ */
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-function requireAuth() {
-  if (!loggedInUser) {
-    window.location.href = "login.html";
-  }
-}
-
-function isAdmin() {
-  return loggedInUser && loggedInUser.role === "admin";
-}
-
-/* ------------------ LOGOUT ------------------ */
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.id === "logoutBtn") {
-    e.preventDefault();
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
-  }
-});
 
 
 
@@ -67,49 +47,7 @@ document.addEventListener("click", (e) => {
   }
 
 
-// Member statement (persist until "logout")
-const statementEl = document.getElementById("memberStatement");
-const saveBtn = document.getElementById("saveStatement");
-const clearBtn = document.getElementById("clearStatement");
-const statusEl = document.getElementById("statementStatus");
 
-if (statementEl && saveBtn && clearBtn) {
-  const KEY = "kac_member_statement";
-
-  // Load saved statement (if any)
-  const saved = localStorage.getItem(KEY);
-  if (saved) {
-    statementEl.value = saved;
-    if (statusEl) statusEl.textContent = "Saved. We see you.";
-  }
-
-  // Save
-  saveBtn.addEventListener("click", () => {
-    const text = statementEl.value.trim();
-    if (!text) {
-      if (statusEl) statusEl.textContent = "Write something real — then hit “I’m Here.”";
-      return;
-    }
-    localStorage.setItem(KEY, text);
-    if (statusEl) statusEl.textContent = "Saved. We see you.";
-  });
-
-  // Clear just this statement
-  clearBtn.addEventListener("click", () => {
-    localStorage.removeItem(KEY);
-    statementEl.value = "";
-    if (statusEl) statusEl.textContent = "Cleared.";
-  });
-}
-
-/* ------------------ MEMBERS AREA ------------------ */
-if (document.body.classList.contains("members-page")) {
-  requireAuth();
-  const welcomeEl = document.getElementById("welcomeUser");
-  if (welcomeEl && loggedInUser) {
-    welcomeEl.textContent = `Welcome, ${loggedInUser.email}`;
-  }
-}
 
 /* ===============================
    CONTACT FORM SUCCESS MESSAGE
