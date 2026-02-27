@@ -48,7 +48,7 @@
   </nav>
 </header>
 
-<section class="auth-page">
+<section class="auth-page register">
   <div class="auth-container">
     <div class="auth-card">
       <h1 class="auth-title">Join Kick-Ass Cocoa</h1>
@@ -94,9 +94,9 @@
         <textarea id="goal" name="goal" rows="4"
           placeholder="Ex: confidence in leadership, consistency, a business launch, career growth..."></textarea>
 
-        <label style="display:flex; gap:10px; align-items:flex-start; margin-top:12px;">
-          <input type="checkbox" name="agree" required style="margin-top:4px; width:auto;" />
-          <span style="color: rgba(26,14,14,0.78);">
+        <label class="terms-row">
+          <input type="checkbox" name="agree" required />
+          <span>
             I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
           </span>
         </label>
@@ -114,10 +114,7 @@
   </div>
 </section>
 
-<script src="js/core.js" defer></script>
-<script>
-  document.getElementById("kacYear").textContent = new Date().getFullYear();
-</script>
+<script src="js/core.js"></script>
 
 </body>
 </html>

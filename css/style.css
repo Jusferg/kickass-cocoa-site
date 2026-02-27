@@ -68,6 +68,24 @@ body{
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ==========================
+   AUTH PAGES (Login / Register)
+   Use body.auth-page to avoid double-centering conflicts
+========================== */
+
+body.auth-page{
+  min-height: 100vh;
+  background: rgba(15,11,11,0.03);
+}
+
+/* This is the wrapper section that centers the card */
+body.auth-page .auth-page{
+  min-height: calc(100vh - 86px); /* accounts for sticky header height */
+  display: grid;
+  place-items: center;
+  padding: 60px 20px;
+}
+
 img{
   max-width: 100%;
   display: block;
@@ -113,6 +131,81 @@ button:focus-visible{
   outline: 3px solid rgba(245, 193, 108, 0.7);
   outline-offset: 3px;
   border-radius: 12px;
+}
+
+/* Auth form fields override global input styles */
+.auth-form input,
+.auth-form textarea{
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(42,18,18,0.16);
+  font-size: 1rem;
+  margin-bottom: 0; /* important: stop the global margin-bottom */
+}
+
+.auth-form label{
+  margin: 14px 0 8px;
+  font-weight: 700;
+}
+
+.auth-card{
+  width: 100%;
+  max-width: 560px;
+}
+
+/* Register checkbox row */
+.terms-row{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 12px;
+}
+
+.terms-row input{
+  width: auto;
+  margin-top: 4px;
+}
+
+.terms-row span{
+  color: rgba(26,14,14,0.78);
+  line-height: 1.5;
+}
+
+/* ==========================
+   REGISTER PAGE TWEAKS ONLY
+========================== */
+
+/* register page has more fields; give it breathing room and avoid "too tall" centering */
+body.auth-page .auth-page.register{
+  place-items: start;
+  padding-top: 44px;
+  padding-bottom: 70px;
+}
+
+/* make checkbox row align nicely and stop it from looking cramped */
+.auth-form .win-checkbox,
+.auth-form .terms-row{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.auth-form .terms-row input{
+  width: auto;
+  margin-top: 4px;
+}
+
+/* textarea should feel premium and not inherit global spacing weirdness */
+.auth-form textarea{
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* keep actions consistent and not too tight after long forms */
+.auth-actions{
+  margin-top: 18px;
 }
 
 /* =========================================================
