@@ -35,7 +35,6 @@
       </div>
 
       <a class="kac-link" href="contact.html">Contact</a>
-      <a class="kac-link" href="login.html">Login</a>
       <a class="kac-cta" href="register.html">Join</a>
     </div>
   </nav>
@@ -71,72 +70,7 @@
   </div>
 </section>
 
-<section class="auth-page">
-  <div class="auth-container">
-    <div class="auth-card">
-      <h1 class="auth-title">Join Kick-Ass Cocoa</h1>
-      <p class="auth-subtitle">
-        A sisterhood for bold women building confidence, growth, and legacy.
-      </p>
-
-      <!-- keep YOUR existing Netlify form attributes/hidden fields -->
-      <form class="auth-form" name="kac-register" method="POST" data-netlify="true"
-            data-netlify-honeypot="bot-field" action="register-success.html">
-
-        <input type="hidden" name="form-name" value="kac-register" />
-        <p class="hidden">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
-        <div class="auth-row">
-          <div>
-            <label for="firstName">First name</label>
-            <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
-          </div>
-          <div>
-            <label for="lastName">Last name</label>
-            <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
-          </div>
-        </div>
-
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required />
-
-        <div class="auth-row">
-          <div>
-            <label for="city">City</label>
-            <input id="city" name="city" type="text" autocomplete="address-level2" />
-          </div>
-          <div>
-            <label for="state">State</label>
-            <input id="state" name="state" type="text" autocomplete="address-level1" />
-          </div>
-        </div>
-
-        <label for="goal">What are you here to build right now?</label>
-        <textarea id="goal" name="goal" rows="4"
-          placeholder="Ex: confidence in leadership, consistency, a business launch, career growth..."></textarea>
-
-        <label style="display:flex; gap:10px; align-items:flex-start; margin-top:12px;">
-          <input type="checkbox" name="agree" required style="margin-top:4px; width:auto;" />
-          <span style="color: rgba(26,14,14,0.78);">
-            I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
-          </span>
-        </label>
-
-        <div class="auth-actions">
-          <button class="btn primary-btn" type="submit">Create my membership</button>
-          <a class="btn secondary-btn-dark" href="login.html">Already a member? Log in</a>
-        </div>
-
-        <p class="auth-meta">
-          You’ll see a confirmation screen after submitting.
-        </p>
-      </form>
-    </div>
-  </div>
-</section>
-
+<script src="js/auth.js"></script>
 
 </body>
 </html>
