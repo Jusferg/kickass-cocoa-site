@@ -1209,6 +1209,18 @@ label{
   font-weight: 600;
 }
 
+.spotlight-win{
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(26,14,14,0.85);
+  margin-bottom: 10px;
+}
+
+.spotlight-meta{
+  font-size: 0.9rem;
+  color: rgba(26,14,14,0.65);
+}
+
 /* ---- Accountability Tracker ---- */
 .tracker-bar{
   height: 12px;

@@ -66,6 +66,29 @@ document.addEventListener("DOMContentLoaded", () => {
     statementEl.value = "";
     if (statusEl) statusEl.textContent = "Cleared.";
   });
+
+    // -------------------------------
+  // Auto-populate Spotlight from Wins
+  // -------------------------------
+  const spotlightContainer = document.getElementById("spotlightContent");
+
+  if (spotlightContainer) {
+    const wins = JSON.parse(localStorage.getItem("kac_wins") || "[]");
+
+    // Filter wins marked for spotlight
+    const spotlightWins = wins.filter(w => w.spotlight);
+
+    if (spotlightWins.length > 0) {
+      // Get most recent spotlight win
+      const latest = spotlightWins[spotlightWins.length - 1];
+
+      spotlightContainer.innerHTML = `
+        <p class="spotlight-win">"${latest.text}"</p>
+        <p class="spotlight-meta">Shared by a sister in the community</p>
+      `;
+    }
+  }
+
 });
 
   // -------------------------------
