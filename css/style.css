@@ -1151,6 +1151,23 @@ label{
   font-size: 0.95rem;
 }
 
+/* ---- Grounding Card ---- */
+.hub-grounding{
+  background: rgba(15,11,11,0.02);
+  border: 1px solid rgba(42,18,18,0.08);
+}
+
+.grounding-text{
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(26,14,14,0.85);
+  max-width: 640px;
+}
+
+.hub-grounding h2{
+  color: var(--cocoa);
+}
+
 /* ---- Accountability Tracker ---- */
 .tracker-bar{
   height: 12px;
