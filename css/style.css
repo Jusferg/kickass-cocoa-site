@@ -825,6 +825,12 @@ button:focus-visible{
    10) PAGES
 ========================================================= */
 
+.featured-image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* --- About page --- */
 .about-section{ margin-bottom: 80px; }
 
