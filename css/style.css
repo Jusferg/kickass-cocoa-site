@@ -1168,6 +1168,47 @@ label{
   color: var(--cocoa);
 }
 
+/* ---- Wins Page ---- */
+
+.wins-page{
+  padding: 80px 20px;
+}
+
+.wins-container{
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.wins-page h1{
+  margin-bottom: 10px;
+}
+
+.wins-subtext{
+  color: rgba(26,14,14,0.75);
+  margin-bottom: 30px;
+}
+
+.wins-form textarea{
+  margin-top: 8px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(42,18,18,0.15);
+}
+
+.win-checkbox{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.win-success{
+  margin-top: 16px;
+  color: var(--cocoa);
+  font-weight: 600;
+}
+
 /* ---- Accountability Tracker ---- */
 .tracker-bar{
   height: 12px;

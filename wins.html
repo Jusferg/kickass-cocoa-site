@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share Your Win | Kick-Ass Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="members-page">
+
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="index.html">
+      <span class="kac-logo-mark">KAC</span>
+      <span class="kac-logo-text">Kick-Ass Cocoa</span>
+    </a>
+  </nav>
+</header>
+
+<section class="wins-page">
+  <div class="wins-container">
+    <h1>Share Your Win</h1>
+    <p class="wins-subtext">
+      Big or small — we celebrate movement. This is a space to honor your growth.
+    </p>
+
+    <form id="winForm" class="wins-form">
+
+      <label for="winText">What happened?</label>
+      <textarea id="winText" name="winText" rows="5"
+        placeholder="Ex: I spoke up in a meeting. I finished the proposal. I chose rest instead of burnout..."
+        required></textarea>
+
+      <label class="win-checkbox">
+        <input type="checkbox" id="spotlightPermission" />
+        <span>I’m open to this being featured in Spotlight.</span>
+      </label>
+
+      <button type="submit" class="btn primary-btn">Submit My Win</button>
+
+      <p id="winSuccess" class="win-success hidden">
+        We see you. Keep going. 🔥
+      </p>
+
+    </form>
+  </div>
+</section>
+
+<script src="js/wins.js"></script>
+</body>
+</html>
