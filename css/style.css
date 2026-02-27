@@ -1885,6 +1885,59 @@ label{
   }
 }
 
+/* ==========================
+   AUTH OVERRIDES (Fix register alignment)
+   Put near the BOTTOM of style.css
+========================== */
+
+/* body.auth-page = background for auth screens */
+body.auth-page{
+  background: rgba(15,11,11,0.03);
+}
+
+/* Force the SECTION wrapper (not the body) to do the centering */
+body.auth-page section.auth-page{
+  min-height: calc(100vh - 86px);  /* header height allowance */
+  display: grid !important;
+  place-items: center !important;  /* center horizontally + vertically */
+  padding: 60px 20px;
+}
+
+/* Register pages are taller—start a bit higher but still centered horizontally */
+body.auth-page section.auth-page.register{
+  place-items: start center !important; /* top-ish, but centered */
+  padding-top: 44px;
+  padding-bottom: 70px;
+}
+
+/* Ensure the card isn't stretching full width */
+body.auth-page .auth-container{
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Guarantee the “card” look shows up */
+body.auth-page .auth-card{
+  width: 100%;
+  background: #fff;
+  border-radius: 18px;
+  padding: 34px;
+  border: 1px solid rgba(42,18,18,0.06);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+body.auth-page .auth-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  height: 5px;
+  width: 100%;
+  background: var(--accent);
+}
+
 
 
 
