@@ -283,44 +283,70 @@ if (session && welcomeEl) {
     loadState();
   }
 
+
+
 /* ===============================
-   MEMBER NAV AVATAR
+   MEMBER AVATAR DROPDOWN (with initials/photo)
 ================================ */
 
-const avatarEl = document.getElementById("memberAvatar");
-const initialsEl = document.getElementById("memberInitials");
+document.addEventListener("DOMContentLoaded", () => {
+  const avatarBtn = document.getElementById("memberAvatarBtn");
+  const dropdown = document.getElementById("memberDropdown");
+  const initialsSpan = document.getElementById("memberInitials");
 
-if (avatarEl) {
+  if (!avatarBtn) return;
 
   const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
 
-if(user.avatar){
-  avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile">`;
-} else {
-  const initialsText = initials(user.firstName, user.lastName);
-  avatarBtn.textContent = initialsText;
-}
-}
+  function getInitials(u) {
+    const first = (u.firstName || "").trim();
+    const last = (u.lastName || "").trim();
 
-/* ===============================
-   MEMBER AVATAR DROPDOWN
-================================ */
+    if (first || last) {
+      const f = first ? first[0].toUpperCase() : "";
+      const l = last ? last[0].toUpperCase() : "";
+      return (f + l) || "?";
+    }
 
-const avatarBtn = document.getElementById("memberAvatarBtn");
-const dropdown = document.getElementById("memberDropdown");
+    const dn = (u.displayName || "").trim();
+    if (dn) {
+      const parts = dn.split(/\s+/);
+      const f = parts[0]?.[0]?.toUpperCase() || "";
+      const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
+      return (f + l) || f || "?";
+    }
 
-if (avatarBtn && dropdown) {
+    const email = (u.email || "").trim();
+    if (email) return email[0].toUpperCase();
 
-  avatarBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    dropdown.classList.toggle("show");
-  });
+    return "?";
+  }
 
-  document.addEventListener("click", () => {
-    dropdown.classList.remove("show");
-  });
+  // Render avatar
+  if (user.avatar) {
+    avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
+  } else {
+    const init = getInitials(user);
 
-}
+    // If your button contains a span, update it
+    if (initialsSpan) {
+      initialsSpan.textContent = init;
+    } else {
+      // Otherwise set button text
+      avatarBtn.textContent = init;
+    }
+  }
+
+  // Dropdown behavior
+  if (dropdown) {
+    avatarBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", () => dropdown.classList.remove("show"));
+  }
+});
 
   /* ===============================
    ACCOUNT PAGE PROFILE
