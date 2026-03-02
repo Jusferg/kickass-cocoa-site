@@ -29,9 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const session = JSON.parse(localStorage.getItem("loggedInUser") || "null");
   const welcomeEl = document.getElementById("welcomeUser");
 
+function formatName(name) {
+  if (!name) return "";
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+function getGreeting() {
+  const hour = new Date().getHours();
+
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
+
 if (session && welcomeEl) {
-  const name = [session.firstName, session.lastName].filter(Boolean).join(" ");
-  welcomeEl.textContent = name ? `Welcome, ${name} 👋` : `Welcome back 👋`;
+  const first = formatName(session.firstName);
+  const greeting = getGreeting();
+
+  welcomeEl.textContent = first
+    ? `${greeting}, ${first} 👋`
+    : `${greeting} 👋`;
 }
 
 
