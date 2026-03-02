@@ -604,6 +604,26 @@ body.auth-page .auth-page.register{
   display: block;
 }
 
+.kac-logo-img{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;      /* matches your style */
+  object-fit: cover;
+  display: block;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+@media (max-width: 560px){
+  .kac-logo-img{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+  .kac-logo-text{
+    font-size: 0.95rem;
+  }
+}
+
 
 /* =========================================================
    7) HERO SLIDER (Home)
