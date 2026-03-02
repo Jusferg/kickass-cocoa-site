@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Registration Received | Kick-Ass Cocoa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="index.html">
+      <span class="kac-logo-mark">KAC</span>
+      <span class="kac-logo-text">Kick-Ass Cocoa</span>
+    </a>
+
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="index.html">Home</a>
+
+      <div class="kac-dropdown">
+        <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
+          About <span class="kac-caret">▾</span>
+        </button>
+        <div class="kac-dropmenu" role="menu">
+          <a href="about.html" role="menuitem">Our Story</a>
+          <a href="about.html#board" role="menuitem">Board</a>
+          <a href="about.html#vision" role="menuitem">Vision</a>
+          <a href="about.html#statement" role="menuitem">Statement</a>
+        </div>
+      </div>
+
+      <a class="kac-link" href="contact.html">Contact</a>
+      <a class="kac-link" href="login.html">Login</a>
+      <a class="kac-cta" href="register.html">Join</a>
+    </div>
+  </nav>
+</header>
+
+<section class="account-page">
+  <div class="account-container">
+
+    <h1 class="account-title">My Account</h1>
+    <p class="account-subtitle">
+      Update how you appear in the community.
+    </p>
+
+    <div class="account-card">
+
+      <!-- Avatar Preview -->
+      <div class="account-avatar">
+        <div id="avatarPreview" class="avatar-circle">TF</div>
+      </div>
+
+      <form id="accountForm" class="account-form">
+
+        <label for="displayName">Display name</label>
+        <input id="displayName" type="text">
+
+        <label for="avatarUrl">Profile image URL (optional)</label>
+        <input id="avatarUrl" type="url" placeholder="https://image-link.jpg">
+
+        <div class="account-actions">
+          <button class="btn primary-btn" type="submit">
+            Save profile
+          </button>
+        </div>
+
+        <p id="accountStatus" class="account-status"></p>
+
+      </form>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

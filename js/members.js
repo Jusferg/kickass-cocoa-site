@@ -51,8 +51,6 @@ if (session && welcomeEl) {
     : `${greeting} 👋`;
 }
 
-
-
   // Member statement (persist until logout via core.js)
   const statementEl = document.getElementById("memberStatement");
   const saveBtn = document.getElementById("saveStatement");
@@ -276,3 +274,48 @@ if (session && welcomeEl) {
 
     loadState();
   }
+
+  /* ===============================
+   ACCOUNT PAGE PROFILE
+================================ */
+
+const accountForm = document.getElementById("accountForm");
+
+if (accountForm) {
+
+  const displayNameInput = document.getElementById("displayName");
+  const avatarUrlInput = document.getElementById("avatarUrl");
+  const avatarPreview = document.getElementById("avatarPreview");
+  const status = document.getElementById("accountStatus");
+
+  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
+
+  function initials(name){
+    if(!name) return "?";
+    return name.charAt(0).toUpperCase();
+  }
+
+  // Prefill
+  if(user.displayName){
+    displayNameInput.value = user.displayName;
+  }
+
+  if(user.avatar){
+    avatarPreview.style.backgroundImage = `url(${user.avatar})`;
+    avatarPreview.style.backgroundSize = "cover";
+    avatarPreview.textContent = "";
+  } else {
+    avatarPreview.textContent = initials(user.firstName);
+  }
+
+  accountForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    user.displayName = displayNameInput.value.trim();
+    user.avatar = avatarUrlInput.value.trim();
+
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+
+    status.textContent = "Profile updated.";
+  });
+}
