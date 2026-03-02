@@ -283,6 +283,45 @@ if (session && welcomeEl) {
     loadState();
   }
 
+/* ===============================
+   MEMBER NAV AVATAR
+================================ */
+
+const avatarEl = document.getElementById("memberAvatar");
+const initialsEl = document.getElementById("memberInitials");
+
+if (avatarEl) {
+
+  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
+
+if(user.avatar){
+  avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile">`;
+} else {
+  const initialsText = initials(user.firstName, user.lastName);
+  avatarBtn.textContent = initialsText;
+}
+}
+
+/* ===============================
+   MEMBER AVATAR DROPDOWN
+================================ */
+
+const avatarBtn = document.getElementById("memberAvatarBtn");
+const dropdown = document.getElementById("memberDropdown");
+
+if (avatarBtn && dropdown) {
+
+  avatarBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("show");
+  });
+
+  document.addEventListener("click", () => {
+    dropdown.classList.remove("show");
+  });
+
+}
+
   /* ===============================
    ACCOUNT PAGE PROFILE
 ================================ */
