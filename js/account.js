@@ -13,12 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!name) return "?";
     const parts = name.trim().split(/\s+/);
     const f = parts[0]?.[0]?.toUpperCase() || "";
-    const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
+    const l = parts.length > 1 ? parts[parts.length - 1][0]?.toUpperCase() : "";
     return (f + l) || f || "?";
   }
 
   function isLikelyImageUrl(url) {
-    // basic check: must be http(s) and not empty
     try {
       const u = new URL(url);
       return u.protocol === "http:" || u.protocol === "https:";
@@ -30,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function setPreviewFromUrl(url, fallbackText) {
     if (!avatarPreview) return;
 
-    if (isLikelyImageUrl(url)) {
+    if (url && isLikelyImageUrl(url)) {
       avatarPreview.style.backgroundImage = `url("${url}")`;
       avatarPreview.style.backgroundSize = "cover";
       avatarPreview.style.backgroundPosition = "center";
@@ -41,19 +40,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function getFallback() {
+    return initialsFromName((displayNameInput?.value || user.displayName || user.email || "").trim());
+  }
+
   // Prefill
   if (displayNameInput && user.displayName) displayNameInput.value = user.displayName;
   if (avatarUrlInput && user.avatar) avatarUrlInput.value = user.avatar;
 
-  const fallback = initialsFromName(user.displayName || user.email || "");
-  setPreviewFromUrl(user.avatar, fallback);
+  // Initial render
+  setPreviewFromUrl(user.avatar, getFallback());
 
   // Live preview while typing/pasting
   if (avatarUrlInput) {
     avatarUrlInput.addEventListener("input", () => {
-      const url = avatarUrlInput.value.trim();
-      const fb = initialsFromName((displayNameInput?.value || user.displayName || user.email || ""));
-      setPreviewFromUrl(url, fb);
+      setPreviewFromUrl(avatarUrlInput.value.trim(), getFallback());
     });
   }
 
@@ -64,16 +65,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = (avatarUrlInput?.value || "").trim();
 
     if (url && !isLikelyImageUrl(url)) {
-      status.textContent = "Please paste a valid URL that starts with https://";
+      if (status) status.textContent = "Please paste a valid URL that starts with https://";
       return;
     }
 
     user.avatar = url; // save URL (or empty string clears)
     localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-    const fb = initialsFromName(user.displayName || user.email || "");
-    setPreviewFromUrl(user.avatar, fb);
-
-    status.textContent = "Saved.";
+    // ✅ Update instantly
+    setPreviewFromUrl(user.avatar, getFallback());
+    if (status) status.textContent = "Profile updated.";
   });
 });
