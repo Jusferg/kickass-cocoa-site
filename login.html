@@ -72,6 +72,18 @@
 
 <script src="js/auth.js"></script>
 <script src="js/auth-real.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const savedEmail = localStorage.getItem("kac_prefill_email");
+  const loginEmail = document.getElementById("loginEmail");
+
+  if (savedEmail && loginEmail) {
+    loginEmail.value = savedEmail;
+    localStorage.removeItem("kac_prefill_email");
+  }
+});
+</script>
+
 </body>
 </html>
 

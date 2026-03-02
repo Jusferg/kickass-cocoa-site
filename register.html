@@ -121,5 +121,18 @@
 
 <script src="js/core.js"></script>
 <script src="js/auth-real.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector('form[name="kac-register"]');
+  const emailInput = document.getElementById("regEmail");
+
+  if (!form || !emailInput) return;
+
+  form.addEventListener("submit", () => {
+    localStorage.setItem("kac_prefill_email", emailInput.value);
+  });
+});
+</script>
+
 </body>
 </html>
