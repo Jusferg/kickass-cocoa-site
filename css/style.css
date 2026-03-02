@@ -382,6 +382,11 @@ body.auth-page .auth-page.register{
   color: #fff;
 }
 
+.kac-link.is-active{
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+}
+
 .kac-cta{
   text-decoration: none;
   padding: 10px 14px;

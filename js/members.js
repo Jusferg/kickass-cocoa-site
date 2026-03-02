@@ -87,6 +87,14 @@ if (session && welcomeEl) {
     if (statusEl) statusEl.textContent = "Cleared.";
   });
 
+  document.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "logoutBtn") {
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+  }
+});
+
     // -------------------------------
   // Auto-populate Spotlight from Wins
   // -------------------------------
