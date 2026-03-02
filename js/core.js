@@ -4,6 +4,21 @@
  * - Logout button (if present)
  ****************************************************/
 console.log("core.js loaded ✅");
+
+function requireAuth() {
+  const session = JSON.parse(localStorage.getItem("loggedInUser") || "null");
+  if (!session) window.location.href = "login.html";
+  return session;
+}
+
+  const prefill = localStorage.getItem("kac_prefill_login_email");
+  if (prefill) {
+    const el = document.getElementById("loginEmail");
+    if (el) el.value = prefill;
+    localStorage.removeItem("kac_prefill_login_email");
+  }
+
+
 document.addEventListener("DOMContentLoaded", () => {
   // ---------- NAV ----------
   const burger = document.querySelector(".kac-burger");
