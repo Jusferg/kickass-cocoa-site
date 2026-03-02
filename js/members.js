@@ -298,6 +298,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
 
+  function renderAvatarEverywhere(user) {
+  // Account preview box
+  const avatarPreview = document.getElementById("avatarPreview");
+
+  // Nav avatar button (if present on account page)
+  const avatarBtn = document.getElementById("memberAvatarBtn");
+  const initialsSpan = document.getElementById("memberInitials");
+
+  function getInitials(u) {
+    const dn = (u.displayName || "").trim();
+    if (dn) {
+      const parts = dn.split(/\s+/);
+      const f = parts[0]?.[0]?.toUpperCase() || "";
+      const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
+      return (f + l) || f || "?";
+    }
+    const email = (u.email || "").trim();
+    return email ? email[0].toUpperCase() : "?";
+  }
+
+  const fallback = getInitials(user);
+
+  // 1) Preview
+  if (avatarPreview) {
+    if (user.avatar) {
+      avatarPreview.style.backgroundImage = `url("${user.avatar}")`;
+      avatarPreview.style.backgroundSize = "cover";
+      avatarPreview.style.backgroundPosition = "center";
+      avatarPreview.textContent = "";
+    } else {
+      avatarPreview.style.backgroundImage = "";
+      avatarPreview.textContent = fallback;
+    }
+  }
+
+  // 2) Navbar avatar (on account page)
+  if (avatarBtn) {
+    if (user.avatar) {
+      avatarBtn.innerHTML = `
+        <img src="${user.avatar}"
+             alt="Profile"
+             style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
+             onerror="this.remove(); this.parentElement.textContent='${fallback}';" />
+      `;
+    } else {
+      // If your button contains the span
+      if (initialsSpan) initialsSpan.textContent = fallback;
+      avatarBtn.textContent = fallback;
+    }
+  }
+}
+
   function getInitials(u) {
     const first = (u.firstName || "").trim();
     const last = (u.lastName || "").trim();
@@ -389,6 +441,9 @@ if (accountForm) {
 
     localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-    status.textContent = "Profile updated.";
+// ✅ instant visual update (no refresh needed)
+renderAvatarEverywhere(user);
+
+status.textContent = "Profile updated.";
   });
 }

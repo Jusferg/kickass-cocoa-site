@@ -56,19 +56,23 @@
         <div id="avatarPreview" class="avatar-circle">TF</div>
       </div>
 
-      <form id="accountForm" class="account-form">
+      <form id="accountForm">
+  <label for="displayName">Display name</label>
+  <input id="displayName" type="text" placeholder="Tia Ferguson" />
 
-        <label for="displayName">Display name</label>
-        <input id="displayName" type="text">
+  <label for="avatarUrl">Profile image URL</label>
+  <input
+    id="avatarUrl"
+    type="url"
+    placeholder="Paste an image link (https://...)"
+    autocomplete="off"
+  />
 
-        <label for="avatarUrl">Profile image URL (optional)</label>
-        <input id="avatarUrl" type="url" placeholder="https://image-link.jpg">
+  <div class="avatar-preview" id="avatarPreview">TF</div>
 
-        <div class="account-actions">
-          <button class="btn primary-btn" type="submit">
-            Save profile
-          </button>
-        </div>
+  <button class="btn primary-btn" type="submit">Save</button>
+  <p id="accountStatus" class="account-status"></p>
+</form>
 
         <p id="accountStatus" class="account-status"></p>
 
