@@ -26,10 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = requireAuth();
 
   // Optional welcome (only if you have an element with id="welcomeUser")
+  const session = JSON.parse(localStorage.getItem("loggedInUser") || "null");
   const welcomeEl = document.getElementById("welcomeUser");
-  if (welcomeEl && user?.email) {
-    welcomeEl.textContent = `Welcome, ${user.email}`;
-  }
+
+if (session && welcomeEl) {
+  const name = [session.firstName, session.lastName].filter(Boolean).join(" ");
+  welcomeEl.textContent = name ? `Welcome, ${name} 👋` : `Welcome back 👋`;
+}
+
+
 
   // Member statement (persist until logout via core.js)
   const statementEl = document.getElementById("memberStatement");

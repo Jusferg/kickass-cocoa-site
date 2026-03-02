@@ -124,12 +124,17 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector('form[name="kac-register"]');
-  const emailInput = document.getElementById("regEmail");
-
-  if (!form || !emailInput) return;
+  if (!form) return;
 
   form.addEventListener("submit", () => {
-    localStorage.setItem("kac_prefill_email", emailInput.value);
+    const email = document.getElementById("regEmail")?.value?.trim() || "";
+    const first = document.getElementById("firstName")?.value?.trim() || "";
+    const last = document.getElementById("lastName")?.value?.trim() || "";
+
+    // used for prefill + auto-login on success page
+    localStorage.setItem("kac_last_register_email", email);
+    localStorage.setItem("kac_last_register_first", first);
+    localStorage.setItem("kac_last_register_last", last);
   });
 });
 </script>

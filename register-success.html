@@ -29,5 +29,32 @@
   </div>
 </section>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const email = localStorage.getItem("kac_last_register_email");
+  const firstName = localStorage.getItem("kac_last_register_first") || "";
+  const lastName = localStorage.getItem("kac_last_register_last") || "";
+
+  if (email) {
+    // Create a lightweight session (prototype auth)
+    localStorage.setItem("loggedInUser", JSON.stringify({
+      email,
+      role: "member",
+      firstName,
+      lastName,
+      loggedAt: new Date().toISOString()
+    }));
+
+    // cleanup
+    localStorage.removeItem("kac_last_register_email");
+    localStorage.removeItem("kac_last_register_first");
+    localStorage.removeItem("kac_last_register_last");
+
+    // Go straight to the dashboard
+    window.location.href = "members-area.html";
+  }
+});
+</script>
+
 </body>
 </html>
