@@ -5,29 +5,12 @@
  * - “Step Into The Room” statement (save/clear, persists until logout)
  ****************************************************/
 
-function getLoggedInUser() {
-  try {
-    return JSON.parse(localStorage.getItem("loggedInUser"));
-  } catch (err) {
-    return null;
-  }
-}
-
+// js/members.js
 function requireAuth() {
-  const user = getLoggedInUser();
+  const user = window.KAC?.getUser?.();
   if (!user) window.location.href = "login.html";
   return user;
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Only run on members pages
-  if (!document.body.classList.contains("members-page")) return;
-
-  const user = requireAuth();
-
-  // Optional welcome (only if you have an element with id="welcomeUser")
-  const session = JSON.parse(localStorage.getItem("loggedInUser") || "null");
-  const welcomeEl = document.getElementById("welcomeUser");
 
 function formatName(name) {
   if (!name) return "";
@@ -35,81 +18,63 @@ function formatName(name) {
 }
 
 function getGreeting() {
-  const hour = new Date().getHours();
-
-  if (hour < 12) return "Good morning";
-  if (hour < 18) return "Good afternoon";
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 18) return "Good afternoon";
   return "Good evening";
 }
 
-if (session && welcomeEl) {
-  const first = formatName(session.firstName);
-  const greeting = getGreeting();
+document.addEventListener("DOMContentLoaded", () => {
+  if (!document.body.classList.contains("members-page")) return;
 
-  welcomeEl.textContent = first
-    ? `${greeting}, ${first} 👋`
-    : `${greeting} 👋`;
-}
+  const user = requireAuth();
 
-  // Member statement (persist until logout via core.js)
+  // Welcome text
+  const welcomeEl = document.getElementById("welcomeUser");
+  if (welcomeEl) {
+    const first = formatName(user.firstName);
+    const greeting = getGreeting();
+    welcomeEl.textContent = first ? `${greeting}, ${first} 👋` : `${greeting} 👋`;
+  }
+
+  // --- Step Into The Room (optional) ---
   const statementEl = document.getElementById("memberStatement");
   const saveBtn = document.getElementById("saveStatement");
   const clearBtn = document.getElementById("clearStatement");
   const statusEl = document.getElementById("statementStatus");
 
-  // If the statement UI isn't on this page yet, do nothing.
-  if (!statementEl || !saveBtn || !clearBtn) return;
-
-  const KEY = "kac_member_statement";
-
-  // Load saved statement
-  const saved = localStorage.getItem(KEY);
-  if (saved) {
-    statementEl.value = saved;
-    if (statusEl) statusEl.textContent = "Saved. We see you.";
-  }
-
-  // Save statement
-  saveBtn.addEventListener("click", () => {
-    const text = statementEl.value.trim();
-    if (!text) {
-      if (statusEl) statusEl.textContent = 'Write something real — then hit “I’m Here.”';
-      return;
+  if (statementEl && saveBtn && clearBtn) {
+    const KEY = "kac_member_statement";
+    const saved = localStorage.getItem(KEY);
+    if (saved) {
+      statementEl.value = saved;
+      if (statusEl) statusEl.textContent = "Saved. We see you.";
     }
-    localStorage.setItem(KEY, text);
-    if (statusEl) statusEl.textContent = "Saved. We see you.";
-  });
 
-  // Clear statement
-  clearBtn.addEventListener("click", () => {
-    localStorage.removeItem(KEY);
-    statementEl.value = "";
-    if (statusEl) statusEl.textContent = "Cleared.";
-  });
+    saveBtn.addEventListener("click", () => {
+      const text = statementEl.value.trim();
+      if (!text) {
+        if (statusEl) statusEl.textContent = 'Write something real — then hit “I’m Here.”';
+        return;
+      }
+      localStorage.setItem(KEY, text);
+      if (statusEl) statusEl.textContent = "Saved. We see you.";
+    });
 
-  document.addEventListener("click", (e) => {
-  if (e.target && e.target.id === "logoutBtn") {
-    e.preventDefault();
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
+    clearBtn.addEventListener("click", () => {
+      localStorage.removeItem(KEY);
+      statementEl.value = "";
+      if (statusEl) statusEl.textContent = "Cleared.";
+    });
   }
-});
 
-    // -------------------------------
-  // Auto-populate Spotlight from Wins
-  // -------------------------------
+  // --- Spotlight from wins (optional) ---
   const spotlightContainer = document.getElementById("spotlightContent");
-
   if (spotlightContainer) {
     const wins = JSON.parse(localStorage.getItem("kac_wins") || "[]");
-
-    // Filter wins marked for spotlight
     const spotlightWins = wins.filter(w => w.spotlight);
-
-    if (spotlightWins.length > 0) {
-      // Get most recent spotlight win
+    if (spotlightWins.length) {
       const latest = spotlightWins[spotlightWins.length - 1];
-
       spotlightContainer.innerHTML = `
         <p class="spotlight-win">"${latest.text}"</p>
         <p class="spotlight-meta">Shared by a sister in the community</p>
@@ -117,11 +82,7 @@ if (session && welcomeEl) {
     }
   }
 
-});
-
-  // -------------------------------
-  // Accountability Tracker (Resets Every Monday + Weekly Streak)
-  // -------------------------------
+  // --- Tracker (only if tracker exists on page) ---
   const trackerFill = document.getElementById("trackerFill");
   const trackerPct = document.getElementById("trackerPct");
   const trackerStreakEl = document.getElementById("trackerStreak");
@@ -129,356 +90,113 @@ if (session && welcomeEl) {
   const trackerNote = document.getElementById("trackerNote");
   const checks = document.querySelectorAll('.tracker-item input[type="checkbox"]');
 
-  if (checks.length && trackerFill && trackerPct) {
-    const KEY = "kac_tracker_v3";
+  if (!checks.length || !trackerFill || !trackerPct) return;
 
-    const isoDate = (d) => new Date(d).toISOString().split("T")[0];
+  const KEY = "kac_tracker_v3";
+  const isoDate = (d) => new Date(d).toISOString().split("T")[0];
 
-    function getMonday(date) {
-      const d = new Date(date);
-      const day = d.getDay();
-      const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-      d.setDate(diff);
-      d.setHours(0, 0, 0, 0);
-      return isoDate(d);
+  function getMonday(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    d.setDate(diff);
+    d.setHours(0,0,0,0);
+    return isoDate(d);
+  }
+
+  function addDays(iso, days) {
+    const d = new Date(iso + "T00:00:00");
+    d.setDate(d.getDate() + days);
+    return isoDate(d);
+  }
+
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(KEY) || "{}"); }
+    catch { return {}; }
+  }
+  function writeStore(data) { localStorage.setItem(KEY, JSON.stringify(data)); }
+
+  function calcPct() {
+    const total = checks.length;
+    const done = Array.from(checks).filter(c => c.checked).length;
+    return { total, done, pct: Math.round((done / total) * 100) };
+  }
+
+  function renderUI(showSaved=true) {
+    const { total, done, pct } = calcPct();
+    trackerFill.style.width = `${pct}%`;
+    trackerPct.textContent = `${pct}%`;
+
+    const store = readStore();
+    const streak = Number(store.streak || 0);
+    if (trackerStreakEl) trackerStreakEl.textContent = String(streak);
+
+    if (trackerNote && showSaved) {
+      trackerNote.textContent = done === total ? "All done. That’s how you lead. ✅" : "Saved automatically.";
     }
+  }
 
-    function addDays(iso, days) {
-      const d = new Date(iso + "T00:00:00");
-      d.setDate(d.getDate() + days);
-      return isoDate(d);
-    }
+  function loadState() {
+    const store = readStore();
+    const currentMonday = getMonday(new Date());
+    const previousMonday = addDays(currentMonday, -7);
 
-    function readStore() {
-      try {
-        return JSON.parse(localStorage.getItem(KEY) || "{}");
-      } catch {
-        return {};
-      }
-    }
+    if (!store.week || store.week !== currentMonday) {
+      const lastCompleted = store.lastCompletedWeek || null;
+      const prevWasCompleted = lastCompleted === previousMonday;
+      const nextStreak = prevWasCompleted ? Number(store.streak || 0) : 0;
 
-    function writeStore(data) {
-      localStorage.setItem(KEY, JSON.stringify(data));
-    }
-
-    function calcPct() {
-      const total = checks.length;
-      const done = Array.from(checks).filter(c => c.checked).length;
-      return { total, done, pct: Math.round((done / total) * 100) };
-    }
-
-    function renderUI(showSaved = true) {
-      const { total, done, pct } = calcPct();
-      trackerFill.style.width = `${pct}%`;
-      trackerPct.textContent = `${pct}%`;
-
-      const store = readStore();
-      const streak = Number(store.streak || 0);
-      if (trackerStreakEl) trackerStreakEl.textContent = String(streak);
-
-      if (trackerNote && showSaved) {
-        trackerNote.textContent =
-          done === total ? "All done. That’s how you lead. ✅" : "Saved automatically.";
-      }
-    }
-
-    function loadState() {
-      const store = readStore();
-      const currentMonday = getMonday(new Date());
-      const previousMonday = addDays(currentMonday, -7);
-
-      // If week changed, reset progress; handle streak continuity
-      if (!store.week || store.week !== currentMonday) {
-        const lastCompleted = store.lastCompletedWeek || null;
-        const prevWasCompleted = lastCompleted === previousMonday;
-
-        // If last completed week isn't immediately previous week, streak breaks
-        const nextStreak = prevWasCompleted ? Number(store.streak || 0) : 0;
-
-        writeStore({
-          week: currentMonday,
-          progress: {},
-          streak: nextStreak,
-          lastCompletedWeek: lastCompleted
-        });
-
-        checks.forEach(cb => (cb.checked = false));
-        renderUI(false);
-        return;
-      }
-
-      // Load saved progress for this week
-      checks.forEach(cb => {
-        const id = cb.dataset.track;
-        cb.checked = !!store.progress?.[id];
-      });
-
+      writeStore({ week: currentMonday, progress: {}, streak: nextStreak, lastCompletedWeek: lastCompleted });
+      checks.forEach(cb => (cb.checked = false));
       renderUI(false);
+      return;
     }
 
-    function saveState() {
-      const store = readStore();
-      const currentMonday = getMonday(new Date());
-
-      const progress = {};
-      checks.forEach(cb => {
-        progress[cb.dataset.track] = cb.checked;
-      });
-
-      // Save progress
-      const updated = {
-        week: currentMonday,
-        progress,
-        streak: Number(store.streak || 0),
-        lastCompletedWeek: store.lastCompletedWeek || null
-      };
-
-      // If just completed all tasks this week AND not already credited, award streak
-      const { total, done } = calcPct();
-      const completedThisWeek = done === total;
-
-      if (completedThisWeek && updated.lastCompletedWeek !== currentMonday) {
-        const previousMonday = addDays(currentMonday, -7);
-
-        // If last completed was previous week, increment; otherwise start at 1
-        updated.streak = (updated.lastCompletedWeek === previousMonday)
-          ? (updated.streak + 1)
-          : 1;
-
-        updated.lastCompletedWeek = currentMonday;
-
-        if (trackerNote) trackerNote.textContent = `Week completed. Streak: ${updated.streak} 🔥`;
-      }
-
-      writeStore(updated);
-    }
-
-    // Wire up events
     checks.forEach(cb => {
-      cb.addEventListener("change", () => {
-        saveState();
-        renderUI(true);
-      });
+      const id = cb.dataset.track;
+      cb.checked = !!store.progress?.[id];
     });
 
-    if (trackerReset) {
-      trackerReset.addEventListener("click", () => {
-        const currentMonday = getMonday(new Date());
-        const store = readStore();
-
-        // Reset progress for this week, keep streak + lastCompletedWeek
-        writeStore({
-          week: currentMonday,
-          progress: {},
-          streak: Number(store.streak || 0),
-          lastCompletedWeek: store.lastCompletedWeek || null
-        });
-
-        checks.forEach(cb => (cb.checked = false));
-        renderUI(true);
-        if (trackerNote) trackerNote.textContent = "Reset. Fresh start.";
-      });
-    }
-
-    loadState();
+    renderUI(false);
   }
 
+  function saveState() {
+    const store = readStore();
+    const currentMonday = getMonday(new Date());
 
+    const progress = {};
+    checks.forEach(cb => (progress[cb.dataset.track] = cb.checked));
 
-/* ===============================
-   MEMBER AVATAR DROPDOWN (with initials/photo)
-================================ */
+    const updated = {
+      week: currentMonday,
+      progress,
+      streak: Number(store.streak || 0),
+      lastCompletedWeek: store.lastCompletedWeek || null
+    };
 
-document.addEventListener("DOMContentLoaded", () => {
-  const avatarBtn = document.getElementById("memberAvatarBtn");
-  const dropdown = document.getElementById("memberDropdown");
-  const initialsSpan = document.getElementById("memberInitials");
+    const { total, done } = calcPct();
+    const completedThisWeek = done === total;
 
-  if (!avatarBtn) return;
-
-  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
-
-  function renderAvatarEverywhere(user) {
-  // Account preview box
-  const avatarPreview = document.getElementById("avatarPreview");
-
-  // Nav avatar button (if present on account page)
-  const avatarBtn = document.getElementById("memberAvatarBtn");
-  const initialsSpan = document.getElementById("memberInitials");
-
-  function getInitials(u) {
-    const dn = (u.displayName || "").trim();
-    if (dn) {
-      const parts = dn.split(/\s+/);
-      const f = parts[0]?.[0]?.toUpperCase() || "";
-      const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
-      return (f + l) || f || "?";
-    }
-    const email = (u.email || "").trim();
-    return email ? email[0].toUpperCase() : "?";
-  }
-
-  const fallback = getInitials(user);
-
-  // 1) Preview
-  if (avatarPreview) {
-    if (user.avatar) {
-      avatarPreview.style.backgroundImage = `url("${user.avatar}")`;
-      avatarPreview.style.backgroundSize = "cover";
-      avatarPreview.style.backgroundPosition = "center";
-      avatarPreview.textContent = "";
-    } else {
-      avatarPreview.style.backgroundImage = "";
-      avatarPreview.textContent = fallback;
-    }
-  }
-
-  // 2) Navbar avatar (on account page)
-  if (avatarBtn) {
-    if (user.avatar) {
-      avatarBtn.innerHTML = `
-        <img src="${user.avatar}"
-             alt="Profile"
-             style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
-             onerror="this.remove(); this.parentElement.textContent='${fallback}';" />
-      `;
-    } else {
-      // If your button contains the span
-      if (initialsSpan) initialsSpan.textContent = fallback;
-      avatarBtn.textContent = fallback;
-    }
-  }
-}
-
-  function getInitials(u) {
-    const first = (u.firstName || "").trim();
-    const last = (u.lastName || "").trim();
-
-    if (first || last) {
-      const f = first ? first[0].toUpperCase() : "";
-      const l = last ? last[0].toUpperCase() : "";
-      return (f + l) || "?";
+    if (completedThisWeek && updated.lastCompletedWeek !== currentMonday) {
+      const previousMonday = addDays(currentMonday, -7);
+      updated.streak = (updated.lastCompletedWeek === previousMonday) ? (updated.streak + 1) : 1;
+      updated.lastCompletedWeek = currentMonday;
+      if (trackerNote) trackerNote.textContent = `Week completed. Streak: ${updated.streak} 🔥`;
     }
 
-    const dn = (u.displayName || "").trim();
-    if (dn) {
-      const parts = dn.split(/\s+/);
-      const f = parts[0]?.[0]?.toUpperCase() || "";
-      const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
-      return (f + l) || f || "?";
-    }
-
-    const email = (u.email || "").trim();
-    if (email) return email[0].toUpperCase();
-
-    return "?";
+    writeStore(updated);
   }
 
-  // Render avatar
-  if (user.avatar) {
-    avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
-  } else {
-    const init = getInitials(user);
+  checks.forEach(cb => cb.addEventListener("change", () => { saveState(); renderUI(true); }));
 
-    // If your button contains a span, update it
-    if (initialsSpan) {
-      initialsSpan.textContent = init;
-    } else {
-      // Otherwise set button text
-      avatarBtn.textContent = init;
-    }
-  }
+  trackerReset?.addEventListener("click", () => {
+    const currentMonday = getMonday(new Date());
+    const store = readStore();
+    writeStore({ week: currentMonday, progress: {}, streak: Number(store.streak || 0), lastCompletedWeek: store.lastCompletedWeek || null });
+    checks.forEach(cb => (cb.checked = false));
+    renderUI(true);
+    if (trackerNote) trackerNote.textContent = "Reset. Fresh start.";
+  });
 
-  // Dropdown behavior
-  if (dropdown) {
-    avatarBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle("show");
-    });
-
-    document.addEventListener("click", () => dropdown.classList.remove("show"));
-  }
+  loadState();
 });
-
-  /* ===============================
-   ACCOUNT PAGE PROFILE
-================================ */
-
-const accountForm = document.getElementById("accountForm");
-
-if (accountForm) {
-
-  const displayNameInput = document.getElementById("displayName");
-  const avatarUrlInput = document.getElementById("avatarUrl");
-  const avatarPreview = document.getElementById("avatarPreview");
-  const status = document.getElementById("accountStatus");
-
-  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
-
-  function initials(name){
-    if(!name) return "?";
-    return name.charAt(0).toUpperCase();
-  }
-
-  // Prefill
-  if(user.displayName){
-    displayNameInput.value = user.displayName;
-  }
-
-  if(user.avatar){
-    avatarPreview.style.backgroundImage = `url(${user.avatar})`;
-    avatarPreview.style.backgroundSize = "cover";
-    avatarPreview.textContent = "";
-  } else {
-    avatarPreview.textContent = initials(user.firstName);
-  }
-
-  accountForm.addEventListener("submit", (e)=>{
-    e.preventDefault();
-
-    user.displayName = displayNameInput.value.trim();
-    user.avatar = avatarUrlInput.value.trim();
-
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-// ✅ instant visual update (no refresh needed)
-renderAvatarEverywhere(user);
-
-status.textContent = "Profile updated.";
-  });
-}
-
-const avatarBtn = document.getElementById("memberAvatarBtn");
-const dropdown = document.getElementById("memberDropdown");
-const initialsEl = document.getElementById("memberInitials");
-
-if (avatarBtn) {
-
-  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
-
-  function initials(name){
-    if(!name) return "?";
-    const parts = name.split(" ");
-    return parts.map(p => p[0]).join("").toUpperCase();
-  }
-
-  if(user.avatar){
-    avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile">`;
-  } else {
-    initialsEl.textContent = initials(user.displayName || user.email);
-  }
-
-}
-
-if (avatarBtn && dropdown){
-
-  avatarBtn.addEventListener("click", (e)=>{
-    e.stopPropagation();
-    dropdown.classList.toggle("show");
-  });
-
-  document.addEventListener("click", ()=>{
-    dropdown.classList.remove("show");
-  });
-
-}

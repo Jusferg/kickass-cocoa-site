@@ -609,7 +609,7 @@ body.auth-page .auth-page.register{
    MEMBER NAV DROPDOWN
 ========================== */
 
-.member-nav-profile{
+.member-nav{
   position: relative;
   display: flex;
   align-items: center;

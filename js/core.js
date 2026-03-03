@@ -3,24 +3,52 @@
  * - Navbar burger + dropdown
  * - Logout button (if present)
  ****************************************************/
-console.log("core.js loaded ✅");
-
-function requireAuth() {
-  const session = JSON.parse(localStorage.getItem("loggedInUser") || "null");
-  if (!session) window.location.href = "login.html";
-  return session;
+// js/core.js
+function getUser() {
+  try { return JSON.parse(localStorage.getItem("loggedInUser") || "null"); }
+  catch { return null; }
 }
 
-  const prefill = localStorage.getItem("kac_prefill_login_email");
-  if (prefill) {
-    const el = document.getElementById("loginEmail");
-    if (el) el.value = prefill;
-    localStorage.removeItem("kac_prefill_login_email");
-  }
+function saveUser(user) {
+  localStorage.setItem("loggedInUser", JSON.stringify(user));
+}
 
+function initialsFromUser(u) {
+  const name = (u?.displayName || `${u?.firstName || ""} ${u?.lastName || ""}`).trim();
+  if (name) {
+    const parts = name.split(/\s+/);
+    const f = parts[0]?.[0]?.toUpperCase() || "";
+    const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
+    return (f + l) || f || "?";
+  }
+  const email = (u?.email || "").trim();
+  return email ? email[0].toUpperCase() : "?";
+}
+
+function renderNavAvatar() {
+  const u = getUser();
+  const btn = document.getElementById("memberAvatarBtn");
+  const initialsSpan = document.getElementById("memberInitials");
+
+  if (!btn) return;
+
+  const fallback = initialsFromUser(u);
+
+  if (u?.avatar) {
+    btn.innerHTML = `
+      <img src="${u.avatar}" alt="Profile"
+           style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
+           onerror="this.remove(); this.parentElement.textContent='${fallback}';" />
+    `;
+  } else {
+    // keep your <span id="memberInitials"> if present
+    if (initialsSpan) initialsSpan.textContent = fallback;
+    else btn.textContent = fallback;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-  // ---------- NAV ----------
+  // NAV burger + About dropdown
   const burger = document.querySelector(".kac-burger");
   const menu = document.querySelector(".kac-menu");
   const drop = document.querySelector(".kac-dropdown");
@@ -31,17 +59,30 @@ document.addEventListener("DOMContentLoaded", () => {
     burger.addEventListener("click", () => {
       const open = menu.classList.toggle("is-open");
       burger.setAttribute("aria-expanded", open ? "true" : "false");
-
       if (!open) {
         drop?.classList.remove("is-open");
         dropBtn?.setAttribute("aria-expanded", "false");
       }
     });
 
+    if (drop && dropBtn) {
+      dropBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = drop.classList.toggle("is-open");
+        dropBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (!drop || !dropBtn) return;
+      if (drop.contains(e.target)) return;
+      drop.classList.remove("is-open");
+      dropBtn.setAttribute("aria-expanded", "false");
+    });
+
     menu.addEventListener("click", (e) => {
       const a = e.target.closest("a");
       if (!a) return;
-
       if (window.innerWidth < 900) {
         menu.classList.remove("is-open");
         burger.setAttribute("aria-expanded", "false");
@@ -49,34 +90,33 @@ document.addEventListener("DOMContentLoaded", () => {
         dropBtn?.setAttribute("aria-expanded", "false");
       }
     });
+
+    dropMenu?.addEventListener("click", (e) => e.stopPropagation());
   }
 
-  if (drop && dropBtn) {
-    dropBtn.addEventListener("click", (e) => {
+  // Logout (one ID only!)
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("#logoutBtn");
+    if (!el) return;
+    e.preventDefault();
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+  });
+
+  // Avatar dropdown
+  const avatarBtn = document.getElementById("memberAvatarBtn");
+  const dropdown = document.getElementById("memberDropdown");
+
+  if (avatarBtn && dropdown) {
+    avatarBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const open = drop.classList.toggle("is-open");
-      dropBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      dropdown.classList.toggle("show");
     });
-
-    document.addEventListener("click", (e) => {
-      if (drop.contains(e.target)) return;
-      drop.classList.remove("is-open");
-      dropBtn.setAttribute("aria-expanded", "false");
-    });
-
-    if (dropMenu) {
-      dropMenu.addEventListener("click", (e) => e.stopPropagation());
-    }
+    document.addEventListener("click", () => dropdown.classList.remove("show"));
   }
 
-  // ---------- LOGOUT ----------
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      localStorage.removeItem("loggedInUser");
-      localStorage.removeItem("kac_member_statement");
-      window.location.href = "login.html";
-    });
-  }
+  renderNavAvatar();
 });
+
+// Expose for other files to call after updates
+window.KAC = { getUser, saveUser, renderNavAvatar, initialsFromUser };
