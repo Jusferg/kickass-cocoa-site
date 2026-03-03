@@ -56,79 +56,56 @@
 
 <main class="members-dashboard">
 
-<section class="member-welcome">
-  <span style="display:inline-block; font-size:0.75rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">
-  Members Area
-  </span>
-  <h1 id="welcomeUser">Welcome Back 👋</h1>
-  <p>You’re officially inside. Let’s build confidence, create momentum, and execute—together.</p>
+  <!-- Welcome / Top actions -->
+  <section class="member-welcome">
+    <span style="display:inline-block; font-size:0.75rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">
+      Members Area
+    </span>
 
-  <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
-    <a class="btn primary-btn" href="events.html">See Upcoming Events</a>
-    <a class="btn secondary-btn-dark" href="resources.html">Explore Resources</a>
-  </div>
-</section>
+    <h1 id="welcomeUser">Welcome Back 👋</h1>
+    <p>You’re officially inside. Let’s build confidence, create momentum, and execute—together.</p>
 
-<section class="hub-card hub-grounding">
-  <div class="hub-header">
-    <h2>Your Space</h2>
-  </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;">
+      <a class="btn primary-btn" href="wins.html">Submit a Win</a>
+      <a class="btn secondary-btn-dark" href="account.html">My Account</a>
+      <a class="btn secondary-btn-dark" href="events.html">Upcoming Events</a>
+    </div>
+  </section>
 
-  <div class="hub-content">
-    <p class="grounding-text">
-      You belong here.
-      <br><br>
-      Growth is not about perfection — it’s about showing up.
-      <br><br>
-      Take what you need. Contribute when you're ready.
-      We move forward together.
-    </p>
-  </div>
-</section>
-
-<section class="members-dashboard">
-
-  <!-- Sisterhood Wins -->
-  <section class="hub-card hub-wins">
+  <!-- Grounding / culture -->
+  <section class="hub-card hub-grounding">
     <div class="hub-header">
-      <h2>Sisterhood Wins</h2>
-      <p>Small wins count. Big wins belong here too.</p>
+      <h2>Your Space</h2>
+      <p>Grounded. Focused. Supported.</p>
     </div>
 
     <div class="hub-content">
-  <p class="hub-highlight">
-    <strong>Win of the Week:</strong> “I spoke up in a meeting—and didn’t shrink.”
-  </p>
-
-  <p class="hub-note">
-    We celebrate progress out loud. Drop your win in the group this week — even if it feels “small.”
-  </p>
-
-  <div class="hub-challenge">
-    <p><strong>Accountability Challenge (7 days):</strong> One bold move a day.</p>
-    <ul>
-      <li>Day 1: Say “no” without over-explaining</li>
-      <li>Day 2: Ask for what you want (clearly)</li>
-      <li>Day 3: Follow up on the thing you’ve been avoiding</li>
-    </ul>
-    <p class="hub-small">Pick your pace. But don’t disappear on yourself.</p>
-  </div>
-</div>
+      <p class="grounding-text">
+        You belong here.
+        <br><br>
+        Growth is not about perfection — it’s about showing up.
+        <br><br>
+        Take what you need. Contribute when you're ready.
+        We move forward together.
+      </p>
+    </div>
   </section>
 
+  <!-- Spotlight (auto-populates from wins) -->
   <section class="hub-card hub-spotlight">
-  <div class="hub-header">
-    <h2>Member Spotlight</h2>
-  </div>
+    <div class="hub-header">
+      <h2>Member Spotlight</h2>
+      <p>Wins worth celebrating.</p>
+    </div>
 
-  <div class="hub-content" id="spotlightContent">
-    <p class="spotlight-placeholder">
-      Your wins could be featured here. Share one when you're ready.
-    </p>
-  </div>
-</section>
+    <div class="hub-content" id="spotlightContent">
+      <p class="spotlight-placeholder">
+        Your wins could be featured here. Share one when you're ready.
+      </p>
+    </div>
+  </section>
 
-  <!-- Quick Links -->
+  <!-- Quick links -->
   <section class="hub-card hub-links">
     <div class="hub-header">
       <h2>Start Here</h2>
@@ -155,93 +132,90 @@
         <span class="ql-title">Need Support?</span>
         <span class="ql-sub">Reach the team</span>
       </a>
-      <a class="btn primary-btn" href="wins.html">
-          Submit a Win
-      </a>
     </div>
   </section>
 
+  <!-- Accountability tracker -->
   <section class="hub-card hub-tracker">
-  <div class="hub-header">
-    <h2>Accountability Tracker</h2>
-    <p>Three moves. One week. Show up for you.</p>
-  </div>
-
-  <div class="tracker">
-    <div class="tracker-bar" aria-hidden="true">
-      <div class="tracker-fill" id="trackerFill" style="width:0%;"></div>
+    <div class="hub-header">
+      <h2>Accountability Tracker</h2>
+      <p>Three moves. One week. Show up for you.</p>
     </div>
-    <p class="tracker-status">
-      Progress: <span id="trackerPct">0%</span>
-    </p>
-    <p class="tracker-streak">Streak: <span id="trackerStreak">0</span> weeks 🔥</p>
 
-    <label class="tracker-item">
-      <input type="checkbox" data-track="1" />
-      <span><strong>One bold move</strong> (speak up, ask, follow up)</span>
-    </label>
+    <div class="tracker">
+      <div class="tracker-bar" aria-hidden="true">
+        <div class="tracker-fill" id="trackerFill" style="width:0%;"></div>
+      </div>
 
-    <label class="tracker-item">
-      <input type="checkbox" data-track="2" />
-      <span><strong>One growth action</strong> (read, learn, reflect)</span>
-    </label>
+      <p class="tracker-status">
+        Progress: <span id="trackerPct">0%</span>
+      </p>
 
-    <label class="tracker-item">
-      <input type="checkbox" data-track="3" />
-      <span><strong>One connection</strong> (encourage, check in, show love)</span>
-    </label>
+      <p class="tracker-streak">
+        Streak: <span id="trackerStreak">0</span> weeks 🔥
+      </p>
 
-    <div class="tracker-actions">
-      <button class="btn secondary-btn-dark" id="trackerReset" type="button">Reset</button>
-      <span class="tracker-note" id="trackerNote">Saved automatically.</span>
+      <label class="tracker-item">
+        <input type="checkbox" data-track="1" />
+        <span><strong>One bold move</strong> (speak up, ask, follow up)</span>
+      </label>
+
+      <label class="tracker-item">
+        <input type="checkbox" data-track="2" />
+        <span><strong>One growth action</strong> (read, learn, reflect)</span>
+      </label>
+
+      <label class="tracker-item">
+        <input type="checkbox" data-track="3" />
+        <span><strong>One connection</strong> (encourage, check in, show love)</span>
+      </label>
+
+      <div class="tracker-actions">
+        <button class="btn secondary-btn-dark" id="trackerReset" type="button">Reset</button>
+        <span class="tracker-note" id="trackerNote">Saved automatically.</span>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-</section>
+  <!-- Optional: featured content (keep if you like the vibe) -->
+  <section class="featured-card featured-book">
+    <div class="featured-content">
+      <span class="badge">Currently Reading</span>
+      <h2>Emotional Intelligence</h2>
+      <p class="author">by Daniel Goleman</p>
 
-<!-- FEATURED BOOK -->
-<section class="featured-card featured-book">
-  <div class="featured-content">
-    <span class="badge">Currently Reading</span>
+      <p class="description">
+        This month’s collective read focuses on self-awareness, emotional
+        regulation, and leadership presence — key skills for personal and
+        professional growth.
+      </p>
 
-    <h2>Emotional Intelligence</h2>
-    <p class="author">by Daniel Goleman</p>
+      <a href="books.html" class="btn primary-btn">View Book</a>
+    </div>
 
-    <p class="description">
-      This month’s collective read focuses on self-awareness, emotional
-      regulation, and leadership presence — key skills for personal and
-      professional growth.
-    </p>
+    <div class="featured-image">
+      <img src="images/books/emotional-intelligence.jpg" alt="Emotional Intelligence Book">
+    </div>
+  </section>
 
-    <a href="books.html" class="btn primary-btn">View Book</a>
-  </div>
+  <section class="featured-card featured-event">
+    <div class="featured-content">
+      <span class="badge accent">Upcoming Event</span>
+      <h2>Leading With Confidence</h2>
+      <p class="event-meta">📅 January 24, 2026 · 🕕 12:30 PM EST</p>
 
-  <div class="featured-image">
-    <img src="images/books/emotional-intelligence.jpg" alt="Emotional Intelligence Book">
-  </div>
-</section>
+      <p class="description">
+        Join us for an empowering discussion centered on confidence, communication,
+        and leadership strategies for women navigating growth.
+      </p>
 
-<!-- UPCOMING EVENT -->
-<section class="featured-card featured-event">
-  <div class="featured-content">
-    <span class="badge accent">Upcoming Event</span>
+      <a href="events.html" class="btn secondary-btn-dark">View Event</a>
+    </div>
 
-    <h2>Leading With Confidence</h2>
-    <p class="event-meta">📅 January 24, 2026 · 🕕 12:30 PM EST</p>
-
-    <p class="description">
-      Join us for an empowering discussion centered on confidence, communication,
-      and leadership strategies for women navigating growth.
-    </p>
-
-    <a href="events.html" class="btn secondary-btn-dark">View Event</a>
-  </div>
-
-  <div class="featured-image">
-    <img src="images/events/confidence-event.jpg" alt="Leading With Confidence Event">
-  </div>
-</section>
+    <div class="featured-image">
+      <img src="images/events/confidence-event.jpg" alt="Leading With Confidence Event">
+    </div>
+  </section>
 
 </main>
 
