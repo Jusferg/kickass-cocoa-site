@@ -624,7 +624,7 @@ body.auth-page .auth-page.register{
   }
 }
 
-/* Header logo image */
+/* ===== Logo Image (Header) ===== */
 .kac-logo-img{
   height: 46px;
   width: auto;
@@ -632,9 +632,7 @@ body.auth-page .auth-page.register{
 }
 
 @media (max-width: 768px){
-  .kac-logo-img{
-    height: 40px;
-  }
+  .kac-logo-img{ height: 40px; }
 }
 
 /* =========================================================
