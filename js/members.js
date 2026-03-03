@@ -447,3 +447,38 @@ renderAvatarEverywhere(user);
 status.textContent = "Profile updated.";
   });
 }
+
+const avatarBtn = document.getElementById("memberAvatarBtn");
+const dropdown = document.getElementById("memberDropdown");
+const initialsEl = document.getElementById("memberInitials");
+
+if (avatarBtn) {
+
+  const user = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
+
+  function initials(name){
+    if(!name) return "?";
+    const parts = name.split(" ");
+    return parts.map(p => p[0]).join("").toUpperCase();
+  }
+
+  if(user.avatar){
+    avatarBtn.innerHTML = `<img src="${user.avatar}" alt="Profile">`;
+  } else {
+    initialsEl.textContent = initials(user.displayName || user.email);
+  }
+
+}
+
+if (avatarBtn && dropdown){
+
+  avatarBtn.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    dropdown.classList.toggle("show");
+  });
+
+  document.addEventListener("click", ()=>{
+    dropdown.classList.remove("show");
+  });
+
+}
