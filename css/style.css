@@ -624,6 +624,18 @@ body.auth-page .auth-page.register{
   }
 }
 
+/* Header logo image */
+.kac-logo-img{
+  height: 46px;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 768px){
+  .kac-logo-img{
+    height: 40px;
+  }
+}
 
 /* =========================================================
    7) HERO SLIDER (Home)
