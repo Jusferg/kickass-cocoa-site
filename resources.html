@@ -10,9 +10,9 @@
 
 <header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">
-    <a class="kac-logo" href="index.html">
-      <span class="kac-logo-mark">KAC</span>
-      <span class="kac-logo-text">Kick-Ass Cocoa</span>
+
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
     </a>
 
     <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
@@ -20,63 +20,119 @@
     </button>
 
     <div class="kac-menu" id="kacMenu">
-      <a class="kac-link" href="index.html">Home</a>
 
-      <div class="kac-dropdown">
-        <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
-          About <span class="kac-caret">▾</span>
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link is-active" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <!-- Avatar -->
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button">
+          <span id="memberInitials">?</span>
         </button>
 
-        <div class="kac-dropmenu" role="menu">
-          <a href="about.html" role="menuitem">Our Story</a>
-          <a href="about.html#board" role="menuitem">Board</a>
-          <a href="about.html#vision" role="menuitem">Vision</a>
-          <a href="about.html#statement" role="menuitem">Statement</a>
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
         </div>
       </div>
 
-      <a class="kac-link" href="contact.html">Contact</a>
-      <a class="kac-link" href="login.html">Login</a>
+      </div>
 
-      <!-- Optional CTA -->
-      <a class="kac-cta" href="register.html">Join</a>
-    </div>
   </nav>
 </header>
 
+<main class="members-dashboard">
 
-<main class="container">
-  <h1>Resource Library</h1>
-  <p class="subtitle">Tools to support your growth, leadership, and purpose.</p>
+<section class="member-welcome">
+  <span class="section-tag">Resources</span>
+  <h1>Tools for Growth</h1>
+  <p>
+    Practical guides, frameworks, and inspiration for leadership,
+    confidence, and intentional living.
+  </p>
+</section>
 
-  <div class="resource-grid">
+<section class="hub-card">
+<div class="hub-header">
+  <h2>Featured Resources</h2>
+  <p>Practical tools from the community.</p>
+</div>
+
+<div class="resource-grid" id="resourceCards">
+
+  <div class="resource-card">
+    <h3>Confidence Framework</h3>
+    <p>Practical steps for speaking up and leading with presence.</p>
+    <a href="#" class="btn secondary-btn-dark">Open Resource</a>
+  </div>
+
+  <div class="resource-card">
+    <h3>Weekly Reflection Guide</h3>
+    <p>A simple structure to review your wins and refocus your goals.</p>
+    <a href="#" class="btn secondary-btn-dark">Open Resource</a>
+  </div>
+
+  <div class="resource-card">
+    <h3>Leadership Communication</h3>
+    <p>How to ask for what you want clearly and professionally.</p>
+    <a href="#" class="btn secondary-btn-dark">Open Resource</a>
+  </div>
+
+</div>
+
+</section>
+
+<section class="hub-card">
+  <div class="hub-header">
+    <h2>Resource Library</h2>
+    <p>Explore by category — more coming soon.</p>
+  </div>
+
+  <div class="resource-grid resource-library">
+
     <a href="books.html" class="resource-card">
       <h3>📚 Books</h3>
       <p>Curated reads focused on leadership, mindset, growth, and wealth.</p>
     </a>
 
-    <div class="resource-card disabled">
+    <div class="resource-card disabled" aria-disabled="true">
       <h3>🎧 Podcasts</h3>
       <p>Coming soon</p>
     </div>
 
-    <div class="resource-card disabled">
+    <div class="resource-card disabled" aria-disabled="true">
       <h3>🧠 Courses</h3>
       <p>Coming soon</p>
     </div>
 
-    <div class="resource-card disabled">
+    <div class="resource-card disabled" aria-disabled="true">
       <h3>📄 Toolkits</h3>
       <p>Coming soon</p>
     </div>
-  </div>
-</main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <p>&copy; 2026 Kick-Ass Cocoa. All rights reserved.</p>
+  </div>
+</section>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
   </div>
 </footer>
+
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
 
 
 <script src="js/core.js" defer></script>

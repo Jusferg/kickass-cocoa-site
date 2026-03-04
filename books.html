@@ -20,14 +20,14 @@
     </button>
 
     <div class="kac-menu" id="kacMenu">
-
       <a class="kac-link" href="members-area.html">Dashboard</a>
       <a class="kac-link" href="resources.html">Resources</a>
+      <a class="kac-link is-active" href="books.html">Books</a>
       <a class="kac-link" href="events.html">Events</a>
 
       <!-- Avatar Menu -->
       <div class="member-nav">
-        <button id="memberAvatarBtn" class="member-avatar" type="button">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
           <span id="memberInitials">?</span>
         </button>
 
@@ -38,18 +38,43 @@
           <a href="#" id="logoutBtn">Logout</a>
         </div>
       </div>
-
     </div>
 
   </nav>
 </header>
 
 
-<main class="container">
-  <h1>Recommended Books</h1>
-  <p class="subtitle">
-    A curated collection supporting growth, leadership, healing, and opportunity.
-  </p>
+<main class="members-dashboard">
+  <section class="member-welcome">
+    <span class="section-tag">Books</span>
+    <h1>Community Reading List</h1>
+    <p class="subtitle">
+      A curated collection supporting growth, leadership, healing, and opportunity.
+    </p>
+  </section>
+  <span class="badge accent">Community Favorite</span>
+  <section class="community-favorite" id="communityFavorite" style="display:none;">
+
+  <!-- <span class="section-tag">Community Favorite</span> -->
+
+  <div class="favorite-card">
+    <h2 id="favoriteTitle"></h2>
+    <p class="favorite-author" id="favoriteAuthor"></p>
+
+    <p class="favorite-rating">
+      ⭐ <span id="favoriteRating"></span>
+      <span id="favoriteCount"></span>
+    </p>
+
+  </div>
+
+</section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Library</h2>
+      <p>Rate what you read. Share what you learn.</p>
+    </div>
 
   <div class="book-grid">
 
@@ -64,14 +89,26 @@
     </p>
     <div class="recommendation">
         <h4>Why We Recommend This</h4>
-        <p>
+        <p class="rec-text rec-collapsed" id="rec-emotional">
         Emotional intelligence is foundational to leadership and self-advocacy.
         This book helps women develop self-awareness, empathy, and emotional
         regulation — skills that directly impact confidence, influence, and growth.
         </p>
+
+        <button class="rec-toggle btn secondary-btn-dark"
+          type="button"
+          data-target="rec-emotional"
+          aria-expanded="false">
+           More
+        </button>
+
+
     </div>
 
     <div class="rating" data-book="emotional-intelligence">
+
+        <p class="rating-label">Member Rating</p>
+
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
@@ -80,7 +117,7 @@
         <span class="rating-text">(No ratings yet)</span>
     </div>
     </br>
-    <a href="https://www.amazon.com/Emotional-Intelligence-Matter-More-Than/dp/055338371X" target="_blank" class="btn">
+    <a href="https://www.amazon.com/Emotional-Intelligence-Matter-More-Than/dp/055338371X" target="_blank" class="btn primary-btn">
       Purchase
     </a>
   </div>
@@ -96,13 +133,25 @@
     </p>
     <div class="recommendation">
         <h4>Why We Recommend This</h4>
-        <p>
+        <p class="rec-text rec-collapsed" id="rec-ted">
             Communication opens doors. This book breaks down how powerful speakers
             connect with audiences and communicate ideas with clarity, confidence,
             and authenticity.
         </p>
+
+        <button class="rec-toggle btn secondary-btn-dark"
+          type="button"
+          data-target="rec-ted"
+          aria-expanded="false">
+          More
+        </button>
+
+
     </div>
     <div class="rating" data-book="talk-like-ted">
+
+        <p class="rating-label">Member Rating</p>
+
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
@@ -112,7 +161,7 @@
     </div>
     </br>
     </br>
-    <a href="https://www.amazon.com/Talk-Like-TED-Public-Speaking/dp/1250041120" target="_blank" class="btn">
+    <a href="https://www.amazon.com/Talk-Like-TED-Public-Speaking/dp/1250041120" target="_blank" class="btn primary-btn">
       Purchase
     </a>
   </div>
@@ -128,12 +177,24 @@
     </p>
     <div class="recommendation">
         <h4>Why We Recommend This</h4>
-        <p>
+        <p class="rec-text rec-collapsed" id="rec-story">
             Storytelling is a leadership skill. This book shows how to use personal
             narrative to build trust, influence decisions, and move people to action.
         </p>
+
+        <button class="rec-toggle btn secondary-btn-dark"
+          type="button"
+          data-target="rec-story"
+          aria-expanded="false">
+            More
+        </button>
+
+
     </div>
-    <div class="rating" data-book="emotional-intelligence">
+    <div class="rating" data-book="unleash-storytelling">
+
+        <p class="rating-label">Member Rating</p>
+
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
@@ -142,7 +203,7 @@
         <span class="rating-text">(No ratings yet)</span>
     </div>
     </br>
-    <a href="https://www.amazon.com/Unleash-Power-Storytelling-Hearts-Change/dp/1119079761" target="_blank" class="btn">
+    <a href="https://www.amazon.com/Unleash-Power-Storytelling-Hearts-Change/dp/1119079761" target="_blank" class="btn primary-btn">
       Purchase
     </a>
   </div>
@@ -158,12 +219,24 @@
     </p>
     <div class="recommendation">
         <h4>Why We Recommend This</h4>
-        <p>
+        <p class="rec-text rec-collapsed" id="rec-exec">
          Clear communication builds authority. This classic helps leaders organize
          thoughts, speak concisely, and command attention in professional spaces.
         </p>
+
+        <button class="rec-toggle btn secondary-btn-dark"
+          type="button"
+          data-target="rec-exec"
+          aria-expanded="false">
+            More
+        </button>
+
+
     </div>
-    <div class="rating" data-book="emotional-intelligence">
+    <div class="rating" data-book="articulate-executive">
+
+        <p class="rating-label">Member Rating</p>
+
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
@@ -173,7 +246,7 @@
     </div>
     </br>
     </br>
-    <a href="https://www.amazon.com/Articulate-Executive-Communication-Excellence-Business/dp/155623497X" target="_blank" class="btn">
+    <a href="https://www.amazon.com/Articulate-Executive-Communication-Excellence-Business/dp/155623497X" target="_blank" class="btn primary-btn">
       Purchase
     </a>
   </div>
@@ -189,12 +262,24 @@
     </p>
     <div class="recommendation">
         <h4>Why We Recommend This</h4>
-        <p>
+        <p class="rec-text rec-collapsed" id="rec-crucial">
          Growth requires honest dialogue. This book equips readers to navigate
          high-stakes conversations with confidence, respect, and emotional control.
         </p>
+
+        <button class="rec-toggle btn secondary-btn-dark"
+          type="button"
+          data-target="rec-crucial"
+          aria-expanded="false">
+            More
+        </button>
+
+
     </div>
-    <div class="rating" data-book="emotional-intelligence">
+    <div class="rating" data-book="crucial-conversations">
+
+        <p class="rating-label">Member Rating</p>
+
         <span class="star" data-value="1">★</span>
         <span class="star" data-value="2">★</span>
         <span class="star" data-value="3">★</span>
@@ -203,12 +288,13 @@
         <span class="rating-text">(No ratings yet)</span>
     </div>
     </br>
-    <a href="https://www.amazon.com/Crucial-Conversations-Talking-Stakes-Second/dp/0071771328" target="_blank" class="btn">
+    <a href="https://www.amazon.com/Crucial-Conversations-Talking-Stakes-Second/dp/0071771328" target="_blank" class="btn primary-btn">
       Purchase
     </a>
   </div>
 
 </div>
+</section>
 
 </main>
 
