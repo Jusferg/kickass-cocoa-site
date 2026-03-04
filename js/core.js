@@ -2,8 +2,10 @@
  * core.js — runs on every page
  * - Navbar burger + dropdown
  * - Logout button (if present)
+ * - Avatar render + dropdown
+ * - Login handler (if #loginForm exists)
  ****************************************************/
-// js/core.js
+
 function getUser() {
   try { return JSON.parse(localStorage.getItem("loggedInUser") || "null"); }
   catch { return null; }
@@ -41,14 +43,15 @@ function renderNavAvatar() {
            onerror="this.remove(); this.parentElement.textContent='${fallback}';" />
     `;
   } else {
-    // keep your <span id="memberInitials"> if present
     if (initialsSpan) initialsSpan.textContent = fallback;
     else btn.textContent = fallback;
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // =========================
   // NAV burger + About dropdown
+  // =========================
   const burger = document.querySelector(".kac-burger");
   const menu = document.querySelector(".kac-menu");
   const drop = document.querySelector(".kac-dropdown");
@@ -94,16 +97,22 @@ document.addEventListener("DOMContentLoaded", () => {
     dropMenu?.addEventListener("click", (e) => e.stopPropagation());
   }
 
+  // =========================
   // Logout (one ID only!)
+  // =========================
   document.addEventListener("click", (e) => {
     const el = e.target.closest("#logoutBtn");
     if (!el) return;
     e.preventDefault();
     localStorage.removeItem("loggedInUser");
+    // Optional: also clear other “session-ish” things if you want
+    // localStorage.removeItem("kac_member_statement");
     window.location.href = "login.html";
   });
 
+  // =========================
   // Avatar dropdown
+  // =========================
   const avatarBtn = document.getElementById("memberAvatarBtn");
   const dropdown = document.getElementById("memberDropdown");
 
@@ -115,6 +124,46 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", () => dropdown.classList.remove("show"));
   }
 
+  // =========================
+  // LOGIN (only runs on login.html where #loginForm exists)
+  // =========================
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const emailEl = document.getElementById("loginEmail");
+      const passEl = document.getElementById("loginPassword");
+
+      const email = (emailEl?.value || "").trim().toLowerCase();
+      const password = (passEl?.value || "").trim(); // placeholder for future realism
+
+      if (!email) return;
+
+      // Simple role rule for now
+      const role = (email === "admin@kickasscocoa.com") ? "admin" : "member";
+
+      // Keep any existing profile fields (avatar/displayName) if they already exist
+      const existing = getUser() || {};
+
+      const user = {
+        ...existing,
+        email,
+        role,
+        loggedAt: new Date().toISOString(),
+      };
+
+      saveUser(user);
+
+      // Optional: clear password field
+      if (passEl) passEl.value = "";
+
+      // Redirect
+      window.location.href = "members-area.html";
+    });
+  }
+
+  // Render avatar (if present on page)
   renderNavAvatar();
 });
 

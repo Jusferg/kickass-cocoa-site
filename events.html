@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kick A$$ Cocoa - Events</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events | Kick A$$ Cocoa</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    
- <header class="kac-header">
+
+<body class="members-page">
+
+<header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">
-    <a class="kac-logo" href="index.html">
-      <span class="kac-logo-mark">KAC</span>
-      <span class="kac-logo-text">Kick-Ass Cocoa</span>
+
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
     </a>
 
     <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
@@ -20,121 +21,80 @@
     </button>
 
     <div class="kac-menu" id="kacMenu">
-      <a class="kac-link" href="index.html">Home</a>
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link is-active" href="events.html">Events</a>
 
-      <div class="kac-dropdown">
-        <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
-          About <span class="kac-caret">▾</span>
+      <!-- Avatar Menu -->
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
         </button>
 
-        <div class="kac-dropmenu" role="menu">
-          <a href="about.html" role="menuitem">Our Story</a>
-          <a href="about.html#board" role="menuitem">Board</a>
-          <a href="about.html#vision" role="menuitem">Vision</a>
-          <a href="about.html#statement" role="menuitem">Statement</a>
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
         </div>
       </div>
-
-      <a class="kac-link" href="contact.html">Contact</a>
-      <a class="kac-link" href="login.html">Login</a>
-
-      <!-- Optional CTA -->
-      <a class="kac-cta" href="register.html">Join</a>
     </div>
+
   </nav>
 </header>
 
+<main class="members-dashboard">
 
-  <!-- Main content -->
-  <main class="page-container">
-    <section id="calendar-section">
-      <h1>Upcoming Events</h1>
+  <section class="member-welcome">
+    <span class="section-tag">Events</span>
+    <h1>Upcoming Events</h1>
+    <p>Show up. Plug in. Build momentum with the sisterhood.</p>
+  </section>
 
-      <!-- Month navigation -->
-      <div class="calendar-nav">
-        <button id="prevMonth" class="btn">&lt; Prev</button>
-        <span id="monthYear"></span>
-        <button id="nextMonth" class="btn">Next &gt;</button>
-      </div>
-
-      <!-- Calendar table -->
-      <table id="calendar" class="calendar-table">
-        <thead>
-          <tr>
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-
-      <!-- Admin form -->
-      <div id="adminForm" class="card hidden">
-        <h2>Add New Event</h2>
-        <label for="eventTitle">Event Title</label>
-        <input type="text" id="eventTitle" placeholder="Enter event name">
-
-        <label for="eventStart">Start Date</label>
-        <input type="date" id="eventStart">
-
-        <label for="eventEnd">End Date</label>
-        <input type="date" id="eventEnd">
-
-        <button id="addEventBtn" class="btn">Add Event</button>
-      </div>
-    </section>
-  </main>
-
-  <footer class="kac-footer">
-  <div class="kac-footer-inner">
-    <div class="kac-footer-top">
-
-      <div class="kac-footer-brand">
-        <div class="kac-footer-logo">
-          <span class="kac-footer-mark">KAC</span>
-          <span class="kac-footer-name">Kick-Ass Cocoa</span>
-        </div>
-        <p class="kac-footer-tagline">
-          Bold women. Real growth. Unstoppable impact.
-        </p>
-        <div class="kac-footer-actions">
-          <a class="kac-footer-cta" href="register.html">Join</a>
-          <a class="kac-footer-link" href="contact.html">Contact</a>
-        </div>
-      </div>
-
-      <div class="kac-footer-col">
-        <h4>Explore</h4>
-        <a href="about.html">Our Story</a>
-        <a href="about.html#vision">Vision</a>
-        <a href="about.html#statement">Statement</a>
-        <a href="books.html">Books</a>
-      </div>
-
-      <div class="kac-footer-col">
-        <h4>Members</h4>
-        <a href="login.html">Login</a>
-        <a href="members-area.html">Members Area</a>
-        <a href="resources.html">Resources</a>
-        <a href="events.html">Events</a>
-      </div>
-
-      <div class="kac-footer-col">
-        <h4>Connect</h4>
-        <!-- Replace # with real links when ready -->
-        <a href="#" target="_blank" rel="noopener">Instagram</a>
-        <a href="#" target="_blank" rel="noopener">Facebook</a>
-        <a href="#" target="_blank" rel="noopener">YouTube</a>
-        <a href="#" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-
+  <section class="hub-card">
+    <div class="calendar-nav">
+      <button id="prevMonth" class="btn secondary-btn-dark" type="button">&lt; Prev</button>
+      <span id="monthYear"></span>
+      <button id="nextMonth" class="btn secondary-btn-dark" type="button">Next &gt;</button>
     </div>
 
+    <table id="calendar" class="calendar-table">
+      <thead>
+        <tr>
+          <th>Sun</th>
+          <th>Mon</th>
+          <th>Tue</th>
+          <th>Wed</th>
+          <th>Thu</th>
+          <th>Fri</th>
+          <th>Sat</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <!-- Admin form (events.js will unhide for admin) -->
+    <div id="adminForm" class="card hidden" style="margin-top:18px;">
+      <h2>Add New Event</h2>
+
+      <label for="eventTitle">Event Title</label>
+      <input type="text" id="eventTitle" placeholder="Enter event name" />
+
+      <label for="eventStart">Start Date</label>
+      <input type="date" id="eventStart" />
+
+      <label for="eventEnd">End Date</label>
+      <input type="date" id="eventEnd" />
+
+      <button id="addEventBtn" class="btn primary-btn" type="button">Add Event</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
     <div class="kac-footer-bottom">
       <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
       <div class="kac-footer-bottom-links">
@@ -145,9 +105,13 @@
   </div>
 </footer>
 
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+
 <script src="js/core.js" defer></script>
 <script src="js/events.js" defer></script>
-
 
 </body>
 </html>

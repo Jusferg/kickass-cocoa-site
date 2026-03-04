@@ -15,7 +15,7 @@ function getLoggedInUser() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Only run if the calendar exists on this page
+
   const calendarTbody = document.querySelector("#calendar tbody");
   const monthYearEl = document.getElementById("monthYear");
   const prevMonthBtn = document.getElementById("prevMonth");
@@ -23,29 +23,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const adminForm = document.getElementById("adminForm");
   const addEventBtn = document.getElementById("addEventBtn");
 
-  if (!calendarTbody || !monthYearEl || !prevMonthBtn || !nextMonthBtn) return;
+  if (!calendarTbody) return;
 
-  console.log("events.js loaded ✅");
+  /* ===============================
+     AUTH GUARD
+  =============================== */
 
-  // Load events
-  let events = JSON.parse(localStorage.getItem("events")) || [];
-
-  // User
   const user = getLoggedInUser();
-  const userIsAdmin = user?.role === "admin";
-  const userIsMember = user?.role === "member";
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-  // Show admin form if admin
-  if (userIsAdmin && adminForm) adminForm.classList.remove("hidden");
+  const userIsAdmin = user.role === "admin";
+  const userIsMember = user.role === "member";
 
-  let currentMonth = new Date().getMonth();
-  let currentYear = new Date().getFullYear();
+  /* ===============================
+     EVENTS STORAGE
+  =============================== */
+
+  let events = JSON.parse(localStorage.getItem("events")) || [];
 
   function saveEvents() {
     localStorage.setItem("events", JSON.stringify(events));
   }
 
+  /* ===============================
+     ADMIN PANEL VISIBILITY
+  =============================== */
+
+  if (userIsAdmin && adminForm) {
+    adminForm.classList.remove("hidden");
+  }
+
+  /* ===============================
+     CALENDAR STATE
+  =============================== */
+
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
+
+  /* ===============================
+     CALENDAR GENERATION
+  =============================== */
+
   function generateCalendar(month = currentMonth, year = currentYear) {
+
     calendarTbody.innerHTML = "";
 
     const firstDay = new Date(year, month, 1).getDay();
@@ -64,10 +87,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
+
       const cell = document.createElement("td");
       const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-      // Highlight today
       const today = new Date();
       if (
         today.getDate() === day &&
@@ -79,42 +102,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cell.innerHTML = `<strong>${day}</strong>`;
 
-      // Add events for this day
-      events.forEach((ev) => {
+      /* ===============================
+         EVENTS FOR DAY
+      =============================== */
+
+      events.forEach(ev => {
+
         if (dateStr >= ev.start && dateStr <= ev.end) {
+
           const evEl = document.createElement("div");
           evEl.classList.add("event");
           evEl.textContent = ev.title;
 
-          // Admin: delete
+          /* ---------- ADMIN DELETE ---------- */
+
           if (userIsAdmin) {
+
             const delBtn = document.createElement("button");
             delBtn.classList.add("rsvp-btn");
             delBtn.style.backgroundColor = "#c0392b";
             delBtn.textContent = "Delete";
+
             delBtn.addEventListener("click", () => {
-              events = events.filter((e) => e !== ev);
+              events = events.filter(e => e.id !== ev.id);
               saveEvents();
               generateCalendar(currentMonth, currentYear);
             });
+
             evEl.appendChild(delBtn);
           }
 
-          // Member: RSVP
-          if (userIsMember && user?.email) {
+          /* ---------- MEMBER RSVP ---------- */
+
+          if (userIsMember && user.email) {
+
+            ev.rsvps = ev.rsvps || [];
+
             const rsvpBtn = document.createElement("button");
             rsvpBtn.classList.add("rsvp-btn");
 
-            ev.rsvps = ev.rsvps || [];
             const hasRSVPed = ev.rsvps.includes(user.email);
 
             rsvpBtn.textContent = hasRSVPed ? "RSVPed" : "RSVP";
             rsvpBtn.disabled = hasRSVPed;
 
             rsvpBtn.addEventListener("click", () => {
-              ev.rsvps.push(user.email);
+
+              if (!ev.rsvps.includes(user.email)) {
+                ev.rsvps.push(user.email);
+              }
+
               saveEvents();
               generateCalendar(currentMonth, currentYear);
+
               alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
             });
 
@@ -123,52 +163,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
           cell.appendChild(evEl);
         }
+
       });
 
       row.appendChild(cell);
 
-      // new row each Saturday
       if ((day + firstDay) % 7 === 0) {
         calendarTbody.appendChild(row);
         row = document.createElement("tr");
       }
     }
 
-    if (row.children.length > 0) calendarTbody.appendChild(row);
+    if (row.children.length > 0) {
+      calendarTbody.appendChild(row);
+    }
+
   }
 
-  // Initial render
-  generateCalendar();
+  /* ===============================
+     MONTH NAVIGATION
+  =============================== */
 
-  // Month navigation
   prevMonthBtn.addEventListener("click", () => {
+
     currentMonth--;
+
     if (currentMonth < 0) {
       currentMonth = 11;
       currentYear--;
     }
+
     generateCalendar(currentMonth, currentYear);
   });
 
   nextMonthBtn.addEventListener("click", () => {
+
     currentMonth++;
+
     if (currentMonth > 11) {
       currentMonth = 0;
       currentYear++;
     }
+
     generateCalendar(currentMonth, currentYear);
   });
 
-  // Admin add event
+  /* ===============================
+     ADMIN ADD EVENT
+  =============================== */
+
   if (userIsAdmin && addEventBtn) {
+
     addEventBtn.addEventListener("click", () => {
+
       const titleEl = document.getElementById("eventTitle");
       const startEl = document.getElementById("eventStart");
       const endEl = document.getElementById("eventEnd");
 
-      const title = titleEl?.value.trim();
-      const start = startEl?.value.trim();
-      const end = endEl?.value.trim();
+      const title = titleEl.value.trim();
+      const start = startEl.value;
+      const end = endEl.value;
 
       if (!title || !start || !end) {
         alert("Please fill out all fields.");
@@ -177,12 +231,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const startDate = new Date(start);
       const endDate = new Date(end);
+
       if (startDate > endDate) {
         alert("Start date cannot be after end date.");
         return;
       }
 
-      events.push({ title, start, end, rsvps: [] });
+      events.push({
+        id: Date.now(),   // unique ID
+        title,
+        start,
+        end,
+        rsvps: []
+      });
+
       saveEvents();
 
       titleEl.value = "";
@@ -190,7 +252,16 @@ document.addEventListener("DOMContentLoaded", () => {
       endEl.value = "";
 
       generateCalendar(currentMonth, currentYear);
+
       alert(`Event "${title}" added successfully!`);
     });
+
   }
+
+  /* ===============================
+     INITIAL CALENDAR
+  =============================== */
+
+  generateCalendar();
+
 });
