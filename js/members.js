@@ -28,52 +28,53 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = requireAuth();
 
   /* ----------------------------
-     Welcome text
-  ---------------------------- */
-  const welcomeEl = document.getElementById("welcomeUser");
+   Welcome text
+---------------------------- */
+const welcomeEl = document.getElementById("welcomeUser");
 
-  function titleCaseWords(str) {
-    return (str || "")
-      .trim()
-      .toLowerCase()
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-  }
+function titleCaseWords(str) {
+  return (str || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
-  function getGreeting() {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 18) return "Good afternoon";
-    return "Good evening";
-  }
+function getGreeting() {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 18) return "Good afternoon";
+  return "Good evening";
+}
 
-  function bestName(u) {
+function bestName(u) {
   if (!u) return "";
 
-  // 1️⃣ Use first name if it exists
-  if (u.firstName) {
+  if (u.firstName && u.firstName.trim()) {
     return titleCaseWords(u.firstName);
   }
 
-  // 2️⃣ Use display name and take first word
-  if (u.displayName) {
-    return titleCaseWords(u.displayName.split(" ")[0]);
+  if (u.displayName && u.displayName.trim()) {
+    const firstWord = u.displayName.trim().split(/\s+/)[0];
+    return titleCaseWords(firstWord);
   }
 
-  // 3️⃣ Fallback to email before @
-  if (u.email) {
+  if (u.email && u.email.trim()) {
     const local = u.email.split("@")[0];
-    const name = local.replace(/[._-]/g, " ");
-    return titleCaseWords(name.split(" ")[0]);
+    const firstPiece = local.split(/[._-]+/)[0];
+    return titleCaseWords(firstPiece);
   }
 
   return "";
 }
 
-  if (welcomeEl) {
-    const greeting = getGreeting();
-    const name = bestName(user);
-    welcomeEl.textContent = name ? `${greeting}, ${name} 👋` : `${greeting} 👋`;
-  }
+if (welcomeEl) {
+  const greeting = getGreeting();
+  const name = bestName(user);
+
+  welcomeEl.textContent = name
+    ? `${greeting}, ${name} 👋`
+    : `${greeting} 👋`;
+}
 
   /* ----------------------------
      Step Into The Room (Statement)
