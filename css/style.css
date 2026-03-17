@@ -1900,11 +1900,31 @@ label{
   background: rgba(212,160,23,0.12);
 }
 
+.has-event strong::after{
+  content: "•";
+  display: block;
+  font-size: 14px;
+  color: var(--accent);
+  line-height: 10px;
+}
+
 .rsvp-count{
-  display:block;
-  font-size:0.75rem;
-  opacity:0.7;
-  margin-top:4px;
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.rsvp-list{
+  margin-top: 6px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.rsvp-name{
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(26,14,14,0.78);
 }
 
 /* RSVP button */
@@ -2238,6 +2258,7 @@ label{
    13) UTILITIES
 ========================================================= */
 .text-center{ text-align: center; }
+
 .hidden{ display: none; }
 
 
