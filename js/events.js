@@ -4,6 +4,7 @@
  * - Admin can add/edit/delete events
  * - Members can RSVP
  * - Persists in localStorage
+ * - Click event to show details below calendar
  ****************************************************/
 
 function getLoggedInUser() {
@@ -58,6 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return /^\d{4}-\d{2}-\d{2}$/.test(s);
   }
 
+  function formatPrettyName(email) {
+    const local = (email || "").split("@")[0];
+    const first = local.split(/[._-]+/)[0] || "";
+    return first.charAt(0).toUpperCase() + first.slice(1);
+  }
+
   function resetEventForm() {
     const titleEl = document.getElementById("eventTitle");
     const startEl = document.getElementById("eventStart");
@@ -71,6 +78,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (addEventBtn) addEventBtn.textContent = "Add Event";
     if (cancelEditBtn) cancelEditBtn.classList.add("hidden");
+  }
+
+  function showEventDetails(ev) {
+    const card = document.getElementById("eventDetailsCard");
+    const title = document.getElementById("detailTitle");
+    const date = document.getElementById("detailDate");
+    const count = document.getElementById("detailCount");
+    const list = document.getElementById("detailRsvpList");
+
+    if (!card || !title || !date || !count || !list) return;
+
+    ev.rsvps = Array.isArray(ev.rsvps) ? ev.rsvps : [];
+
+    title.textContent = ev.title;
+    date.textContent = ev.start === ev.end ? ev.start : `${ev.start} to ${ev.end}`;
+    count.textContent = ev.rsvps.length;
+
+    list.innerHTML = "";
+
+    if (ev.rsvps.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "detail-rsvp-name";
+      empty.textContent = "No RSVPs yet.";
+      list.appendChild(empty);
+    } else {
+      ev.rsvps.forEach((email) => {
+        const item = document.createElement("div");
+        item.className = "detail-rsvp-name";
+        item.textContent = userIsAdmin ? email : formatPrettyName(email);
+        list.appendChild(item);
+      });
+    }
+
+    card.style.display = "block";
   }
 
   function generateCalendar(month = currentMonth, year = currentYear) {
@@ -126,23 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
           rsvpCount.textContent = `${ev.rsvps.length} going`;
           evEl.appendChild(rsvpCount);
 
-          if (userIsAdmin && ev.rsvps.length > 0) {
-          const rsvpList = document.createElement("div");
-          rsvpList.classList.add("rsvp-list");
-
-          ev.rsvps.forEach((email) => {
-          const item = document.createElement("div");
-          item.classList.add("rsvp-name");
-
-          const name = email.split("@")[0].split(/[._-]+/)[0];
-          const prettyName = name.charAt(0).toUpperCase() + name.slice(1);
-
-          item.textContent = prettyName;
-          rsvpList.appendChild(item);
-        });
-
-        evEl.appendChild(rsvpList);
-      }
+          evEl.addEventListener("click", (e) => {
+            if (e.target.closest("button")) return;
+            showEventDetails(ev);
+          });
 
           if (userIsAdmin) {
             const editBtn = document.createElement("button");
@@ -215,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ev.rsvps.push(user.email);
                 saveEvents();
                 generateCalendar(currentMonth, currentYear);
+                showEventDetails(ev);
                 alert(`You RSVP'd for ${ev.title} on ${dateStr}`);
               }
             });

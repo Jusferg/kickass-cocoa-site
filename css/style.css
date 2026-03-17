@@ -1949,6 +1949,25 @@ label{
   color: #555;
 }
 
+.detail-going{
+  margin-bottom: 12px;
+  color: rgba(26,14,14,0.8);
+}
+
+.detail-rsvp-list{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-rsvp-name{
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(15,11,11,0.03);
+  border: 1px solid rgba(42,18,18,0.08);
+  color: rgba(26,14,14,0.82);
+}
+
 #adminForm{
   margin-top: 24px;
   padding: 16px;
