@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const user = requireAuth();
 
-  /* ----------------------------
+/* ----------------------------
    Welcome text
 ---------------------------- */
 const welcomeEl = document.getElementById("welcomeUser");
