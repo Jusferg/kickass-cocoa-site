@@ -15,6 +15,24 @@ function saveUser(user) {
   localStorage.setItem("loggedInUser", JSON.stringify(user));
 }
 
+function getProfiles() {
+  try {
+    return JSON.parse(localStorage.getItem("kac_profiles") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveProfiles(profiles) {
+  localStorage.setItem("kac_profiles", JSON.stringify(profiles));
+}
+
+function getProfileByEmail(email) {
+  if (!email) return null;
+  const profiles = getProfiles();
+  return profiles[email.toLowerCase()] || null;
+}
+
 function initialsFromUser(u) {
   const name = (u?.displayName || `${u?.firstName || ""} ${u?.lastName || ""}`).trim();
   if (name) {
@@ -128,41 +146,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // LOGIN (only runs on login.html where #loginForm exists)
   // =========================
   const loginForm = document.getElementById("loginForm");
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      const emailEl = document.getElementById("loginEmail");
-      const passEl = document.getElementById("loginPassword");
+    const emailEl = document.getElementById("loginEmail");
+    const passEl = document.getElementById("loginPassword");
 
-      const email = (emailEl?.value || "").trim().toLowerCase();
-      const password = (passEl?.value || "").trim(); // placeholder for future realism
+    const email = (emailEl?.value || "").trim().toLowerCase();
+    if (!email) return;
 
-      if (!email) return;
+    const role = (email === "admin@kickasscocoa.com") ? "admin" : "member";
 
-      // Simple role rule for now
-      const role = (email === "admin@kickasscocoa.com") ? "admin" : "member";
+    const savedProfile = getProfileByEmail(email) || {};
 
-      // Keep any existing profile fields (avatar/displayName) if they already exist
-      const existing = getUser() || {};
+    const user = {
+      email,
+      role,
+      displayName: savedProfile.displayName || "",
+      firstName: savedProfile.firstName || "",
+      lastName: savedProfile.lastName || "",
+      avatar: savedProfile.avatar || "",
+      loggedAt: new Date().toISOString()
+    };
 
-      const user = {
-        ...existing,
-        email,
-        role,
-        loggedAt: new Date().toISOString(),
-      };
+    saveUser(user);
 
-      saveUser(user);
-
-      // Optional: clear password field
-      if (passEl) passEl.value = "";
-
-      // Redirect
-      window.location.href = "members-area.html";
-    });
-  }
-
+    if (passEl) passEl.value = "";
+    window.location.href = "members-area.html";
+  });
+}
   // Render avatar (if present on page)
   renderNavAvatar();
 });
