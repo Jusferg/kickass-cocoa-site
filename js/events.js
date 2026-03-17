@@ -92,8 +92,20 @@ document.addEventListener("DOMContentLoaded", () => {
     ev.rsvps = Array.isArray(ev.rsvps) ? ev.rsvps : [];
 
     title.textContent = ev.title;
-    date.textContent = ev.start === ev.end ? ev.start : `${ev.start} to ${ev.end}`;
-    count.textContent = ev.rsvps.length;
+
+    function prettyDate(d){
+    return new Date(d).toLocaleDateString(undefined,{
+    month:"long",
+    day:"numeric",
+    year:"numeric"
+  });
+}
+
+    date.textContent =
+     ev.start === ev.end
+     ? prettyDate(ev.start)
+     : `${prettyDate(ev.start)} — ${prettyDate(ev.end)}`;
+     count.textContent = ev.rsvps.length;
 
     list.innerHTML = "";
 
@@ -112,6 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     card.style.display = "block";
+    card.style.display = "block";
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function generateCalendar(month = currentMonth, year = currentYear) {

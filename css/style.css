@@ -1861,6 +1861,10 @@ label{
   cursor: pointer;
 }
 
+.event.active{
+  outline: 2px solid var(--accent);
+}
+
 .event .tooltip{
   visibility: hidden;
   background-color: #5a3e2b;
