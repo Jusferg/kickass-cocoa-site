@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Save persistent profile by email
     const emailKey = (user.email || "").toLowerCase();
+    console.log("Saving profile for:", emailKey, user);
     if (emailKey) {
       const profiles = getProfiles();
       profiles[emailKey] = {
