@@ -47,14 +47,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function bestName(u) {
-    if (u?.firstName) return titleCaseWords(u.firstName);
-    if (u?.displayName) return titleCaseWords(u.displayName);
-    if (u?.email) {
-      const local = (u.email.split("@")[0] || "").replace(/[._-]+/g, " ");
-      return titleCaseWords(local);
-    }
-    return "";
+  if (!u) return "";
+
+  // 1️⃣ Use first name if it exists
+  if (u.firstName) {
+    return titleCaseWords(u.firstName);
   }
+
+  // 2️⃣ Use display name and take first word
+  if (u.displayName) {
+    return titleCaseWords(u.displayName.split(" ")[0]);
+  }
+
+  // 3️⃣ Fallback to email before @
+  if (u.email) {
+    const local = u.email.split("@")[0];
+    const name = local.replace(/[._-]/g, " ");
+    return titleCaseWords(name.split(" ")[0]);
+  }
+
+  return "";
+}
 
   if (welcomeEl) {
     const greeting = getGreeting();
