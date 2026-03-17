@@ -2008,6 +2008,12 @@ label{
   display: grid;
   place-items: center;
   font-size: 1.4rem;
+  overflow: hidden;
+  transition: transform 0.15s ease;
+}
+
+.avatar-circle:hover{
+  transform: scale(1.04);
 }
 
 .account-form input{
@@ -2022,6 +2028,7 @@ label{
   margin-top: 12px;
   color: var(--cocoa);
   font-weight: 600;
+  min-height: 1.2rem;
 }
 
 /* =========================================================

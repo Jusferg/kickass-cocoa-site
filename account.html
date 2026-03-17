@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Registration Received | Kick-Ass Cocoa</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>My Account | Kick-Ass Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-    
+<body class="members-page">
+
 <header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">
     <a class="kac-logo" href="members-area.html">
@@ -20,10 +24,9 @@
     </button>
 
     <div class="kac-menu" id="kacMenu">
-      <a class="kac-link is-active" href="members-area.html">Dashboard</a>
+      <a class="kac-link" href="members-area.html">Dashboard</a>
       <a class="kac-link" href="wins.html">Submit a Win</a>
 
-      <!-- Avatar menu (logged-in) -->
       <div class="member-nav">
         <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
           <span id="memberInitials">?</span>
@@ -42,15 +45,12 @@
 
 <section class="account-page">
   <div class="account-container">
-
     <h1 class="account-title">My Account</h1>
     <p class="account-subtitle">
       Update how you appear in the community.
     </p>
 
     <div class="account-card">
-
-      <!-- Avatar Preview -->
       <div class="account-avatar">
         <div id="avatarPreview" class="avatar-circle">TF</div>
       </div>
@@ -62,15 +62,29 @@
         <label for="avatarUrl">Profile image URL</label>
         <input id="avatarUrl" type="url" placeholder="Paste an image link (https://...)" />
 
-        <div id="avatarPreview" class="avatar-circle">TF</div>
-
         <button class="btn primary-btn" type="submit">Save</button>
         <p id="accountStatus" class="account-status"></p>
-        </form>
-
+      </form>
     </div>
   </div>
 </section>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
 
 <script src="js/core.js" defer></script>
 <script src="js/account.js" defer></script>
