@@ -47,7 +47,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Prefill
-  if (displayNameInput) displayNameInput.value = user.displayName || "";
+  if (displayNameInput) {
+  if (user.displayName) {
+    displayNameInput.value = user.displayName;
+  } else if (user.email) {
+    const base = user.email.split("@")[0];
+    const first = base.split(/[._-]+/)[0];
+    displayNameInput.value = first.charAt(0).toUpperCase() + first.slice(1);
+  }
+}
   if (avatarUrlInput) avatarUrlInput.value = user.avatar || "";
   setPreview(user.avatar || "");
 
