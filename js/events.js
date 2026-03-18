@@ -158,32 +158,6 @@ function showEventDetails(ev) {
   card.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-    date.textContent =
-     ev.start === ev.end
-     ? prettyDate(ev.start)
-     : `${prettyDate(ev.start)} — ${prettyDate(ev.end)}`;
-     count.textContent = ev.rsvps.length;
-
-    list.innerHTML = "";
-
-    if (ev.rsvps.length === 0) {
-      const empty = document.createElement("div");
-      empty.className = "detail-rsvp-name";
-      empty.textContent = "No RSVPs yet.";
-      list.appendChild(empty);
-    } else {
-      ev.rsvps.forEach((email) => {
-        const item = document.createElement("div");
-        item.className = "detail-rsvp-name";
-        item.textContent = userIsAdmin ? email : formatPrettyName(email);
-        list.appendChild(item);
-      });
-    }
-
-    card.style.display = "block";
-    card.style.display = "block";
-    card.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
 
   function generateCalendar(month = currentMonth, year = currentYear) {
     calendarTbody.innerHTML = "";
