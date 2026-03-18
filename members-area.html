@@ -14,43 +14,35 @@
 
 <header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">
-    <a class="kac-logo" href="index.html">
-  <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
-</a>
 
-<!-- ... -->
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
+    </a>
 
-<div class="kac-menu" id="kacMenu">
-  <a class="kac-link" href="index.html">Home</a>
-
-  <div class="kac-dropdown">
-    <button class="kac-link kac-dropbtn" type="button" aria-expanded="false">
-      About <span class="kac-caret">▾</span>
-    </button>
-    <div class="kac-dropmenu" role="menu">
-      <a href="about.html" role="menuitem">Our Story</a>
-      <a href="about.html#board" role="menuitem">Board</a>
-      <a href="about.html#vision" role="menuitem">Vision</a>
-      <a href="about.html#statement" role="menuitem">Statement</a>
-    </div>
-  </div>
-
-  <a class="kac-link" href="contact.html">Contact</a>
-
-  <!-- Avatar menu (logged-in) -->
-  <div class="member-nav">
-    <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
-      <span id="memberInitials">?</span>
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
     </button>
 
-    <div class="member-dropdown" id="memberDropdown">
-      <a href="members-area.html">Dashboard</a>
-      <a href="account.html">My Account</a>
-      <a href="wins.html">Submit a Win</a>
-      <a href="#" id="logoutBtn">Logout</a>
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link is-active" href="members-area.html">Dashboard</a>
+      <a class="kac-link" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
+        </button>
+
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+
   </nav>
 </header>
 
