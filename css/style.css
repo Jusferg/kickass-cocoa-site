@@ -1958,10 +1958,15 @@ label{
   color: rgba(26,14,14,0.8);
 }
 
+.admin-rsvp-wrap{
+  margin-top: 14px;
+}
+
 .detail-rsvp-list{
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-top: 12px;
 }
 
 .detail-rsvp-name{

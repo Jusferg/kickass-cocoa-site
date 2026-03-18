@@ -80,25 +80,82 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cancelEditBtn) cancelEditBtn.classList.add("hidden");
   }
 
-  function showEventDetails(ev) {
-    const card = document.getElementById("eventDetailsCard");
-    const title = document.getElementById("detailTitle");
-    const date = document.getElementById("detailDate");
-    const count = document.getElementById("detailCount");
-    const list = document.getElementById("detailRsvpList");
+  function formatPrettyName(email) {
+  const local = (email || "").split("@")[0];
+  const first = local.split(/[._-]+/)[0] || "";
+  return first.charAt(0).toUpperCase() + first.slice(1);
+}
 
-    if (!card || !title || !date || !count || !list) return;
-
-    ev.rsvps = Array.isArray(ev.rsvps) ? ev.rsvps : [];
-
-    title.textContent = ev.title;
-
-    function prettyDate(d){
-    return new Date(d).toLocaleDateString(undefined,{
-    month:"long",
-    day:"numeric",
-    year:"numeric"
+function prettyDate(d) {
+  return new Date(d).toLocaleDateString(undefined, {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
   });
+}
+
+function showEventDetails(ev) {
+  const card = document.getElementById("eventDetailsCard");
+  const title = document.getElementById("detailTitle");
+  const date = document.getElementById("detailDate");
+  const count = document.getElementById("detailCount");
+  const adminWrap = document.getElementById("adminRsvpWrap");
+  const toggleBtn = document.getElementById("toggleRsvpBtn");
+  const list = document.getElementById("detailRsvpList");
+
+  if (!card || !title || !date || !count) return;
+
+  ev.rsvps = Array.isArray(ev.rsvps) ? ev.rsvps : [];
+
+  title.textContent = ev.title;
+  date.textContent = ev.start === ev.end
+    ? prettyDate(ev.start)
+    : `${prettyDate(ev.start)} — ${prettyDate(ev.end)}`;
+  count.textContent = ev.rsvps.length;
+
+  // Default hidden state every time a new event is opened
+  if (adminWrap) adminWrap.classList.add("hidden");
+  if (list) {
+    list.innerHTML = "";
+    list.classList.add("hidden");
+  }
+  if (toggleBtn) {
+    toggleBtn.textContent = "View RSVP List";
+  }
+
+  // Admin only: build RSVP list and reveal toggle button
+  if (userIsAdmin && adminWrap && toggleBtn && list) {
+    adminWrap.classList.remove("hidden");
+
+    if (ev.rsvps.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "detail-rsvp-name";
+      empty.textContent = "No RSVPs yet.";
+      list.appendChild(empty);
+    } else {
+      ev.rsvps.forEach((email) => {
+        const item = document.createElement("div");
+        item.className = "detail-rsvp-name";
+        item.textContent = email;
+        list.appendChild(item);
+      });
+    }
+
+    toggleBtn.onclick = () => {
+      const isHidden = list.classList.contains("hidden");
+
+      if (isHidden) {
+        list.classList.remove("hidden");
+        toggleBtn.textContent = "Hide RSVP List";
+      } else {
+        list.classList.add("hidden");
+        toggleBtn.textContent = "View RSVP List";
+      }
+    };
+  }
+
+  card.style.display = "block";
+  card.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
     date.textContent =
