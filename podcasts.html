@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Podcasts | Kick A$$ Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="members-page">
+
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
+    </a>
+
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
+        </button>
+
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
+        </div>
+      </div>
+    </div>
+
+  </nav>
+</header>
+
+<main class="members-dashboard">
+
+  <section class="member-welcome">
+    <span class="section-tag">Podcasts</span>
+    <h1>Listen and Grow</h1>
+    <p>Curated podcasts for confidence, leadership, wealth, wellness, and purpose.</p>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Featured Podcasts</h2>
+      <p>Strong conversations for ambitious women building boldly.</p>
+    </div>
+
+    <div class="podcast-grid">
+
+      <article class="podcast-card">
+        <h3>🎧 Side Hustle Pro</h3>
+        <p class="podcast-meta">Entrepreneurship • Career Growth • Wealth</p>
+        <p>
+          Stories and strategies from Black women entrepreneurs building profitable businesses and bold careers.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+      <article class="podcast-card">
+        <h3>🎧 Balanced Black Girl</h3>
+        <p class="podcast-meta">Wellness • Mindset • Lifestyle</p>
+        <p>
+          Thoughtful conversations on balance, wellness, confidence, and personal growth for modern Black women.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+      <article class="podcast-card">
+        <h3>🎧 Brown Ambition</h3>
+        <p class="podcast-meta">Money • Career • Entrepreneurship</p>
+        <p>
+          Honest, practical conversations about financial independence, career moves, and building real wealth.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+      <article class="podcast-card">
+        <h3>🎧 Earn Your Leisure</h3>
+        <p class="podcast-meta">Investing • Business • Financial Literacy</p>
+        <p>
+          Deep dives into wealth-building, ownership, entrepreneurship, and financial education.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+      <article class="podcast-card">
+        <h3>🎧 Slay Girl Slay</h3>
+        <p class="podcast-meta">Empowerment • Confidence • Healing</p>
+        <p>
+          Encouragement and mindset support for women becoming more whole, confident, and intentional.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+      <article class="podcast-card">
+        <h3>🎧 Therapy for Black Girls</h3>
+        <p class="podcast-meta">Mental Health • Boundaries • Self-Worth</p>
+        <p>
+          Insightful conversations around emotional wellness, relationships, workplace stress, and healing.
+        </p>
+        <div class="podcast-actions">
+          <a href="#" class="btn secondary-btn-dark">Listen</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+
+<script src="js/core.js" defer></script>
+<script src="js/members.js" defer></script>
+
+</body>
+</html>
