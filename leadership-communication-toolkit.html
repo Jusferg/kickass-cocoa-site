@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Leadership Communication Toolkit | Kick A$$ Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="members-page">
+
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
+    </a>
+
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link is-active" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
+        </button>
+
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="members-dashboard">
+
+  <section class="member-welcome">
+    <span class="section-tag">Toolkit</span>
+    <h1>Leadership Communication Toolkit</h1>
+    <p>Use this guided toolkit to strengthen clarity, confidence, and presence in the way you communicate.</p>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Start with the Free Course</h2>
+      <p>Recommended learning path for this toolkit.</p>
+    </div>
+
+    <div class="toolkit-course-card">
+      <span class="badge accent">Free Course</span>
+      <h3>Improving Communication Skills</h3>
+      <p class="toolkit-meta">University of Pennsylvania / Wharton • Coursera</p>
+      <p>
+        This course focuses on communicating more effectively at work and building practical communication strategies you can use immediately.
+      </p>
+
+      <div class="toolkit-actions">
+        <a
+          href="https://www.coursera.org/learn/wharton-communication-skills"
+          class="btn primary-btn"
+          target="_blank"
+          rel="noopener">
+          Open Course
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Why This Matters</h2>
+      <p>How this connects to your growth inside Kick-A$$ Cocoa.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      Clear communication is one of the most powerful leadership skills you can build. Whether you are speaking up in meetings, advocating for yourself, navigating difficult conversations, or sharing your ideas with confidence, communication shapes how people experience your presence and leadership.
+    </p>
+
+    <p class="toolkit-copy">
+      This toolkit is here to help you move beyond consuming content and into intentional reflection and practice.
+    </p>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Kick-A$$ Cocoa Reflection</h2>
+      <p>Use these prompts after your first lesson or module.</p>
+    </div>
+
+    <div class="toolkit-prompts">
+      <div class="toolkit-prompt">
+        <h3>1. Where do I feel strongest when communicating?</h3>
+        <p>Think about settings where your voice already feels steady and confident.</p>
+      </div>
+
+      <div class="toolkit-prompt">
+        <h3>2. Where do I hold back?</h3>
+        <p>Identify the situations where your confidence drops or your message gets smaller.</p>
+      </div>
+
+      <div class="toolkit-prompt">
+        <h3>3. What is one conversation I need to handle differently?</h3>
+        <p>Choose one real moment in your work or life where better communication could create a different outcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Practice Exercise</h2>
+      <p>Turn reflection into action.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      Write a short message below explaining an idea, boundary, or request you want to communicate clearly this week.
+    </p>
+
+    <textarea class="toolkit-textarea" rows="6" placeholder="Write your practice response here..."></textarea>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Next Step</h2>
+      <p>Keep the momentum going.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      After you finish a lesson, come back and refine your response. The goal is not perfect language — it is a clearer, more confident voice.
+    </p>
+  </section>
+
+</main>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+
+<script src="js/core.js" defer></script>
+<script src="js/members.js" defer></script>
+
+</body>
+</html>

@@ -2203,6 +2203,58 @@ flex-wrap:wrap;
   margin-bottom: 10px;
 }
 
+/* ==========================
+   TOOLKIT PAGE
+========================== */
+
+.toolkit-course-card{
+  background: #f7f3ee;
+  border: 1px solid rgba(42,18,18,0.08);
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.toolkit-meta{
+  color: rgba(26,14,14,0.65);
+  margin: 8px 0 10px;
+}
+
+.toolkit-actions{
+  margin-top: 14px;
+}
+
+.toolkit-copy{
+  color: rgba(26,14,14,0.78);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.toolkit-prompts{
+  display: grid;
+  gap: 14px;
+}
+
+.toolkit-prompt{
+  background: rgba(15,11,11,0.03);
+  border: 1px solid rgba(42,18,18,0.08);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.toolkit-prompt h3{
+  margin-bottom: 8px;
+  color: var(--cocoa);
+}
+
+.toolkit-textarea{
+  width: 100%;
+  border: 1px solid rgba(42,18,18,0.15);
+  border-radius: 12px;
+  padding: 14px;
+  font-family: inherit;
+  resize: vertical;
+}  
+
 /* =========================================================
    11) FOOTER — KAC FOOTER
 ========================================================= */
