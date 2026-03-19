@@ -2137,6 +2137,11 @@ margin-top:14px;
 flex-wrap:wrap;
 }
 
+.featured-podcast .author{
+  color: rgba(26,14,14,0.65);
+  margin-bottom: 10px;
+}
+
 /* =========================================================
    11) FOOTER — KAC FOOTER
 ========================================================= */

@@ -283,6 +283,76 @@ if (welcomeEl) {
     loadState();
   }
 
+  /* ----------------------------
+   Podcast of the Week
+---------------------------- */
+const podcastTitle = document.getElementById("podcastTitle");
+const podcastMeta = document.getElementById("podcastMeta");
+const podcastDescription = document.getElementById("podcastDescription");
+const podcastLink = document.getElementById("podcastLink");
+const podcastImage = document.getElementById("podcastImage");
+
+if (podcastTitle && podcastMeta && podcastDescription && podcastLink && podcastImage) {
+  const podcasts = [
+    {
+      title: "Side Hustle Pro",
+      meta: "Entrepreneurship • Career Growth",
+      description: "Stories and strategies from Black women entrepreneurs building profitable businesses and bold careers.",
+      link: "https://podcasts.apple.com/us/podcast/side-hustle-pro/id1183877070",
+      image: "images/podcasts/side-hustle-pro.jpg"
+    },
+    {
+      title: "Balanced Black Girl",
+      meta: "Wellness • Mindset",
+      description: "Thoughtful conversations on personal growth, mental wellness, and living with intention.",
+      link: "https://podcasts.apple.com/us/podcast/balanced-black-girl/id1485657560",
+      image: "images/podcasts/balanced-black-girl.jpg"
+    },
+    {
+      title: "Brown Ambition",
+      meta: "Money • Career",
+      description: "Honest conversations about finances, career growth, and building wealth unapologetically.",
+      link: "https://podcasts.apple.com/us/podcast/brown-ambition/id1050292155",
+      image: "images/podcasts/brown-ambition.jpg"
+    },
+    {
+      title: "Earn Your Leisure",
+      meta: "Investing • Financial Literacy",
+      description: "Breaking down investing, ownership, and wealth-building in ways that empower the community.",
+      link: "https://podcasts.apple.com/us/podcast/earn-your-leisure/id1451132350",
+      image: "images/podcasts/earn-your-leisure.jpg"
+    },
+    {
+      title: "Slay Girl Slay",
+      meta: "Confidence • Empowerment",
+      description: "Encouraging conversations about healing, growth, and becoming the most confident version of yourself.",
+      link: "https://podcasts.apple.com/us/podcast/slay-girl-slay/id1222580011",
+      image: "images/podcasts/slay-girl-slay.jpg"
+    },
+    {
+      title: "Therapy for Black Girls",
+      meta: "Mental Health • Healing",
+      description: "A space dedicated to mental health, boundaries, relationships, and emotional wellness.",
+      link: "https://podcasts.apple.com/us/podcast/therapy-for-black-girls/id1339882526",
+      image: "images/podcasts/therapy-for-black-girls.jpg"
+    }
+  ];
+
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 1);
+  const days = Math.floor((now - start) / 86400000);
+  const weekNumber = Math.floor(days / 7);
+
+  const featured = podcasts[weekNumber % podcasts.length];
+
+  podcastTitle.textContent = featured.title;
+  podcastMeta.textContent = featured.meta;
+  podcastDescription.textContent = featured.description;
+  podcastLink.href = featured.link;
+  podcastImage.src = featured.image;
+  podcastImage.alt = featured.title;
+}
+
   // If you update user avatar/name on account page, call:
   // window.KAC?.renderNavAvatar?.();
 });
