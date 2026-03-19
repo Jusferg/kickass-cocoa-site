@@ -1241,6 +1241,7 @@ body.auth-page .auth-page.register{
 }
 
 /* Board grid */
+
 .board-grid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
