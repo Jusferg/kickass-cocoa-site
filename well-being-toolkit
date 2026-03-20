@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Well-Being Toolkit | Kick A$$ Cocoa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="members-page">
+
+<header class="kac-header">
+  <nav class="kac-nav" aria-label="Primary">
+    <a class="kac-logo" href="members-area.html">
+      <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
+    </a>
+
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link is-active" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
+        </button>
+
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="members-dashboard">
+
+  <section class="member-welcome">
+    <span class="section-tag">Toolkit</span>
+    <h1>Well-Being Toolkit</h1>
+    <p>Use this guided toolkit to build habits that support clarity, rest, resilience, and sustainable growth.</p>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Start with the Free Course</h2>
+      <p>Recommended learning path for this toolkit.</p>
+    </div>
+
+    <div class="toolkit-course-card">
+      <span class="badge accent">Free Course</span>
+      <h3>The Science of Well-Being</h3>
+      <p class="toolkit-meta">Yale University • Coursera</p>
+      <p>
+        This course explores research-backed habits that can improve happiness, reduce unhelpful thinking patterns, and support more productive daily routines.
+      </p>
+
+      <div class="toolkit-actions">
+        <a
+          href="https://www.coursera.org/learn/the-science-of-well-being"
+          class="btn primary-btn"
+          target="_blank"
+          rel="noopener">
+          Open Course
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Why This Matters</h2>
+      <p>How this connects to your growth inside Kick-A$$ Cocoa.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      Growth is not only about pushing harder. It is also about learning how to care for yourself in ways that make your success sustainable. Well-being shapes your clarity, your confidence, your energy, and the way you show up for your life and leadership.
+    </p>
+
+    <p class="toolkit-copy">
+      This toolkit is designed to help you reflect on what actually supports your peace, focus, and joy — not just what looks productive on the outside.
+    </p>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Kick-A$$ Cocoa Reflection</h2>
+      <p>Use these prompts after your first lesson or module.</p>
+    </div>
+
+    <div class="toolkit-prompts">
+      <div class="toolkit-prompt">
+        <h3>1. What habits help me feel like myself?</h3>
+        <p>Think about routines, environments, or boundaries that support your energy and peace.</p>
+      </div>
+
+      <div class="toolkit-prompt">
+        <h3>2. Where am I running on empty?</h3>
+        <p>Be honest about the places where stress, overwork, or pressure are affecting your well-being.</p>
+      </div>
+
+      <div class="toolkit-prompt">
+        <h3>3. What is one small shift I can commit to this week?</h3>
+        <p>Choose one realistic change that supports your balance rather than trying to overhaul everything at once.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Practice Exercise</h2>
+      <p>Turn reflection into action.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      Write a short reset plan for this week. Focus on one habit you want to protect, one habit you want to reduce, and one thing you want to do for your own well-being.
+    </p>
+
+    <textarea class="toolkit-textarea" rows="6" placeholder="Write your weekly reset here..."></textarea>
+  </section>
+
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>Next Step</h2>
+      <p>Keep building consistency.</p>
+    </div>
+
+    <p class="toolkit-copy">
+      Revisit this page after your next lesson and update your reset plan. Small, repeated shifts often create the deepest change.
+    </p>
+  </section>
+
+</main>
+
+<footer class="kac-footer">
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
+</script>
+
+<script src="js/core.js" defer></script>
+<script src="js/members.js" defer></script>
+
+</body>
+</html>
