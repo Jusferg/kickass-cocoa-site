@@ -2463,28 +2463,42 @@ flex-wrap:wrap;
 .toolkit-challenge-list {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  max-width: 700px; /* keeps everything tight and readable */
+  gap: 1rem;
+  width: 100%;
+  max-width: 760px;
+  align-items: stretch;
 }
 
 .toolkit-check {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  justify-content: flex-start;
+  gap: 0.85rem;
+  width: 100%;
   padding: 0.95rem 1rem;
   border-radius: 16px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 .toolkit-check input {
-  margin-top: 0.35rem;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  margin: 0.2rem 0 0 0;
 }
 
 .toolkit-check span {
   display: block;
-  max-width: 100%;
+  flex: 1 1 auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
   line-height: 1.5;
 }
 
