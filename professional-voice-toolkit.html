@@ -58,7 +58,7 @@
     <div class="toolkit-progress-wrap" aria-label="Toolkit progress">
       <div class="toolkit-progress-top">
         <span class="toolkit-progress-label">Your Learning Path</span>
-        <span class="toolkit-progress-step">Step 1 of 5</span>
+        <span class="toolkit-progress-step">Progress 0%</span>
       </div>
       <div class="toolkit-progress-bar" aria-hidden="true">
         <span class="toolkit-progress-fill"></span>
@@ -204,7 +204,7 @@
 
     <label class="sr-only" for="voiceMessage">Write your message here</label>
     <textarea
-      id="voiceMessage"
+      id="toolkitJournal"
       class="toolkit-textarea"
       rows="7"
       placeholder="Write your message here..."></textarea>
@@ -253,7 +253,7 @@
       <p>Small practice creates real growth.</p>
     </div>
 
-    <div class="toolkit-challenge-list">
+    <div class="toolkit-challenge-list" id=""toolkitChecklist>
       <label class="toolkit-check">
         <input type="checkbox" />
         <span>Speak up once earlier than you normally would in a meeting or conversation.</span>
@@ -313,8 +313,13 @@
   if (y) y.textContent = new Date().getFullYear();
 </script>
 
+<script>
+  window.KACToolkitKey = "voice-presence-power";
+</script>
+
 <script src="js/core.js" defer></script>
 <script src="js/members.js" defer></script>
+<script src="js/toolkit-progress.js" defer></script>
 
 </body>
 </html>

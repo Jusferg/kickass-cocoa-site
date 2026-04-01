@@ -2640,6 +2640,11 @@ flex-wrap:wrap;
   padding-top: 3rem;
 }
 
+.toolkit-path-step h3 {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .toolkit-path-number {
   position: absolute;
   top: 1rem;
@@ -2648,6 +2653,15 @@ flex-wrap:wrap;
   font-weight: 700;
   letter-spacing: 0.08em;
   opacity: 0.75;
+}
+
+.toolkit-progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c89b3c 0%, #f2d38b 100%);
+  transition: width 0.35s ease;
 }
 
 @media (max-width: 900px) {

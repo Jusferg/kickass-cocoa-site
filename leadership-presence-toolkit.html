@@ -58,10 +58,10 @@
     <div class="toolkit-progress-wrap" aria-label="Toolkit progress">
       <div class="toolkit-progress-top">
         <span class="toolkit-progress-label">Your Learning Path</span>
-        <span class="toolkit-progress-step">Step 3 of 5</span>
+        <span class="toolkit-progress-step" id="toolkitProgressText">Progress 0%</span>
       </div>
       <div class="toolkit-progress-bar" aria-hidden="true">
-        <span class="toolkit-progress-fill" style="width: 60%;"></span>
+        <span class="toolkit-progress-fill" id="toolkitProgressFill"></span>
       </div>
     </div>
 
@@ -231,7 +231,7 @@
 
     <label class="sr-only" for="leadershipStatement">Write your leadership statement here</label>
     <textarea
-      id="leadershipStatement"
+      id="toolkitJournal"
       class="toolkit-textarea"
       rows="7"
       placeholder="Write your leadership statement here..."></textarea>
@@ -280,7 +280,7 @@
       <p>Practice leadership presence in visible, everyday ways.</p>
     </div>
 
-    <div class="toolkit-challenge-list">
+    <div class="toolkit-challenge-list" id="toolkitChecklist">
 
       <label class="toolkit-check">
         <input type="checkbox" />
@@ -342,8 +342,13 @@
   if (y) y.textContent = new Date().getFullYear();
 </script>
 
+<script>
+  window.KACToolkitKey = "leadership-presence";
+</script>
+
 <script src="js/core.js" defer></script>
 <script src="js/members.js" defer></script>
+<script src="js/toolkit-progress.js" defer></script>
 
 </body>
 </html>

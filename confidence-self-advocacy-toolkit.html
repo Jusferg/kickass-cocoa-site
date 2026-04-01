@@ -30,10 +30,10 @@
     <div class="toolkit-progress-wrap">
       <div class="toolkit-progress-top">
         <span>Learning Path</span>
-        <span>Step 2 of 5</span>
+        <span class="toolkit-progress-step" id="toolkitProgressText">Progress 0%</span>
       </div>
       <div class="toolkit-progress-bar">
-        <span class="toolkit-progress-fill" style="width:40%"></span>
+        <span class="toolkit-progress-fill" id="toolkitProgressFill"></span>
       </div>
     </div>
   </section>
@@ -139,7 +139,11 @@
       Write one clear ask you’ve been avoiding. Be direct, specific, and confident.
     </p>
 
-    <textarea class="toolkit-textarea" rows="6" placeholder="Write your ask here..."></textarea>
+    <textarea 
+    id="toolkitJournal"
+    class="toolkit-textarea" 
+    rows="6" 
+    placeholder="Write your ask here..."></textarea>
   </section>
 
   <!-- POWER PHRASES -->
@@ -167,7 +171,7 @@
       <h2>Your Real-Life Challenge</h2>
     </div>
 
-    <div class="toolkit-challenge-list">
+    <div class="toolkit-challenge-list" id="toolkitChecklist">
 
       <label class="toolkit-check">
         <input type="checkbox">
@@ -210,6 +214,12 @@
   <p>© <span id="year"></span> Kick-Ass Cocoa</p>
 </footer>
 
+<script>
+  window.KACToolkitKey = "confidence-self-advocacy";
+</script>
+<script src="js/core.js" defer></script>
+<script src="js/members.js" defer></script>
+<script src="js/toolkit-progress.js" defer></script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
