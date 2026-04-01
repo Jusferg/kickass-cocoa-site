@@ -4,177 +4,317 @@
   <meta charset="UTF-8" />
   <title>Voice, Presence & Power Toolkit | Kick A$$ Cocoa</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="members-page">
 
 <header class="kac-header">
-  <nav class="kac-nav">
+  <nav class="kac-nav" aria-label="Primary">
     <a class="kac-logo" href="members-area.html">
       <img class="kac-logo-img" src="images/kac-logo.jpg" alt="Kick-Ass Cocoa">
     </a>
+
+    <button class="kac-burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="kac-menu" id="kacMenu">
+      <a class="kac-link" href="members-area.html">Dashboard</a>
+      <a class="kac-link is-active" href="resources.html">Resources</a>
+      <a class="kac-link" href="books.html">Books</a>
+      <a class="kac-link" href="events.html">Events</a>
+
+      <div class="member-nav">
+        <button id="memberAvatarBtn" class="member-avatar" type="button" aria-label="Open member menu">
+          <span id="memberInitials">?</span>
+        </button>
+
+        <div class="member-dropdown" id="memberDropdown">
+          <a href="members-area.html">Dashboard</a>
+          <a href="account.html">My Account</a>
+          <a href="wins.html">Submit a Win</a>
+          <a href="#" id="logoutBtn">Logout</a>
+        </div>
+      </div>
+    </div>
   </nav>
 </header>
 
-<main class="members-dashboard">
+<main class="members-dashboard toolkit-page">
 
-  <!-- HERO -->
-  <section class="member-welcome">
+  <section class="member-welcome toolkit-hero">
     <span class="section-tag">Toolkit</span>
-    <h1>Voice, Presence & Power</h1>
-    <p>
-      Strengthen your professional voice, communicate with clarity, 
-      and build presence in rooms where your ideas deserve to land.
+    <h1>Voice, Presence &amp; Power</h1>
+    <p class="toolkit-hero-copy">
+      Strengthen your professional voice, communicate with clarity, and build the kind of presence
+      that makes your ideas land with confidence.
     </p>
 
-    <div class="toolkit-progress">
-      <p><strong>Progress:</strong> Step 1 of 5</p>
+    <div class="toolkit-progress-wrap" aria-label="Toolkit progress">
+      <div class="toolkit-progress-top">
+        <span class="toolkit-progress-label">Your Learning Path</span>
+        <span class="toolkit-progress-step">Step 1 of 5</span>
+      </div>
+      <div class="toolkit-progress-bar" aria-hidden="true">
+        <span class="toolkit-progress-fill"></span>
+      </div>
+    </div>
+
+    <div class="toolkit-hero-points">
+      <span>Clarity</span>
+      <span>Confidence</span>
+      <span>Presence</span>
+      <span>Self-Advocacy</span>
     </div>
   </section>
 
-  <!-- COURSE -->
-  <section class="hub-card">
+  <section class="hub-card toolkit-card-highlight">
     <div class="hub-header">
       <h2>Start with the Free Course</h2>
+      <p>Recommended learning path for this toolkit.</p>
     </div>
 
     <div class="toolkit-course-card">
-      <span class="badge accent">Free Course</span>
-      <h3>Finding Your Professional Voice: Confidence & Impact</h3>
-      <p class="toolkit-meta">University of London • Coursera</p>
+      <div class="toolkit-course-topline">
+        <span class="badge accent">Free Course</span>
+        <span class="toolkit-course-source">University of London • Coursera</span>
+      </div>
 
-      <div class="toolkit-course-meta">
-        <span>⏱ 8 Hours</span>
-        <span>📚 4 Modules</span>
-        <span>🎓 Beginner Friendly</span>
+      <h3>Finding Your Professional Voice: Confidence &amp; Impact</h3>
+
+      <div class="toolkit-course-meta-row">
+        <span class="toolkit-meta-pill">4 Modules</span>
+        <span class="toolkit-meta-pill">~8 Hours</span>
+        <span class="toolkit-meta-pill">Beginner Friendly</span>
       </div>
 
       <p>
-        This course helps you develop confidence in your speaking voice,
-        strengthen audience connection, and communicate with more impact
-        in professional environments.
+        This course explores how to develop confidence in your speaking voice, strengthen audience
+        connection, and communicate with more impact in professional settings.
       </p>
 
-      <a href="https://www.coursera.org/learn/finding-your-professional-voice"
-         class="btn primary-btn"
-         target="_blank">
-        Open Course
-      </a>
+      <div class="toolkit-actions">
+        <a
+          href="https://www.coursera.org/learn/finding-your-professional-voice"
+          class="btn primary-btn"
+          target="_blank"
+          rel="noopener">
+          Open Course
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- WHY IT MATTERS -->
+  <section class="hub-card">
+    <div class="hub-header">
+      <h2>What You’ll Build Here</h2>
+      <p>This toolkit is about more than sounding polished.</p>
+    </div>
+
+    <div class="toolkit-benefits-grid">
+      <div class="toolkit-benefit">
+        <h3>Speak with clarity</h3>
+        <p>Say what you mean with less over-explaining, shrinking, or second-guessing.</p>
+      </div>
+
+      <div class="toolkit-benefit">
+        <h3>Strengthen presence</h3>
+        <p>Build a steadier energy that people can feel when you walk into the room.</p>
+      </div>
+
+      <div class="toolkit-benefit">
+        <h3>Lead with confidence</h3>
+        <p>Communicate ideas, requests, and boundaries with more authority and ease.</p>
+      </div>
+
+      <div class="toolkit-benefit">
+        <h3>Use your voice intentionally</h3>
+        <p>Make sure your words match the impact you want to leave behind.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="hub-card">
     <div class="hub-header">
       <h2>Why This Matters</h2>
+      <p>How this connects to your growth inside Kick-A$$ Cocoa.</p>
     </div>
 
     <p class="toolkit-copy">
-      Voice is more than sound. It is how your ideas arrive, how your confidence is felt,
-      and how your presence is remembered. Strengthening your voice is about taking up space
-      with clarity, intention, and self-trust.
+      Voice is more than sound. It is how your ideas arrive, how your confidence is felt, and how
+      your presence is remembered. For many women — especially those navigating spaces where they may
+      feel overlooked, underestimated, or underrepresented — strengthening voice and presence is not
+      just about public speaking. It is about being able to take up space with clarity and intention.
+    </p>
+
+    <p class="toolkit-copy">
+      This toolkit is here to help you practice showing up fully: not louder for performance, but
+      clearer, steadier, and more grounded in who you are and what you bring.
     </p>
   </section>
 
-  <!-- REFLECTION -->
   <section class="hub-card">
     <div class="hub-header">
-      <h2>Reflection</h2>
+      <h2>Kick-A$$ Cocoa Reflection</h2>
+      <p>Use these prompts after your first lesson or module.</p>
     </div>
 
-    <div class="toolkit-prompts">
+    <div class="toolkit-prompts toolkit-prompts-3">
       <div class="toolkit-prompt">
+        <span class="toolkit-prompt-number">01</span>
         <h3>Where do I shrink my voice?</h3>
-        <p>Think about where you hold back or soften your ideas.</p>
+        <p>
+          Think about situations where you hesitate, soften your ideas, or hold back what you really want to say.
+        </p>
       </div>
 
       <div class="toolkit-prompt">
-        <h3>When do I feel most powerful speaking?</h3>
-        <p>Identify environments where your confidence expands.</p>
+        <span class="toolkit-prompt-number">02</span>
+        <h3>When do I feel most powerful when I speak?</h3>
+        <p>
+          Identify the settings, people, or conditions that help your confidence expand instead of contract.
+        </p>
       </div>
 
       <div class="toolkit-prompt">
-        <h3>What do I want people to feel when I speak?</h3>
-        <p>Clarify your impact and intention.</p>
+        <span class="toolkit-prompt-number">03</span>
+        <h3>What do I want people to feel or remember when I speak?</h3>
+        <p>
+          Clarifying your intention can strengthen both your confidence and your presence.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- PRACTICE -->
   <section class="hub-card">
     <div class="hub-header">
       <h2>Practice Exercise</h2>
+      <p>Turn reflection into action.</p>
     </div>
 
     <p class="toolkit-copy">
-      Write a message expressing an idea, opinion, or request clearly and confidently.
+      Write a short message below introducing an idea, opinion, or request you want to express with
+      more confidence this week. Focus on clarity, steadiness, and directness.
     </p>
 
-    <textarea class="toolkit-textarea" rows="6" placeholder="Write your message here..."></textarea>
+    <label class="sr-only" for="voiceMessage">Write your message here</label>
+    <textarea
+      id="voiceMessage"
+      class="toolkit-textarea"
+      rows="7"
+      placeholder="Write your message here..."></textarea>
   </section>
 
-  <!-- POWER PHRASES -->
   <section class="hub-card">
     <div class="hub-header">
       <h2>Power Phrases</h2>
+      <p>Replace shrinking language with language that lands.</p>
     </div>
 
-    <div class="toolkit-prompts">
-      <div class="toolkit-prompt">
-        <p><strong>Instead of:</strong> “Sorry, I just wanted to add…”</p>
-        <p><strong>Say:</strong> “I’d like to add a perspective here.”</p>
+    <div class="toolkit-power-grid">
+      <div class="toolkit-power-card">
+        <p class="toolkit-power-label">Instead of</p>
+        <p class="toolkit-power-old">“Sorry, I just wanted to add…”</p>
+        <p class="toolkit-power-label strong">Try</p>
+        <p class="toolkit-power-new">“I’d like to add a perspective here.”</p>
       </div>
 
-      <div class="toolkit-prompt">
-        <p><strong>Instead of:</strong> “This might be wrong…”</p>
-        <p><strong>Say:</strong> “Here’s an approach worth considering.”</p>
+      <div class="toolkit-power-card">
+        <p class="toolkit-power-label">Instead of</p>
+        <p class="toolkit-power-old">“This might be a bad idea…”</p>
+        <p class="toolkit-power-label strong">Try</p>
+        <p class="toolkit-power-new">“Here’s an approach worth considering.”</p>
+      </div>
+
+      <div class="toolkit-power-card">
+        <p class="toolkit-power-label">Instead of</p>
+        <p class="toolkit-power-old">“I’m not sure if this makes sense…”</p>
+        <p class="toolkit-power-label strong">Try</p>
+        <p class="toolkit-power-new">“Here’s what I’m seeing.”</p>
+      </div>
+
+      <div class="toolkit-power-card">
+        <p class="toolkit-power-label">Instead of</p>
+        <p class="toolkit-power-old">“Just checking in…”</p>
+        <p class="toolkit-power-label strong">Try</p>
+        <p class="toolkit-power-new">“Following up on the next step here.”</p>
       </div>
     </div>
   </section>
 
-  <!-- REAL LIFE -->
   <section class="hub-card">
     <div class="hub-header">
-      <h2>Try This This Week</h2>
+      <h2>Your Real-Life Challenge</h2>
+      <p>Small practice creates real growth.</p>
     </div>
 
-    <div class="toolkit-prompts">
-      <div class="toolkit-prompt">
-        <p>Speak earlier in a meeting</p>
-      </div>
+    <div class="toolkit-challenge-list">
+      <label class="toolkit-check">
+        <input type="checkbox" />
+        <span>Speak up once earlier than you normally would in a meeting or conversation.</span>
+      </label>
 
-      <div class="toolkit-prompt">
-        <p>Replace apology language with direct language</p>
-      </div>
+      <label class="toolkit-check">
+        <input type="checkbox" />
+        <span>Replace apology language with direct language at least once this week.</span>
+      </label>
 
-      <div class="toolkit-prompt">
-        <p>Practice one clear sentence of self-advocacy</p>
-      </div>
+      <label class="toolkit-check">
+        <input type="checkbox" />
+        <span>Practice one clear sentence of self-advocacy.</span>
+      </label>
+
+      <label class="toolkit-check">
+        <input type="checkbox" />
+        <span>Re-read your written message and tighten it until it sounds steady and direct.</span>
+      </label>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="hub-card toolkit-cta">
+  <section class="hub-card toolkit-next-step">
     <div class="hub-header">
-      <h2>Keep Building Your Voice</h2>
-      <p>Your growth continues inside the community.</p>
+      <h2>Next Step</h2>
+      <p>Keep building confidence through repetition.</p>
     </div>
 
-    <a href="members-area.html" class="btn primary-btn">
-      Return to Dashboard
-    </a>
+    <p class="toolkit-copy">
+      Revisit this page after your next lesson and rewrite your message with even more clarity.
+      The goal is not to sound like someone else — it is to strengthen your own voice so it lands
+      with more confidence and impact.
+    </p>
+
+    <div class="toolkit-actions">
+      <a href="resources.html" class="btn secondary-btn">Back to Resources</a>
+      <a href="members-area.html" class="btn primary-btn">Return to Dashboard</a>
+    </div>
   </section>
 
 </main>
 
 <footer class="kac-footer">
-  <p>© <span id="year"></span> Kick-Ass Cocoa</p>
+  <div class="kac-footer-inner">
+    <div class="kac-footer-bottom">
+      <p>© <span id="kacYear"></span> Kick-Ass Cocoa. All rights reserved.</p>
+      <div class="kac-footer-bottom-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  const y = document.getElementById("kacYear");
+  if (y) y.textContent = new Date().getFullYear();
 </script>
+
+<script src="js/core.js" defer></script>
+<script src="js/members.js" defer></script>
 
 </body>
 </html>

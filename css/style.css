@@ -2253,7 +2253,282 @@ flex-wrap:wrap;
   padding: 14px;
   font-family: inherit;
   resize: vertical;
-}  
+} 
+
+/* =========================================
+   PROFESSIONAL VOICE TOOLKIT
+========================================= */
+
+.toolkit-page {
+  gap: 1.5rem;
+}
+
+.toolkit-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.toolkit-hero::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -60px auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  opacity: 0.08;
+  background: radial-gradient(circle, #d4af37 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.toolkit-hero-copy {
+  max-width: 760px;
+}
+
+.toolkit-progress-wrap {
+  margin-top: 1.25rem;
+}
+
+.toolkit-progress-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.55rem;
+  font-size: 0.95rem;
+}
+
+.toolkit-progress-label {
+  font-weight: 600;
+}
+
+.toolkit-progress-step {
+  opacity: 0.85;
+}
+
+.toolkit-progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.toolkit-progress-fill {
+  display: block;
+  width: 20%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #c89b3c 0%, #f2d38b 100%);
+}
+
+.toolkit-hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.toolkit-hero-points span,
+.toolkit-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.92rem;
+}
+
+.toolkit-card-highlight {
+  border: 1px solid rgba(212, 175, 55, 0.24);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+}
+
+.toolkit-course-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.toolkit-course-topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.toolkit-course-source {
+  font-size: 0.95rem;
+  opacity: 0.82;
+}
+
+.toolkit-course-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+.toolkit-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.toolkit-benefit,
+.toolkit-power-card {
+  padding: 1.1rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.toolkit-benefit h3,
+.toolkit-power-card h3 {
+  margin-bottom: 0.45rem;
+}
+
+.toolkit-prompts-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.toolkit-prompt {
+  position: relative;
+  padding-top: 2.8rem;
+}
+
+.toolkit-prompt-number {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.toolkit-textarea {
+  width: 100%;
+  border-radius: 18px;
+  padding: 1rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: inherit;
+  resize: vertical;
+  min-height: 160px;
+}
+
+.toolkit-textarea:focus {
+  outline: none;
+  border-color: rgba(212,175,55,0.65);
+  box-shadow: 0 0 0 4px rgba(212,175,55,0.12);
+}
+
+.toolkit-power-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.toolkit-power-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.68;
+}
+
+.toolkit-power-label.strong {
+  margin-top: 0.9rem;
+  opacity: 1;
+  font-weight: 700;
+}
+
+.toolkit-power-old {
+  margin: 0;
+  opacity: 0.78;
+}
+
+.toolkit-power-new {
+  margin: 0;
+  font-weight: 700;
+}
+
+.toolkit-challenge-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.toolkit-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+}
+
+.toolkit-check input {
+  margin-top: 0.18rem;
+}
+
+.toolkit-next-step .toolkit-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.secondary-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.16);
+  color: inherit;
+}
+
+.secondary-btn:hover {
+  border-color: rgba(212,175,55,0.55);
+}
+
+.hub-card,
+.toolkit-benefit,
+.toolkit-power-card,
+.toolkit-check,
+.toolkit-prompt {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.hub-card:hover,
+.toolkit-benefit:hover,
+.toolkit-power-card:hover,
+.toolkit-check:hover,
+.toolkit-prompt:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212,175,55,0.28);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .toolkit-benefits-grid,
+  .toolkit-prompts-3,
+  .toolkit-power-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* =========================================================
    11) FOOTER — KAC FOOTER
