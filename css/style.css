@@ -2491,6 +2491,15 @@ flex-wrap:wrap;
   margin: 0.2rem 0 0 0;
 }
 
+.toolkit-check input:checked + span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.toolkit-check input:checked {
+  accent-color: #d4af37;
+}
+
 .toolkit-check span {
   display: block;
   flex: 1 1 auto;
