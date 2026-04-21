@@ -1,3 +1,5 @@
+console.log("netlifyIdentity exists?", !!window.netlifyIdentity);
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector('form[name="kac-register"]');
   if (!form || !window.netlifyIdentity) return;
