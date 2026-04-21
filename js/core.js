@@ -1,36 +1,34 @@
 /****************************************************
  * core.js — runs on every page
  * - Navbar burger + dropdown
- * - Logout button (if present)
  * - Avatar render + dropdown
- * - Login handler (if #loginForm exists)
+ * - Logout button via Netlify Identity
  ****************************************************/
 
-function getUser() {
-  try { return JSON.parse(localStorage.getItem("loggedInUser") || "null"); }
-  catch { return null; }
+function getNetlifyUser() {
+  if (!window.netlifyIdentity) return null;
+  return window.netlifyIdentity.currentUser();
 }
 
-function saveUser(user) {
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
-}
+function getUserProfile() {
+  const user = getNetlifyUser();
+  if (!user) return null;
 
-function getProfiles() {
-  try {
-    return JSON.parse(localStorage.getItem("kac_profiles") || "{}");
-  } catch {
-    return {};
-  }
-}
+  const meta = user.user_metadata || {};
+  const fullName =
+    meta.full_name ||
+    [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
+    user.email ||
+    "";
 
-function saveProfiles(profiles) {
-  localStorage.setItem("kac_profiles", JSON.stringify(profiles));
-}
-
-function getProfileByEmail(email) {
-  if (!email) return null;
-  const profiles = getProfiles();
-  return profiles[email.toLowerCase()] || null;
+  return {
+    email: user.email || "",
+    displayName: fullName,
+    firstName: meta.first_name || "",
+    lastName: meta.last_name || "",
+    avatar: meta.avatar_url || "",
+    role: (user.app_metadata && user.app_metadata.roles && user.app_metadata.roles[0]) || "member"
+  };
 }
 
 function initialsFromUser(u) {
@@ -41,32 +39,44 @@ function initialsFromUser(u) {
     const l = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
     return (f + l) || f || "?";
   }
+
   const email = (u?.email || "").trim();
   return email ? email[0].toUpperCase() : "?";
 }
 
 function renderNavAvatar() {
-  const u = getUser();
+  const u = getUserProfile();
   const btn = document.getElementById("memberAvatarBtn");
   const initialsSpan = document.getElementById("memberInitials");
-
   if (!btn) return;
 
   const fallback = initialsFromUser(u);
 
   if (u?.avatar) {
-    btn.innerHTML = `
-      <img src="${u.avatar}" alt="Profile"
-           style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
-           onerror="this.remove(); this.parentElement.textContent='${fallback}';" />
-    `;
+    btn.innerHTML = `<img src="${u.avatar}" alt="${u.displayName || "Member"}" class="member-avatar-img">`;
+  } else if (initialsSpan) {
+    initialsSpan.textContent = fallback;
   } else {
-    if (initialsSpan) initialsSpan.textContent = fallback;
-    else btn.textContent = fallback;
+    btn.textContent = fallback;
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // =========================
+  // Netlify Identity init
+  // =========================
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.init();
+
+    window.netlifyIdentity.on("login", () => {
+      renderNavAvatar();
+    });
+
+    window.netlifyIdentity.on("logout", () => {
+      window.location.href = "login.html";
+    });
+  }
+
   // =========================
   // NAV burger + About dropdown
   // =========================
@@ -80,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
     burger.addEventListener("click", () => {
       const open = menu.classList.toggle("is-open");
       burger.setAttribute("aria-expanded", open ? "true" : "false");
+
       if (!open) {
         drop?.classList.remove("is-open");
         dropBtn?.setAttribute("aria-expanded", "false");
@@ -104,6 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menu.addEventListener("click", (e) => {
       const a = e.target.closest("a");
       if (!a) return;
+
       if (window.innerWidth < 900) {
         menu.classList.remove("is-open");
         burger.setAttribute("aria-expanded", "false");
@@ -116,16 +128,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =========================
-  // Logout (one ID only!)
+  // Logout
   // =========================
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", async (e) => {
     const el = e.target.closest("#logoutBtn");
     if (!el) return;
+
     e.preventDefault();
-    localStorage.removeItem("loggedInUser");
-    // Optional: also clear other “session-ish” things if you want
-    // localStorage.removeItem("kac_member_statement");
-    window.location.href = "login.html";
+
+    try {
+      if (window.netlifyIdentity) {
+        await window.netlifyIdentity.logout();
+      } else {
+        window.location.href = "login.html";
+      }
+    } catch (err) {
+      console.error("Logout failed:", err);
+      window.location.href = "login.html";
+    }
   });
 
   // =========================
@@ -139,46 +159,15 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       dropdown.classList.toggle("show");
     });
+
     document.addEventListener("click", () => dropdown.classList.remove("show"));
   }
 
-  // =========================
-  // LOGIN (only runs on login.html where #loginForm exists)
-  // =========================
-  const loginForm = document.getElementById("loginForm");
-if (loginForm) {
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const emailEl = document.getElementById("loginEmail");
-    const passEl = document.getElementById("loginPassword");
-
-    const email = (emailEl?.value || "").trim().toLowerCase();
-    if (!email) return;
-
-    const role = (email === "admin@kickasscocoa.com") ? "admin" : "member";
-
-    const savedProfile = getProfileByEmail(email) || {};
-
-    const user = {
-      email,
-      role,
-      displayName: savedProfile.displayName || "",
-      firstName: savedProfile.firstName || "",
-      lastName: savedProfile.lastName || "",
-      avatar: savedProfile.avatar || "",
-      loggedAt: new Date().toISOString()
-    };
-
-    saveUser(user);
-
-    if (passEl) passEl.value = "";
-    window.location.href = "members-area.html";
-  });
-}
-  // Render avatar (if present on page)
   renderNavAvatar();
 });
 
-// Expose for other files to call after updates
-window.KAC = { getUser, saveUser, renderNavAvatar, initialsFromUser };
+window.KAC = {
+  getUserProfile,
+  renderNavAvatar,
+  initialsFromUser
+};
