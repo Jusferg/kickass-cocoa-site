@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      await window.netlifyIdentity.signup(email, password, {
+      await window.netlifyIdentity.gotrue.signup(email, password, {
         full_name: `${firstName} ${lastName}`.trim(),
         first_name: firstName,
         last_name: lastName
