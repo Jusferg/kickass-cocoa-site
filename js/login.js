@@ -37,4 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
       alert(error.message || "Login failed. Please check your email and password.");
     }
   });
+
+  window.netlifyIdentity.on("login", () => {
+    window.location.href = "members-area.html";
+  });
 });
