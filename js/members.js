@@ -316,13 +316,6 @@ if (podcastTitle && podcastMeta && podcastDescription && podcastLink && podcastI
       image: "images/podcasts/brown-ambition.jpg"
     },
     {
-      title: "Earn Your Leisure",
-      meta: "Investing • Financial Literacy",
-      description: "Breaking down investing, ownership, and wealth-building in ways that empower the community.",
-      link: "https://podcasts.apple.com/us/podcast/earn-your-leisure/id1451132350",
-      image: "images/podcasts/earn-your-leisure.jpg"
-    },
-    {
       title: "Slay Girl Slay",
       meta: "Confidence • Empowerment",
       description: "Encouraging conversations about healing, growth, and becoming the most confident version of yourself.",
