@@ -11,6 +11,19 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="members-page">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.netlifyIdentity) return;
+
+  window.netlifyIdentity.init();
+  const user = window.netlifyIdentity.currentUser();
+
+  if (!user) {
+    window.location.href = "login.html";
+  }
+});
+</script>
 
 <header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">

@@ -6,52 +6,35 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
-  if (!form) return;
+  if (!form || !window.netlifyIdentity) return;
 
   const emailEl = document.getElementById("loginEmail");
   const passEl = document.getElementById("loginPassword");
 
-  // Prefill email (your existing behavior)
   const savedEmail = localStorage.getItem("kac_prefill_email");
   if (savedEmail && emailEl) {
     emailEl.value = savedEmail;
     localStorage.removeItem("kac_prefill_email");
   }
 
-  function nameFromEmail(email) {
-    if (!email) return "";
-    const local = email.split("@")[0] || "";
-    // Turn "tia.ferguson" or "tia_ferguson" into "Tia Ferguson"
-    return local
-      .replace(/[._-]+/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase())
-      .trim();
-  }
+  window.netlifyIdentity.init();
 
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = (emailEl?.value || "").trim().toLowerCase();
-    const password = (passEl?.value || "").trim();
+    const email = (emailEl?.value || "").trim();
+    const password = passEl?.value || "";
 
     if (!email || !password) {
       alert("Please enter email and password.");
       return;
     }
 
-    // Simple role rule (customize anytime)
-    const role = email === "admin@kickasscocoa.com" ? "admin" : "member";
-
-    const user = {
-      email,
-      role,
-      displayName: nameFromEmail(email), // prevents “undefined” in welcome
-      loggedAt: new Date().toISOString(),
-    };
-
-    localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-    // go to dashboard
-    window.location.href = "members-area.html";
+    try {
+      await window.netlifyIdentity.login(email, password);
+      window.location.href = "members-area.html";
+    } catch (error) {
+      alert(error.message || "Login failed. Please check your email and password.");
+    }
   });
 });
