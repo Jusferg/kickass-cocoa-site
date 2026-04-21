@@ -35,13 +35,44 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  window.netlifyIdentity.init();
+  window.netlifyIdentity.on("init", (user) => {
 
-  const user = getCurrentMember();
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+    // ✅ If no user after init → redirect
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    // ✅ Now safe to use user
+    const memberName = document.getElementById("memberName");
+    const memberEmail = document.getElementById("memberEmail");
+    const memberRole = document.getElementById("memberRole");
+
+    const meta = user.user_metadata || {};
+
+    const displayName =
+      meta.full_name ||
+      [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
+      user.email ||
+      "Member";
+
+    if (memberName) {
+      memberName.textContent = displayName;
+    }
+
+    if (memberEmail) {
+      memberEmail.textContent = user.email || "—";
+    }
+
+    if (memberRole) {
+      memberRole.textContent = "Member";
+    }
+  });
+
+  window.netlifyIdentity.init();
+});
+
+  // 👇 your existing code continues below...
 
   /* ----------------------------
      Welcome text
