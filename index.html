@@ -250,7 +250,16 @@
 <script src="js/core.js" defer></script> 
 <script src="js/home.js" defer></script>
 
-
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user && window.location.hash.includes("confirmation_token")) {
+        window.netlifyIdentity.open();
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
