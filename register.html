@@ -58,12 +58,6 @@
 
       <!-- keep YOUR existing Netlify form attributes/hidden fields -->
       <form class="auth-form" id="registerForm" name="kac-register">
-
-        <input type="hidden" name="form-name" value="kac-register" />
-        <p class="hidden">
-          <label>Don’t fill this out: <input name="bot-field" /></label>
-        </p>
-
         <div class="auth-row">
           <div>
             <label for="firstName">First name</label>
@@ -119,25 +113,8 @@
 </section>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script src="js/core.js"></script>
-<script src="js/register.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector('form[name="kac-register"]');
-  if (!form) return;
-
-  form.addEventListener("submit", () => {
-    const email = document.getElementById("regEmail")?.value?.trim() || "";
-    const first = document.getElementById("firstName")?.value?.trim() || "";
-    const last = document.getElementById("lastName")?.value?.trim() || "";
-
-    // used for prefill + auto-login on success page
-    localStorage.setItem("kac_last_register_email", email);
-    localStorage.setItem("kac_last_register_first", first);
-    localStorage.setItem("kac_last_register_last", last);
-  });
-});
-</script>
+<script src="js/core.js" defer></script>
+<script src="js/register.js" defer></script>
 
 </body>
 </html>

@@ -1,48 +1,31 @@
-console.log("netlifyIdentity exists?", !!window.netlifyIdentity);
+/****************************************************
+ * register.js — Register page only
+ * Uses Netlify Identity modal signup
+ ****************************************************/
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.querySelector('form[name="kac-register"]');
-  if (!form || !window.netlifyIdentity) return;
-
-  const emailEl = document.getElementById("regEmail");
-  const passwordEl = document.getElementById("password");
-  const confirmEl = document.getElementById("passwordConfirm");
-  const firstNameEl = document.getElementById("firstName");
-  const lastNameEl = document.getElementById("lastName");
+  if (!window.netlifyIdentity) {
+    console.error("Netlify Identity widget is not loaded.");
+    return;
+  }
 
   window.netlifyIdentity.init();
 
-  form.addEventListener("submit", async (e) => {
+  const form = document.querySelector('form[name="kac-register"]');
+
+  if (!form) {
+    console.error("Register form not found.");
+    return;
+  }
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const email = emailEl?.value.trim();
-    const password = passwordEl?.value || "";
-    const confirm = confirmEl?.value || "";
-    const firstName = firstNameEl?.value.trim() || "";
-    const lastName = lastNameEl?.value.trim() || "";
+    window.netlifyIdentity.open("signup");
+  });
 
-    if (!email || !password || !confirm || !firstName || !lastName) {
-      alert("Please complete all required fields.");
-      return;
-    }
-
-    if (password !== confirm) {
-      alert("Passwords do not match.");
-      return;
-    }
-
-    try {
-      await window.netlifyIdentity.gotrue.signup(email, password, {
-        full_name: `${firstName} ${lastName}`.trim(),
-        first_name: firstName,
-        last_name: lastName
-      });
-
-      localStorage.setItem("kac_prefill_email", email);
-      alert("Account created. Please check your email to confirm your account.");
-      window.location.href = "login.html";
-    } catch (error) {
-      alert(error.message || "Signup failed. Please try again.");
-    }
+  window.netlifyIdentity.on("signup", () => {
+    alert("Account created. Please check your email to confirm your account.");
+    window.location.href = "login.html";
   });
 });
