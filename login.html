@@ -77,28 +77,6 @@
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="js/core.js" defer></script>
 <script src="js/login.js" defer></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const savedEmail = localStorage.getItem("kac_prefill_email");
-  const loginEmail = document.getElementById("loginEmail");
-
-  if (savedEmail && loginEmail) {
-    loginEmail.value = savedEmail;
-    localStorage.removeItem("kac_prefill_email");
-  }
-});
-</script>
-
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user && window.location.hash.includes("confirmation_token")) {
-        window.netlifyIdentity.open();
-      }
-    });
-  }
-</script>
 
 </body>
 </html>
