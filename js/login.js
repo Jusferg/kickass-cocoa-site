@@ -13,8 +13,18 @@ document.addEventListener("DOMContentLoaded", () => {
   window.netlifyIdentity.on("init", (user) => {
     // If user is already logged in, send them to dashboard
     if (user) {
+      const title = document.querySelector(".auth-title");
+      const subtitle = document.querySelector(".auth-subtitle");
+
+    if (title) title.textContent = "You're confirmed 🎉";
+    if (subtitle) {
+      subtitle.textContent = "Your email is confirmed. Redirecting you to your member dashboard...";
+  }
+
+    setTimeout(() => {
       window.location.href = "members-area.html";
-    }
+    }, 1800);
+   }
   });
 
   window.netlifyIdentity.init();
