@@ -251,34 +251,35 @@
 <script src="js/home.js" defer></script>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.netlifyIdentity) return;
 
   const hasConfirmationToken = window.location.hash.includes("confirmation_token");
 
-  window.netlifyIdentity.on("init", () => {
+  window.netlifyIdentity.on("init", (user) => {
     if (!hasConfirmationToken) return;
 
     const notice = document.createElement("div");
     notice.className = "kac-confirm-notice";
-    notice.innerHTML = `
-      <strong>Your email is being confirmed 🎉</strong>
-      <span>Please wait while we finish setting up your membership.</span>
-    `;
+
+    if (user) {
+      notice.innerHTML = `
+        <strong>Your email is confirmed 🎉</strong>
+        <span>You’re logged in and ready to continue.</span>
+        <a href="members-area.html">Go to Dashboard</a>
+      `;
+    } else {
+      notice.innerHTML = `
+        <strong>Check your confirmation status 🎉</strong>
+        <span>If you just confirmed your email, log in to continue.</span>
+        <a href="login.html">Go to Login</a>
+      `;
+    }
 
     document.body.prepend(notice);
 
-    window.netlifyIdentity.open();
-
-    setTimeout(() => {
-      notice.innerHTML = `
-        <strong>Your email is confirmed 🎉</strong>
-        <span>You can now access your member dashboard.</span>
-        <a href="members-area.html">Go to Dashboard</a>
-      `;
-    }, 1800);
+    history.replaceState(null, "", window.location.pathname);
   });
 
   window.netlifyIdentity.init();
