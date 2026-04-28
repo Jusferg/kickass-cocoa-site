@@ -250,39 +250,25 @@
 <script src="js/core.js" defer></script> 
 <script src="js/home.js" defer></script>
 
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  if (!window.netlifyIdentity) return;
+  const hasToken =
+    window.location.hash.includes("confirmation_token") ||
+    window.location.href.includes("confirmation_token");
 
-  const hasConfirmationToken = window.location.hash.includes("confirmation_token");
+  if (!hasToken) return;
 
-  window.netlifyIdentity.on("init", (user) => {
-    if (!hasConfirmationToken) return;
+  const notice = document.createElement("div");
+  notice.className = "kac-confirm-notice";
+  notice.innerHTML = `
+    <strong>Email confirmation received 🎉</strong>
+    <span>Your account should now be ready. Please log in to continue.</span>
+    <a href="login.html">Go to Login</a>
+  `;
 
-    const notice = document.createElement("div");
-    notice.className = "kac-confirm-notice";
+  document.body.prepend(notice);
 
-    if (user) {
-      notice.innerHTML = `
-        <strong>Your email is confirmed 🎉</strong>
-        <span>You’re logged in and ready to continue.</span>
-        <a href="members-area.html">Go to Dashboard</a>
-      `;
-    } else {
-      notice.innerHTML = `
-        <strong>Check your confirmation status 🎉</strong>
-        <span>If you just confirmed your email, log in to continue.</span>
-        <a href="login.html">Go to Login</a>
-      `;
-    }
-
-    document.body.prepend(notice);
-
-    history.replaceState(null, "", window.location.pathname);
-  });
-
-  window.netlifyIdentity.init();
+  history.replaceState(null, "", window.location.pathname);
 });
 </script>
 
