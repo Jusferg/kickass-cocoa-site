@@ -252,13 +252,29 @@
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user && window.location.hash.includes("confirmation_token")) {
-        window.netlifyIdentity.open();
-      }
-    });
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.netlifyIdentity) return;
+
+  const hasConfirmationToken = window.location.hash.includes("confirmation_token");
+
+  window.netlifyIdentity.on("init", () => {
+    if (hasConfirmationToken) {
+      window.netlifyIdentity.open();
+
+      const notice = document.createElement("div");
+      notice.className = "kac-confirm-notice";
+      notice.innerHTML = `
+        <strong>Email confirmation in progress.</strong>
+        <span>Please complete the confirmation popup, then log in.</span>
+        <a href="login.html">Go to Login</a>
+      `;
+
+      document.body.prepend(notice);
+    }
+  });
+
+  window.netlifyIdentity.init();
+});
 </script>
 
 </body>
