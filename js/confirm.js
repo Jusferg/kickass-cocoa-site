@@ -1,23 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.netlifyIdentity) return;
 
-  const title = document.getElementById("confirmTitle");
-  const message = document.getElementById("confirmMessage");
-  const actions = document.getElementById("confirmActions");
+  const params = new URLSearchParams(window.location.search);
+  const queryToken = params.get("confirmation_token");
 
-  window.netlifyIdentity.on("init", (user) => {
-    const hasToken =
-      window.location.hash.includes("confirmation_token");
+  if (queryToken && !window.location.hash.includes("confirmation_token")) {
+    window.location.href = `confirm.html#confirmation_token=${queryToken}`;
+    return;
+  }
 
-    if (hasToken) {
+  window.netlifyIdentity.on("init", () => {
+    if (window.location.hash.includes("confirmation_token")) {
       window.netlifyIdentity.open();
-    }
-
-    if (user) {
-      title.textContent = "You're all set 🎉";
-      message.textContent =
-        "Your email has been confirmed. You can now access your dashboard.";
-      actions.style.display = "block";
     }
   });
 
