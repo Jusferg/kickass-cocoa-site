@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const signupBtn = document.getElementById("openSignup");
 
+  window.netlifyIdentity.on("init", (user) => {
+    if (user) {
+      window.location.href = "members-area.html";
+    }
+  });
+
   window.netlifyIdentity.init();
 
   if (signupBtn) {
@@ -20,6 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.netlifyIdentity.on("signup", () => {
-    window.location.href = "index.html";
+    window.location.href = "members-area.html";
+  });
+
+  window.netlifyIdentity.on("login", () => {
+    window.location.href = "members-area.html";
   });
 });
