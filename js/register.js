@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   window.netlifyIdentity.on("signup", () => {
-    alert("Account created! Please log in.");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 });
