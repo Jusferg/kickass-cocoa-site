@@ -253,34 +253,19 @@
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const hasToken = window.location.hash.includes("confirmation_token");
-
-  if (!hasToken || !window.netlifyIdentity) return;
+  if (!window.location.hash.includes("confirmation_token")) return;
+  if (!window.netlifyIdentity) return;
 
   const notice = document.createElement("div");
   notice.className = "kac-confirm-notice";
   notice.innerHTML = `
     <strong>Email confirmation in progress 🎉</strong>
-    <span>Please wait while we finish confirming your account.</span>
+    <span>Please wait while Netlify confirms your account.</span>
   `;
-
   document.body.prepend(notice);
 
-  window.netlifyIdentity.on("init", () => {
-    window.netlifyIdentity.open();
-
-    setTimeout(() => {
-      notice.innerHTML = `
-        <strong>Email confirmation received 🎉</strong>
-        <span>Your account should now be ready. Please log in to continue.</span>
-        <a href="login.html">Go to Login</a>
-      `;
-
-      history.replaceState(null, "", window.location.pathname);
-    }, 2000);
-  });
-
   window.netlifyIdentity.init();
+  window.netlifyIdentity.open();
 });
 </script>
 
