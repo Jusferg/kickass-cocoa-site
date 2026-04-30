@@ -5,27 +5,22 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.netlifyIdentity) {
-    console.error("Netlify Identity widget is not loaded.");
+    console.error("Netlify Identity not loaded");
     return;
   }
+
+  const signupBtn = document.getElementById("openSignup");
 
   window.netlifyIdentity.init();
 
-  const form = document.querySelector('form[name="kac-register"]');
-
-  if (!form) {
-    console.error("Register form not found.");
-    return;
+  if (signupBtn) {
+    signupBtn.addEventListener("click", () => {
+      window.netlifyIdentity.open("signup");
+    });
   }
 
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    window.netlifyIdentity.open("signup");
-  });
-
   window.netlifyIdentity.on("signup", () => {
-    alert("Account created. Please check your email to confirm your account.");
+    alert("Account created! Please log in.");
     window.location.href = "login.html";
   });
 });

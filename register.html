@@ -57,57 +57,15 @@
       </p>
 
       <!-- keep YOUR existing Netlify form attributes/hidden fields -->
-      <form class="auth-form" id="registerForm" name="kac-register">
-        <div class="auth-row">
-          <div>
-            <label for="firstName">First name</label>
-            <input id="firstName" name="firstName" type="text" autocomplete="given-name" required />
-          </div>
-          <div>
-            <label for="lastName">Last name</label>
-            <input id="lastName" name="lastName" type="text" autocomplete="family-name" required />
-          </div>
-        </div>
+      <div class="auth-actions">
+  <button class="btn primary-btn" id="openSignup" type="button">
+    Create my membership
+  </button>
 
-        <label for="email">Email</label>
-        <input id="regEmail" name="email" type="email" autocomplete="email" required />
-        <label for="password" style="margin-top:10px;">Password</label>
-        <input id="password" name="password" type="password" autocomplete="new-password" required />
-
-        <label for="passwordConfirm" style="margin-top:10px;">Confirm password</label>
-        <input id="passwordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" required />
-
-        <div class="auth-row">
-          <div>
-            <label for="city">City</label>
-            <input id="city" name="city" type="text" autocomplete="address-level2" />
-          </div>
-          <div>
-            <label for="state">State</label>
-            <input id="state" name="state" type="text" autocomplete="address-level1" />
-          </div>
-        </div>
-
-        <label for="goal">What are you here to build right now?</label>
-        <textarea id="goal" name="goal" rows="4"
-          placeholder="Ex: confidence in leadership, consistency, a business launch, career growth..."></textarea>
-
-        <label class="terms-row">
-          <input type="checkbox" name="agree" required />
-          <span>
-            I agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.
-          </span>
-        </label>
-
-        <div class="auth-actions">
-          <button class="btn primary-btn" type="submit">Create my membership</button>
-          <a class="btn secondary-btn-dark" href="login.html">Already a member? Log in</a>
-        </div>
-
-        <p class="auth-meta">
-          You’ll see a confirmation screen after submitting.
-        </p>
-      </form>
+  <a class="btn secondary-btn-dark" href="login.html">
+    Already a member? Log in
+  </a>
+</div>
     </div>
   </div>
 </section>
@@ -115,17 +73,6 @@
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="js/core.js" defer></script>
 <script src="js/register.js" defer></script>
-
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user && window.location.hash.includes("confirmation_token")) {
-        window.netlifyIdentity.open();
-      }
-    });
-  }
-</script>
 
 </body>
 </html>
