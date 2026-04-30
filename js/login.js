@@ -10,30 +10,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const loginBtn = document.getElementById("openLogin");
+
   window.netlifyIdentity.on("init", (user) => {
-    // If user is already logged in, send them to dashboard
     if (user) {
       const title = document.querySelector(".auth-title");
       const subtitle = document.querySelector(".auth-subtitle");
 
-    if (title) title.textContent = "You're confirmed 🎉";
-    if (subtitle) {
-      subtitle.textContent = "Your email is confirmed. Redirecting you to your member dashboard...";
-  }
+      if (title) title.textContent = "You're confirmed 🎉";
+      if (subtitle) {
+        subtitle.textContent = "Redirecting you to your member dashboard...";
+      }
 
-    setTimeout(() => {
-      window.location.href = "members-area.html";
-    }, 1800);
-   }
+      setTimeout(() => {
+        window.location.href = "members-area.html";
+      }, 1200);
+    }
   });
 
   window.netlifyIdentity.init();
 
-  const form = document.getElementById("loginForm");
-
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  if (loginBtn) {
+    loginBtn.addEventListener("click", () => {
       window.netlifyIdentity.open("login");
     });
   }

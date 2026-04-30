@@ -54,22 +54,16 @@
         Log in to access your dashboard, wins, and accountability tracker.
       </p>
 
-      <form class="auth-form" id="loginForm">
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" name="email" type="email" autocomplete="email" required>
+      <div class="auth-form" id="loginForm">
+    <div class="auth-actions">
+      <button class="btn primary-btn" id="openLogin" type="button">Log in</button>
+      <a class="btn secondary-btn-dark" href="register.html">Create an account</a>
+    </div>
 
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
-
-        <div class="auth-actions">
-          <button class="btn primary-btn" type="submit">Log in</button>
-          <a class="btn secondary-btn-dark" href="register.html">Create an account</a>
-        </div>
-
-        <p class="auth-meta">
-          Having trouble? <a href="contact.html">Contact support</a>
-        </p>
-      </form>
+    <p class="auth-meta">
+      Having trouble? <a href="contact.html">Contact support</a>
+    </p>
+  </div>
     </div>
   </div>
 </section>
