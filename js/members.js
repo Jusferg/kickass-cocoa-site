@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    document.body.classList.remove("suth-checking");
+    document.body.classList.remove("auth-checking");
 
     // ✅ Now safe to use user
     const memberName = document.getElementById("memberName");
