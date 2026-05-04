@@ -1,14 +1,12 @@
 // js/account.js
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("accountForm");
-  if (!form) return;
+  if (!form || !window.netlifyIdentity) return;
 
   const displayNameInput = document.getElementById("displayName");
   const avatarUrlInput = document.getElementById("avatarUrl");
   const avatarPreview = document.getElementById("avatarPreview");
   const status = document.getElementById("accountStatus");
-
-  const user = window.KAC?.getUser?.() || {};
 
   function isValidHttpUrl(url) {
     try {
@@ -19,21 +17,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function getProfiles() {
-    try {
-      return JSON.parse(localStorage.getItem("kac_profiles") || "{}");
-    } catch {
-      return {};
+  function initialsFromName(name, email = "") {
+    const cleanName = (name || "").trim();
+
+    if (cleanName) {
+      const parts = cleanName.split(/\s+/);
+      const first = parts[0]?.[0]?.toUpperCase() || "";
+      const last = parts.length > 1 ? parts[parts.length - 1][0].toUpperCase() : "";
+      return (first + last) || first || "?";
     }
+
+    return email ? email[0].toUpperCase() : "?";
   }
 
-  function saveProfiles(profiles) {
-    localStorage.setItem("kac_profiles", JSON.stringify(profiles));
-  }
-
-  function setPreview(url) {
-    const fallback = window.KAC?.initialsFromUser?.(user) || "?";
+  function setPreview(user, url = "") {
     if (!avatarPreview) return;
+
+    const meta = user.user_metadata || {};
+    const displayName =
+      meta.full_name ||
+      [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
+      user.email ||
+      "";
+
+    const fallback = initialsFromName(displayName, user.email);
 
     if (url && isValidHttpUrl(url)) {
       avatarPreview.style.backgroundImage = `url("${url}")`;
@@ -46,66 +53,64 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Prefill
-  if (displayNameInput) {
-  if (user.displayName) {
-    displayNameInput.value = user.displayName;
-  } else if (user.email) {
-    const base = user.email.split("@")[0];
-    const first = base.split(/[._-]+/)[0];
-    displayNameInput.value = first.charAt(0).toUpperCase() + first.slice(1);
-  }
-}
-  if (avatarUrlInput) avatarUrlInput.value = user.avatar || "";
-  setPreview(user.avatar || "");
-
-  // Live preview
-  avatarUrlInput?.addEventListener("input", () => {
-    setPreview(avatarUrlInput.value.trim());
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const dn = (displayNameInput?.value || "").trim();
-    const url = (avatarUrlInput?.value || "").trim();
-
-    if (url && !isValidHttpUrl(url)) {
-      if (status) status.textContent = "Please paste a valid image URL starting with https://";
+  window.netlifyIdentity.on("init", (user) => {
+    if (!user) {
+      window.location.href = "login.html";
       return;
     }
 
-    // Update current session
-    user.displayName = dn;
-    user.avatar = url;
+    const meta = user.user_metadata || {};
 
-    // Derive first/last from display name
-    const parts = dn.split(/\s+/).filter(Boolean);
-    user.firstName = parts[0] || "";
-    user.lastName = parts.length > 1 ? parts.slice(1).join(" ") : "";
+    const displayName =
+      meta.full_name ||
+      [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
+      user.email ||
+      "";
 
-    // Save current session
-    window.KAC?.saveUser?.(user);
+    if (displayNameInput) displayNameInput.value = displayName;
+    if (avatarUrlInput) avatarUrlInput.value = meta.avatar_url || "";
 
-    // Save persistent profile by email
-    const emailKey = (user.email || "").toLowerCase();
-    console.log("Saving profile for:", emailKey, user);
-    if (emailKey) {
-      const profiles = getProfiles();
-      profiles[emailKey] = {
-        email: emailKey,
-        displayName: user.displayName || "",
-        firstName: user.firstName || "",
-        lastName: user.lastName || "",
-        avatar: user.avatar || ""
-      };
-      saveProfiles(profiles);
-    }
+    setPreview(user, meta.avatar_url || "");
 
-    // Update preview + nav avatar immediately
-    setPreview(user.avatar);
-    window.KAC?.renderNavAvatar?.();
+    avatarUrlInput?.addEventListener("input", () => {
+      setPreview(user, avatarUrlInput.value.trim());
+    });
 
-    if (status) status.textContent = "Profile updated.";
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const dn = (displayNameInput?.value || "").trim();
+      const url = (avatarUrlInput?.value || "").trim();
+
+      if (url && !isValidHttpUrl(url)) {
+        if (status) status.textContent = "Please paste a valid image URL starting with https://";
+        return;
+      }
+
+      const parts = dn.split(/\s+/).filter(Boolean);
+      const firstName = parts[0] || "";
+      const lastName = parts.length > 1 ? parts.slice(1).join(" ") : "";
+
+      try {
+        await user.update({
+          data: {
+            full_name: dn,
+            first_name: firstName,
+            last_name: lastName,
+            avatar_url: url
+          }
+        });
+
+        if (status) status.textContent = "Profile updated.";
+
+        setPreview(user, url);
+        window.KAC?.renderNavAvatar?.();
+      } catch (error) {
+        console.error("Profile update failed:", error);
+        if (status) status.textContent = "Profile update failed. Please try again.";
+      }
+    });
   });
+
+  window.netlifyIdentity.init();
 });
