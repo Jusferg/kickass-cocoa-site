@@ -2982,6 +2982,10 @@ flex-wrap:wrap;
 
 .hidden{ display: none; }
 
+.auth-checking {
+  visibility: hidden;
+}
+
 
 /* =========================================================
    14) MOBILE: RESOURCES & BOOKS (kept, deduped)

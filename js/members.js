@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    document.body.classList.remove("suth-checking");
+
     // ✅ Now safe to use user
     const memberName = document.getElementById("memberName");
     const memberEmail = document.getElementById("memberEmail");
