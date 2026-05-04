@@ -81,3 +81,48 @@ document.addEventListener("DOMContentLoaded", () => {
   loadJournal();
   updateProgress();
 });
+
+/* ----------------------------
+   Toolkit Hub Status
+---------------------------- */
+function initToolkitHubStatus() {
+  const statusEls = document.querySelectorAll("[data-toolkit-status]");
+  if (!statusEls.length) return;
+
+  statusEls.forEach((el) => {
+    const key = el.dataset.toolkitStatus;
+
+    const raw = localStorage.getItem(`kac-toolkit-${key}-checks`);
+    if (!raw) {
+      el.textContent = "Not Started";
+      el.className = "toolkit-status status-not-started";
+      return;
+    }
+
+    let checks = [];
+    try {
+      checks = JSON.parse(raw);
+    } catch {
+      el.textContent = "Not Started";
+      el.className = "toolkit-status status-not-started";
+      return;
+    }
+
+    const total = checks.length;
+    const completed = checks.filter(Boolean).length;
+
+    if (completed === 0) {
+      el.textContent = "Not Started";
+      el.className = "toolkit-status status-not-started";
+    } else if (completed < total) {
+      el.textContent = "In Progress";
+      el.className = "toolkit-status status-in-progress";
+    } else {
+      el.textContent = "Complete";
+      el.className = "toolkit-status status-complete";
+    }
+  });
+}
+
+// Run it
+initToolkitHubStatus();

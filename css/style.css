@@ -2986,6 +2986,21 @@ flex-wrap:wrap;
   visibility: hidden;
 }
 
+.status-not-started {
+  background: rgba(255,255,255,0.08);
+  color: #f5f0e8;
+}
+
+.status-in-progress {
+  background: rgba(212,175,55,0.16);
+  color: #d4af37;
+}
+
+.status-complete {
+  background: rgba(72,187,120,0.16);
+  color: #48bb78;
+}
+
 
 /* =========================================================
    14) MOBILE: RESOURCES & BOOKS (kept, deduped)

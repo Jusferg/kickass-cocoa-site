@@ -12,20 +12,7 @@
 </head>
 
 <body class="members-page auth-checking">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  if (!window.netlifyIdentity) return;
-
-  window.netlifyIdentity.init();
-  const user = window.netlifyIdentity.currentUser();
-
-  if (!user) {
-    window.location.href = "login.html";
-  }
-});
-</script>
-
+ 
 <header class="kac-header">
   <nav class="kac-nav" aria-label="Primary">
     <a class="kac-logo" href="members-area.html">
@@ -116,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <article class="toolkit-hub-card featured">
         <div class="toolkit-hub-top">
           <span class="badge accent">Start Here</span>
-          <span class="toolkit-status">Available Now</span>
+          <span class="toolkit-status" data-toolkit-status="voice-presence-power">Not Started</span>
         </div>
         <h3>Voice, Presence &amp; Power</h3>
         <p>
@@ -131,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <article class="toolkit-hub-card">
         <div class="toolkit-hub-top">
           <span class="badge accent">Build Next</span>
-          <span class="toolkit-status">Available Now</span>
+          <span class="toolkit-status" data-toolkit-status="confidence-self-advocacy">Not Started</span>
         </div>
         <h3>Confidence &amp; Self-Advocacy</h3>
         <p>
@@ -145,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <article class="toolkit-hub-card">
         <div class="toolkit-hub-top">
           <span class="badge accent">Lead Fully</span>
-          <span class="toolkit-status">Available Now</span>
+          <span class="toolkit-status" data-toolkit-status="leadership-presence">Not Started</span>
         </div>
         <h3>Leadership Presence</h3>
         <p>
@@ -241,6 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 <script src="js/core.js" defer></script>
 <script src="js/members.js" defer></script>
+<script src="js/toolkit-progress.js" defer></script>
 
 </body>
 </html>
