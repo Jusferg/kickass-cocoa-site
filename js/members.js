@@ -386,4 +386,3 @@ document.addEventListener("DOMContentLoaded", () => {
     podcastImage.src = featured.image;
     podcastImage.alt = featured.title;
   }
-});
