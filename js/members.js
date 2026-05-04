@@ -1,15 +1,11 @@
 /****************************************************
- * members.js — Members pages only
+ * - members.js — Members pages only
  * - Auth guard via Netlify Identity
  * - Welcome text
  * - “Step Into The Room” statement save/clear
  * - Spotlight from wins
  * - Accountability tracker (weekly reset + streak)
- ****************************************************/
-
-/****************************************************
- * members.js — Members pages only
- * Netlify Identity auth guard + dashboard behavior
+ * - Netlify Identity auth guard + dashboard behavior
  ****************************************************/
 
 document.addEventListener("DOMContentLoaded", () => {

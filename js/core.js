@@ -66,16 +66,20 @@ document.addEventListener("DOMContentLoaded", () => {
   // Netlify Identity init
   // =========================
   if (window.netlifyIdentity) {
-    window.netlifyIdentity.init();
+  window.netlifyIdentity.on("init", () => {
+    renderNavAvatar();
+  });
 
-    window.netlifyIdentity.on("login", () => {
-      renderNavAvatar();
-    });
+  window.netlifyIdentity.on("login", () => {
+    renderNavAvatar();
+  });
 
-    window.netlifyIdentity.on("logout", () => {
-      window.location.href = "login.html";
-    });
-  }
+  window.netlifyIdentity.on("logout", () => {
+    window.location.href = "login.html";
+  });
+
+  window.netlifyIdentity.init();
+}
 
   // =========================
   // NAV burger + About dropdown
