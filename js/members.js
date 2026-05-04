@@ -37,48 +37,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.netlifyIdentity.on("init", (user) => {
 
-    // ✅ If no user after init → redirect
-    if (!user) {
-      window.location.href = "login.html";
-      return;
-    }
+  // Redirect if not logged in
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
 
-    document.body.classList.remove("auth-checking");
+  document.body.classList.remove("auth-checking");
 
-    // ✅ Now safe to use user
-    const memberName = document.getElementById("memberName");
-    const memberEmail = document.getElementById("memberEmail");
-    const memberRole = document.getElementById("memberRole");
+  // Member info
+  const memberName = document.getElementById("memberName");
+  const memberEmail = document.getElementById("memberEmail");
+  const memberRole = document.getElementById("memberRole");
 
-    const meta = user.user_metadata || {};
+  const meta = user.user_metadata || {};
 
-    const displayName =
-      meta.full_name ||
-      [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
-      user.email ||
-      "Member";
+  const displayName =
+    meta.full_name ||
+    [meta.first_name, meta.last_name].filter(Boolean).join(" ").trim() ||
+    user.email ||
+    "Member";
 
-    if (memberName) {
-      memberName.textContent = displayName;
-    }
+  if (memberName) memberName.textContent = displayName;
+  if (memberEmail) memberEmail.textContent = user.email || "—";
+  if (memberRole) memberRole.textContent = "Member";
 
-    if (memberEmail) {
-      memberEmail.textContent = user.email || "—";
-    }
+  // =========================
+  // 👇 Welcome text (FIXED)
+  // =========================
 
-    if (memberRole) {
-      memberRole.textContent = "Member";
-    }
-  });
-
-  window.netlifyIdentity.init();
-});
-
-  // 👇 your existing code continues below...
-
-  /* ----------------------------
-     Welcome text
-  ---------------------------- */
   const welcomeEl = document.getElementById("welcomeUser");
 
   function titleCaseWords(str) {
@@ -95,28 +82,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return "Good evening";
   }
 
-  function bestName(u) {
-    if (!u) return "";
-    if (u.firstName && u.firstName.trim()) {
-      return titleCaseWords(u.firstName);
+  function bestNameFromUser(u) {
+    const meta = u.user_metadata || {};
+
+    if (meta.first_name) {
+      return titleCaseWords(meta.first_name);
     }
-    if (u.displayName && u.displayName.trim()) {
-      const firstWord = u.displayName.trim().split(/\s+/)[0];
-      return titleCaseWords(firstWord);
+
+    if (meta.full_name) {
+      return titleCaseWords(meta.full_name.split(" ")[0]);
     }
-    if (u.email && u.email.trim()) {
+
+    if (u.email) {
       const local = u.email.split("@")[0];
-      const firstPiece = local.split(/[._-]+/)[0];
-      return titleCaseWords(firstPiece);
+      return titleCaseWords(local.split(/[._-]+/)[0]);
     }
+
     return "";
   }
 
   if (welcomeEl) {
     const greeting = getGreeting();
-    const name = bestName(user);
-    welcomeEl.textContent = name ? `${greeting}, ${name}` : greeting;
+    const name = bestNameFromUser(user);
+
+    welcomeEl.textContent = name
+      ? `${greeting}, ${name}`
+      : greeting;
   }
+});
 
   /* ----------------------------
      Step Into The Room (Statement)
