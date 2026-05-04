@@ -378,4 +378,5 @@ document.addEventListener("DOMContentLoaded", () => {
     podcastLink.href = featured.link;
     podcastImage.src = featured.image;
     podcastImage.alt = featured.title;
-  }})
+  
+  }}); 
